@@ -1,0 +1,61 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <ItemGroup>
+    <Filter Include="ソース ファイル">
+      <UniqueIdentifier>{4FC737F1-C7A5-4376-A066-2A32D752A2FF}</UniqueIdentifier>
+      <Extensions>cpp;c;cc;cxx;def;odl;idl;hpj;bat;asm;asmx</Extensions>
+    </Filter>
+    <Filter Include="ソース ファイル\System">
+      <UniqueIdentifier>{8bbf3bd2-baa7-4ca3-a91b-8ad0c2e46790}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="ソース ファイル\Input">
+      <UniqueIdentifier>{64d89c6f-b34c-41c4-8172-dc83545166c7}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="ソース ファイル\Exe">
+      <UniqueIdentifier>{1b1dd403-1bbf-41cb-aa54-5db5c0f85585}</UniqueIdentifier>
+    </Filter>
+  </ItemGroup>
+  <ItemGroup>
+    <ClCompile Include="src\main.cpp">
+      <Filter>ソース ファイル</Filter>
+    </ClCompile>
+    <ClCompile Include="src\SystemDefine.cpp">
+      <Filter>ソース ファイル\System</Filter>
+    </ClCompile>
+    <ClCompile Include="src\GameSystem.cpp">
+      <Filter>ソース ファイル\System</Filter>
+    </ClCompile>
+    <ClCompile Include="src\ButtonInfo.cpp">
+      <Filter>ソース ファイル\Input</Filter>
+    </ClCompile>
+    <ClCompile Include="src\InputState.cpp">
+      <Filter>ソース ファイル\Input</Filter>
+    </ClCompile>
+    <ClCompile Include="src\Math.cpp">
+      <Filter>ソース ファイル\Exe</Filter>
+    </ClCompile>
+    <ClCompile Include="src\TimeCounter.cpp">
+      <Filter>ソース ファイル\Exe</Filter>
+    </ClCompile>
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="src\SystemDefine.h">
+      <Filter>ソース ファイル\System</Filter>
+    </ClInclude>
+    <ClInclude Include="src\GameSystem.h">
+      <Filter>ソース ファイル\System</Filter>
+    </ClInclude>
+    <ClInclude Include="src\ButtonInfo.h">
+      <Filter>ソース ファイル\Input</Filter>
+    </ClInclude>
+    <ClInclude Include="src\InputState.h">
+      <Filter>ソース ファイル\Input</Filter>
+    </ClInclude>
+    <ClInclude Include="src\Math.h">
+      <Filter>ソース ファイル\Exe</Filter>
+    </ClInclude>
+    <ClInclude Include="src\TimeCounter.h">
+      <Filter>ソース ファイル\Exe</Filter>
+    </ClInclude>
+  </ItemGroup>
+</Project>
