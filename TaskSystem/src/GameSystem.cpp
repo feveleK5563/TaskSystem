@@ -2,7 +2,9 @@
 #include "DxLib.h"
 #include "SystemDefine.h"
 #include "InputState.h"
+#include "TaskSystem.h"
 
+#include "Task_Scene.h"
 
 GameSystem::GameSystem(){}
 
@@ -38,6 +40,8 @@ void GameSystem::Initialize()
 	{
 		return;
 	}
+
+	auto it = Task_Scene::Create();
 }
 
 //フルスクリーンモードにするか否かをメッセージボックスで問う
@@ -74,7 +78,8 @@ void GameSystem::MainLoop()
 {
 	while (Run())
 	{
-
+		TS::taskSystem.Update();
+		TS::taskSystem.Draw();
 	}
 }
 

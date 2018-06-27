@@ -24,15 +24,23 @@
     <ClCompile Include="src\InputState.cpp" />
     <ClCompile Include="src\main.cpp" />
     <ClCompile Include="src\Math.cpp" />
+    <ClCompile Include="src\ObjectAbstract.cpp" />
     <ClCompile Include="src\SystemDefine.cpp" />
+    <ClCompile Include="src\TaskSystem.cpp" />
+    <ClCompile Include="src\Task_Scene.cpp" />
     <ClCompile Include="src\TimeCounter.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="src\ButtonInfo.h" />
+    <ClInclude Include="src\DataAbstract.h" />
+    <ClInclude Include="src\Data_Scene.h" />
     <ClInclude Include="src\GameSystem.h" />
     <ClInclude Include="src\InputState.h" />
     <ClInclude Include="src\Math.h" />
+    <ClInclude Include="src\ObjectAbstract.h" />
     <ClInclude Include="src\SystemDefine.h" />
+    <ClInclude Include="src\TaskSystem.h" />
+    <ClInclude Include="src\Task_Scene.h" />
     <ClInclude Include="src\TimeCounter.h" />
   </ItemGroup>
   <PropertyGroup Label="Globals">
