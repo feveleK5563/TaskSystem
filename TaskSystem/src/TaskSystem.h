@@ -3,42 +3,46 @@
 #include <unordered_map>
 #include <memory>
 #include <string>
-#include "ObjectAbstract.h"
+#include "TaskAbstract.h"
 
 class TaskSystem
 {
 private:
-	std::vector<std::shared_ptr<ObjectAbstract>> object;
-	std::vector<std::shared_ptr<ObjectAbstract>> addObject;
-	std::unordered_map<std::string, std::vector<std::shared_ptr<DataAbstract>>> objData;
+	std::vector<std::shared_ptr<TaskAbstract>> task;
+	std::vector<std::shared_ptr<TaskAbstract>> addTask;
+	std::unordered_map<std::string, std::vector<std::shared_ptr<TaskAbstract>>> taskData;
 
 public:
 	TaskSystem() {};
 
 	void Update();
 	void Draw();
-	void CreateObject(std::shared_ptr<ObjectAbstract> createObj);
+	void RegistrationObject(std::shared_ptr<TaskAbstract> createObj);
 	
+	//指定したグループ名の内、先頭のみを渡す
 	template<class T>
-	std::shared_ptr<const T> GetDataOne(const std::string& groupName)
+	std::shared_ptr<const T> GetTaskOne(const std::string& groupName)
 	{
-		if (objData.find(groupName) != objData.end())
+		if (taskData.find(groupName) != taskData.end())
 		{
-			return std::static_pointer_cast<const T>(objData[groupName][0]);
+			return std::static_pointer_cast<const T>(taskData[groupName].front());
 		}
 
 		return nullptr;
 	}
 
+	//指定したグループ名のタスクをまとめて渡す
 	template<class T>
-	std::shared_ptr<std::vector<std::shared_ptr<const T>>> GetDataGroup(const std::string& groupName)
+	std::shared_ptr<std::vector<std::shared_ptr<const T>>> GetTaskGroup(const std::string& groupName)
 	{
-		if (objData.find(groupName) != objData.end())
+		if (taskData.find(groupName) != taskData.end())
 		{
 			std::shared_ptr<std::vector<std::shared_ptr<const T>>> gd =
 				std::make_shared<std::vector<std::shared_ptr<const T>>>();
 
-			for (auto it : objData[groupName])
+			gd->reserve(taskData[groupName].size() * sizeof(gd));
+
+			for (auto it : taskData[groupName])
 			{
 				gd->emplace_back(std::static_pointer_cast<const T>(it));
 			}

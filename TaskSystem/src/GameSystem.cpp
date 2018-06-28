@@ -41,7 +41,7 @@ void GameSystem::Initialize()
 		return;
 	}
 
-	auto it = Task_Scene::Create();
+	auto it = Scene::Task::Create();
 }
 
 //フルスクリーンモードにするか否かをメッセージボックスで問う

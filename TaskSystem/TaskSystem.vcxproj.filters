@@ -14,11 +14,11 @@
     <Filter Include="ソース ファイル\Exe">
       <UniqueIdentifier>{1b1dd403-1bbf-41cb-aa54-5db5c0f85585}</UniqueIdentifier>
     </Filter>
-    <Filter Include="ソース ファイル\Object">
-      <UniqueIdentifier>{269b6ff9-6fd9-4bf1-8afd-77d94eaeac39}</UniqueIdentifier>
-    </Filter>
     <Filter Include="ソース ファイル\Scene%28Test%29">
       <UniqueIdentifier>{1644d8d5-b98e-4e7a-be91-545459ba8508}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="ソース ファイル\Task">
+      <UniqueIdentifier>{269b6ff9-6fd9-4bf1-8afd-77d94eaeac39}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
   <ItemGroup>
@@ -46,11 +46,11 @@
     <ClCompile Include="src\TaskSystem.cpp">
       <Filter>ソース ファイル\System</Filter>
     </ClCompile>
-    <ClCompile Include="src\ObjectAbstract.cpp">
-      <Filter>ソース ファイル\Object</Filter>
-    </ClCompile>
     <ClCompile Include="src\Task_Scene.cpp">
       <Filter>ソース ファイル\Scene%28Test%29</Filter>
+    </ClCompile>
+    <ClCompile Include="src\TaskAbstract.cpp">
+      <Filter>ソース ファイル\Task</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -75,17 +75,11 @@
     <ClInclude Include="src\TaskSystem.h">
       <Filter>ソース ファイル\System</Filter>
     </ClInclude>
-    <ClInclude Include="src\ObjectAbstract.h">
-      <Filter>ソース ファイル\Object</Filter>
-    </ClInclude>
-    <ClInclude Include="src\DataAbstract.h">
-      <Filter>ソース ファイル\Object</Filter>
-    </ClInclude>
     <ClInclude Include="src\Task_Scene.h">
       <Filter>ソース ファイル\Scene%28Test%29</Filter>
     </ClInclude>
-    <ClInclude Include="src\Data_Scene.h">
-      <Filter>ソース ファイル\Scene%28Test%29</Filter>
+    <ClInclude Include="src\TaskAbstract.h">
+      <Filter>ソース ファイル\Task</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

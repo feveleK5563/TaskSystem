@@ -12,19 +12,18 @@ void TaskSystem::Update()
 
 void TaskSystem::Draw()
 {
-	for (auto& it : object)
+	for (auto& it : task)
 	{
 		it->Draw();
 	}
 }
 
-void TaskSystem::CreateObject(std::shared_ptr<ObjectAbstract> createObj)
+void TaskSystem::RegistrationObject(std::shared_ptr<TaskAbstract> createObj)
 {
 	if (createObj != nullptr)
 	{
-		addObject.emplace_back(createObj);
-		auto data = addObject.back()->GetData();
-		objData[data->groupName].emplace_back(data);
+		addTask.emplace_back(createObj);
+		taskData[addTask.back()->groupName].emplace_back(createObj);
 	}
 }
 
@@ -40,7 +39,7 @@ TaskSystem& TaskSystem::GetInstance()
 //全てのオブジェクトのUpdateを呼ぶ
 void TaskSystem::AllUpdate()
 {
-	for (auto& it : object)
+	for (auto& it : task)
 	{
 		it->Update();
 	}
@@ -49,35 +48,35 @@ void TaskSystem::AllUpdate()
 //追加予定のオブジェクトを追加する
 void TaskSystem::AddObject()
 {
-	if (addObject.empty())
+	if (addTask.empty())
 		return;
 
-	object.insert(object.end(), addObject.begin(), addObject.end());
-	addObject.clear();
-	addObject.shrink_to_fit();
+	task.insert(task.end(), addTask.begin(), addTask.end());
+	addTask.clear();
+	addTask.shrink_to_fit();
 }
 
 //状態がKillのオブジェクトを削除する
 void TaskSystem::KillObject()
 {
 	{//オブジェクトの削除
-		const auto& removeIt = std::remove_if(object.begin(), object.end(),
-			[](std::shared_ptr<ObjectAbstract>& obj)
+		const auto& removeIt = std::remove_if(task.begin(), task.end(),
+			[](std::shared_ptr<TaskAbstract>& obj)
 		{
-			return (obj->GetData()->state == ObjectState::Kill);
+			return (obj->state == ObjectState::Kill);
 		}
 		);
-		object.erase(removeIt, object.end());
-		object.shrink_to_fit();
+		task.erase(removeIt, task.end());
+		task.shrink_to_fit();
 	}
 
 	//データの削除
-	for (auto it = objData.begin();
-		 it != objData.end();
+	for (auto it = taskData.begin();
+		 it != taskData.end();
 		 ++it)
 	{
 		const auto& removeIt = std::remove_if(it->second.begin(), it->second.end(),
-			[](std::shared_ptr<DataAbstract>& data)
+			[](std::shared_ptr<TaskAbstract>& data)
 		{
 			return (data->state == ObjectState::Kill);
 		}
@@ -87,7 +86,7 @@ void TaskSystem::KillObject()
 
 		if ((int)it->second.size() == 0)
 		{
-			objData.erase(it);
+			taskData.erase(it);
 		}
 	}
 }
@@ -95,10 +94,10 @@ void TaskSystem::KillObject()
 //priorityを基に昇順にソートする
 void TaskSystem::SortObject()
 {
-	std::sort(object.begin(), object.end(), 
-		[](std::shared_ptr<ObjectAbstract>& left, std::shared_ptr<ObjectAbstract>& right)
+	std::sort(task.begin(), task.end(), 
+		[](std::shared_ptr<TaskAbstract>& left, std::shared_ptr<TaskAbstract>& right)
 		{
-			return (left->GetData()->priority < right->GetData()->priority);
+			return (left->priority < right->priority);
 		}
 	);
 }

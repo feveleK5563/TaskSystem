@@ -1,14 +1,22 @@
 #pragma once
 #include "TaskSystem.h"
-#include "Data_Scene.h"
 
-class Task_Scene : public ObjectAbstract
+namespace Scene
 {
-public:
-	Task_Scene();
+	const std::string gn("Ç†Ç¢Ç§Ç¶Ç®");	//ÉOÉãÅ[Évñº
 
-	void Update() override;
-	void Draw() override;
+	//----------------------------------------------
+	class Task : public TaskAbstract
+	{
+	private:
+		int hogehoge;
 
-	static const std::shared_ptr<const Task_Scene> Create();
-};
+	public:
+		Task();
+
+		void Update() override;
+		void Draw() override;
+
+		static const std::shared_ptr<const Task> Create();
+	};
+}
