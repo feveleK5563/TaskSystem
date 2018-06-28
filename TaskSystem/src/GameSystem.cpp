@@ -1,5 +1,6 @@
 #include "GameSystem.h"
 #include "DxLib.h"
+#include "Fps.h"
 #include "SystemDefine.h"
 #include "InputState.h"
 #include "TaskSystem.h"
@@ -65,7 +66,7 @@ bool GameSystem::IsFullScreenMode()
 //ループを回す際の判定処理
 bool GameSystem::Run()
 {
-	return	ScreenFlip() == 0 &&						//裏画面を表画面に反映
+	return	ScreenFlip() == 0 &&					//裏画面を表画面に反映
 		ProcessMessage() == 0 &&					//メッセージ処理
 		ClearDrawScreen() == 0 &&					//画面をクリア
 		Input::key.GetInputStateAll() == 0 &&		//キーボード入力状態を保存
@@ -76,9 +77,15 @@ bool GameSystem::Run()
 //メインループ
 void GameSystem::MainLoop()
 {
+	Fps fps;
+
 	while (Run())
 	{
+		fps.Wait();
+		fps.Update();
 		TS::taskSystem.Update();
+
+		fps.Draw();
 		TS::taskSystem.Draw();
 	}
 }
