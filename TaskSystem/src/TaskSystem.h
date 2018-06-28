@@ -17,7 +17,7 @@ public:
 
 	void Update();
 	void Draw();
-	void RegistrationObject(std::shared_ptr<TaskAbstract> createObj);
+	void RegistrationTask(std::shared_ptr<TaskAbstract> createObj);
 	
 	//指定したグループ名の内、先頭のみを渡す
 	template<class T>
@@ -53,13 +53,14 @@ public:
 		return nullptr;
 	}
 
+	//インスタンスを得る
 	static TaskSystem& GetInstance();
 
 private:
-	void AllUpdate();
-	void AddObject();
-	void KillObject();
-	void SortObject();
+	void AllUpdate();	//全てのタスクのUpdateを呼ぶ
+	void AddTask();		//追加予定のタスクを追加する
+	void DeleteTask();	//状態がDeleteのタスクを削除する
+	void SortTask();	//priorityを基に昇順にソートする
 };
 
 namespace TS

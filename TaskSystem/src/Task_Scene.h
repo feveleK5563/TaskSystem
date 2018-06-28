@@ -3,20 +3,36 @@
 
 namespace Scene
 {
-	const std::string gn("あいうえお");	//グループ名
+	const std::string	gn("あいうえお");	//グループ名
+	const float			defPriority(0.f);	//デフォルトの優先度
+
+	//----------------------------------------------
+	class Resource
+	{
+	private:
+		static std::weak_ptr<Resource> instance;
+
+	public:
+		Resource();
+		~Resource();
+		static std::shared_ptr<Resource> Create();
+	};
 
 	//----------------------------------------------
 	class Task : public TaskAbstract
 	{
 	private:
+		std::shared_ptr<Resource> res;	//確保したリソース
 		int hogehoge;
 
 	public:
-		Task();
+		Task();		//コンストラクタ
+		~Task();	//デストラクタ
+		static const std::shared_ptr<const Task> Create();	//タスクの生成
 
-		void Update() override;
-		void Draw() override;
-
-		static const std::shared_ptr<const Task> Create();
+		void Initialize() override;	//初期化処理
+		void Finalize() override;	//終了処理
+		void Update() override;		//更新
+		void Draw() override;		//描画
 	};
 }

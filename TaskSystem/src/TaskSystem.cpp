@@ -1,24 +1,27 @@
 #include "TaskSystem.h"
 #include <algorithm>
 
+//更新
 void TaskSystem::Update()
 {
-	AllUpdate();	//全てのオブジェクトのUpdateを呼ぶ
-	AddObject();	//追加予定のオブジェクトを追加する
-	KillObject();	//状態がKillのオブジェクトを削除する
-
-	SortObject();	//priorityを基に昇順にソートする
+	AllUpdate();	//全てのタスクのUpdateを呼ぶ
+	AddTask();		//追加予定のタスクを追加する
+	DeleteTask();	//状態がDeleteのタスクを削除する
+	SortTask();		//priorityを基に昇順にソートする
 }
 
+//描画
 void TaskSystem::Draw()
 {
 	for (auto& it : task)
 	{
-		it->Draw();
+		if (it->state != TaskState::Kill)
+			it->Draw();
 	}
 }
 
-void TaskSystem::RegistrationObject(std::shared_ptr<TaskAbstract> createObj)
+//タスクを追加する
+void TaskSystem::RegistrationTask(std::shared_ptr<TaskAbstract> createObj)
 {
 	if (createObj != nullptr)
 	{
@@ -27,6 +30,7 @@ void TaskSystem::RegistrationObject(std::shared_ptr<TaskAbstract> createObj)
 	}
 }
 
+//インスタンスを得る
 TaskSystem& TaskSystem::GetInstance()
 {
 	static TaskSystem ts;
@@ -36,17 +40,27 @@ TaskSystem& TaskSystem::GetInstance()
 //-----------------------------------------------------------------------------
 //-----------------------------------------------------------------------------
 
-//全てのオブジェクトのUpdateを呼ぶ
+//全てのタスクのUpdateを呼ぶ
 void TaskSystem::AllUpdate()
 {
 	for (auto& it : task)
 	{
-		it->Update();
+		switch (it->state)
+		{
+		case TaskState::Active:	//状態が通常の場合は普通に更新
+			it->Update();
+			break;
+
+		case TaskState::Kill:	//状態が削除要請中の場合は終了処理を呼ぶ
+			it->Finalize();
+			it->state = TaskState::Delete;
+			break;
+		}
 	}
 }
 
-//追加予定のオブジェクトを追加する
-void TaskSystem::AddObject()
+//追加予定のタスクを追加する
+void TaskSystem::AddTask()
 {
 	if (addTask.empty())
 		return;
@@ -56,16 +70,17 @@ void TaskSystem::AddObject()
 	addTask.shrink_to_fit();
 }
 
-//状態がKillのオブジェクトを削除する
-void TaskSystem::KillObject()
+//状態がDeleteのタスクを削除する
+void TaskSystem::DeleteTask()
 {
+	auto deleteCondition =		//削除する条件(状態がDelete)
+		[](std::shared_ptr<TaskAbstract>& obj)
+	{
+		return (obj->state == TaskState::Delete);
+	};
+
 	{//オブジェクトの削除
-		const auto& removeIt = std::remove_if(task.begin(), task.end(),
-			[](std::shared_ptr<TaskAbstract>& obj)
-		{
-			return (obj->state == ObjectState::Kill);
-		}
-		);
+		const auto& removeIt = std::remove_if(task.begin(), task.end(), deleteCondition);
 		task.erase(removeIt, task.end());
 		task.shrink_to_fit();
 	}
@@ -75,12 +90,7 @@ void TaskSystem::KillObject()
 		 it != taskData.end();
 		 ++it)
 	{
-		const auto& removeIt = std::remove_if(it->second.begin(), it->second.end(),
-			[](std::shared_ptr<TaskAbstract>& data)
-		{
-			return (data->state == ObjectState::Kill);
-		}
-		);
+		const auto& removeIt = std::remove_if(it->second.begin(), it->second.end(), deleteCondition);
 		it->second.erase(removeIt, it->second.end());
 		it->second.shrink_to_fit();
 
@@ -92,7 +102,7 @@ void TaskSystem::KillObject()
 }
 
 //priorityを基に昇順にソートする
-void TaskSystem::SortObject()
+void TaskSystem::SortTask()
 {
 	std::sort(task.begin(), task.end(), 
 		[](std::shared_ptr<TaskAbstract>& left, std::shared_ptr<TaskAbstract>& right)
