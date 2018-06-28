@@ -1,5 +1,6 @@
 #include "Task_Scene.h"
 #include "DxLib.h"
+#include "ImageLoader.h"
 
 namespace Scene
 {
@@ -12,7 +13,10 @@ namespace Scene
 	}
 	//----------------------------------------------
 	//リソースのデストラクタ
-	Resource::~Resource() {}
+	Resource::~Resource()
+	{
+
+	}
 	//----------------------------------------------
 	//リソースの生成
 	std::shared_ptr<Resource> Resource::Create()
@@ -30,16 +34,19 @@ namespace Scene
 	//★☆★☆★☆★☆★☆★☆★☆★☆★☆★☆★☆★☆★☆★☆★☆★☆★☆★☆★☆★☆★☆★☆★☆
 
 	//----------------------------------------------
-	//コンストラクタ
+	//タスクのコンストラクタ
 	Task::Task():
-		TaskAbstract(gn, defPriority),
+		TaskAbstract(defGroupName, defPriority),
 		res(Resource::Create())
 	{ 
 		Initialize();
 	}
 	//----------------------------------------------
-	//デストラクタ
-	Task::~Task() {}
+	//タスクのデストラクタ
+	Task::~Task()
+	{
+
+	}
 	//----------------------------------------------
 	//タスクの生成
 	const std::shared_ptr<const Task> Task::Create()
@@ -58,7 +65,7 @@ namespace Scene
 	//----------------------------------------------
 	void Task::Initialize()
 	{
-		hogehoge = 0;
+
 	}
 
 	//----------------------------------------------
@@ -74,8 +81,7 @@ namespace Scene
 	//----------------------------------------------
 	void Task::Update()
 	{
-		auto me = TS::taskSystem.GetTaskGroup<Scene::Task>("あいうえお");
-		(*me)[0]->hogehoge;
+
 	}
 
 	//----------------------------------------------

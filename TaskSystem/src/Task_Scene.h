@@ -3,8 +3,8 @@
 
 namespace Scene
 {
-	const std::string	gn("あいうえお");	//グループ名
-	const float			defPriority(0.f);	//デフォルトの優先度
+	const std::string	defGroupName("あいうえお");	//グループ名
+	const float			defPriority(0.f);			//デフォルトの処理優先度
 
 	//----------------------------------------------
 	class Resource
@@ -13,9 +13,9 @@ namespace Scene
 		static std::weak_ptr<Resource> instance;
 
 	public:
-		Resource();
-		~Resource();
-		static std::shared_ptr<Resource> Create();
+		Resource();		//コンストラクタ
+		~Resource();	//デストラクタ
+		static std::shared_ptr<Resource> Create();	//リソースの生成
 	};
 
 	//----------------------------------------------
@@ -23,7 +23,6 @@ namespace Scene
 	{
 	private:
 		std::shared_ptr<Resource> res;	//確保したリソース
-		int hogehoge;
 
 	public:
 		Task();		//コンストラクタ
