@@ -1,5 +1,6 @@
 #pragma once
 #include "TaskSystem.h"
+#include "ImageDrawer.h"
 
 namespace Scene
 {
@@ -13,6 +14,8 @@ namespace Scene
 		static std::weak_ptr<Resource> instance;
 
 	public:
+		ImageData imgData;
+
 		Resource();		//コンストラクタ
 		~Resource();	//デストラクタ
 		static std::shared_ptr<Resource> Create();	//リソースの生成
@@ -23,6 +26,8 @@ namespace Scene
 	{
 	private:
 		std::shared_ptr<Resource> res;	//確保したリソース
+
+		ImageDrawer imgDrawer;
 
 	public:
 		Task();		//コンストラクタ

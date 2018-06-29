@@ -12,11 +12,8 @@ struct AnimData
 	float	waitTime;		//ウェイト
 	bool	isLoop;			//ループ
 
-	AnimData(int startPos, int relativePos, float waitTime, bool isLoop):
-		startPos(startPos),
-		relativePos(relativePos),
-		waitTime(waitTime),
-		isLoop(isLoop){}
+	AnimData();
+	AnimData(int startPos, int relativePos, float waitTime, bool isLoop);
 };
 
 //画像データ
@@ -52,7 +49,7 @@ public:
 	const ImageData& GetImageData(const std::string& imgName);
 	
 	//画像データの解放
-	auto DeleteImageData(const std::string& imgName);
+	std::list<std::pair<const std::string, ImageData>, std::allocator<std::pair<const std::string, ImageData>>>::iterator DeleteImageData(const std::string& imgName);
 
 	//全ての画像データの解放
 	void AllDeleteImageData();

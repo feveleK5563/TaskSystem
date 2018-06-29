@@ -1,11 +1,11 @@
 #include "ImageDrawer.h"
 #include "DxLib.h"
 
-Color::Color(): r(255), g(255), b(255){}
+Color::Color(): r(255), g(255), b(255), alpha(255){}
 
-Color::Color(int r, int g, int b): r(r), g(g), b(b){}
+Color::Color(int r, int g, int b, int alpha): r(r), g(g), b(b), alpha(alpha){}
 
-Color::Color(const Color& color): r(color.r), g(color.g), b(color.b){}
+Color::Color(const Color& color): r(color.r), g(color.g), b(color.b), alpha(color.alpha){}
 
 //-----------------------------------------------------------------------------
 
@@ -14,16 +14,14 @@ ImageDrawer::ImageDrawer(const ImageData& imageData, const Math::Vec2& criterion
 	imageData(imageData),
 	criterionPos(criterionPos),
 	nowAnimPattern(0),
-	nowAnimImage(0),
-	color() {}
+	nowAnimImage(0) {}
 
 //コンストラクタ(描画したい画像データとループするか否かを指定)
 ImageDrawer::ImageDrawer(const ImageData& imageData, const Math::Vec2& criterionPos, const Color& color):
 	imageData(imageData),
 	criterionPos(criterionPos),
 	nowAnimPattern(0),
-	nowAnimImage(0),
-	color(color) {}
+	nowAnimImage(0) {}
 
 //アニメーションさせる
 bool ImageDrawer::Run()
@@ -61,9 +59,10 @@ void ImageDrawer::ChangeAnimPattern(int pattern, bool isResetTime)
 }
 
 //描画する
-void ImageDrawer::Draw(const Math::Vec2& pos, float scale, float angle, bool isTurn)
+void ImageDrawer::Draw(const Math::Vec2& pos, float scale, float angle, bool isTurn, const Color& color)
 {
 	SetDrawBright(color.r, color.g, color.b);
+	SetDrawBlendMode(DX_BLENDMODE_ALPHA, color.alpha);
 
 	DrawRotaGraph2F(
 		pos.x, pos.y,
@@ -76,12 +75,14 @@ void ImageDrawer::Draw(const Math::Vec2& pos, float scale, float angle, bool isT
 		false);
 
 	SetDrawBright(255, 255, 255);
+	SetDrawBlendMode(DX_BLENDMODE_NOBLEND, 0);
 }
 
 //指定番号の画像を描画する(アニメーションしない)
-void ImageDrawer::DrawOne(const Math::Vec2& pos, float scale, float angle, bool isTurn, int imageSheet)
+void ImageDrawer::DrawOne(const Math::Vec2& pos, float scale, float angle, bool isTurn, int imageSheet, const Color& color)
 {
 	SetDrawBright(color.r, color.g, color.b);
+	SetDrawBlendMode(DX_BLENDMODE_ALPHA, color.alpha);
 
 	DrawRotaGraph2F(
 		pos.x, pos.y,
@@ -94,6 +95,7 @@ void ImageDrawer::DrawOne(const Math::Vec2& pos, float scale, float angle, bool 
 		false);
 
 	SetDrawBright(255, 255, 255);
+	SetDrawBlendMode(DX_BLENDMODE_NOBLEND, 0);
 }
 
 //画像データを取得

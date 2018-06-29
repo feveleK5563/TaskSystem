@@ -1,5 +1,21 @@
+#define NOMINMAX
+#include <algorithm>
 #include "ImageLoader.h"
 #include "DxLib.h"
+
+AnimData::AnimData():
+	startPos(0),
+	relativePos(0),
+	waitTime(0),
+	isLoop(false) {}
+
+AnimData::AnimData(int startPos, int relativePos, float waitTime, bool isLoop) :
+	startPos(startPos),
+	relativePos(relativePos),
+	waitTime(waitTime),
+	isLoop(isLoop) {}
+
+//-----------------------------------------------------------------------------
 
 //デストラクタ
 ImageLoader::~ImageLoader()
@@ -53,18 +69,25 @@ void ImageLoader::LoadDivImage(const std::string& imageName, const std::string& 
 void ImageLoader::AddAnimationData(const std::string& imageName, int startPos, int endPos, float waitTime, bool isLoop)
 {
 	imageData[imageName].anim.emplace_back(
-		new AnimData(startPos, endPos - startPos, waitTime, isLoop)
+		new AnimData(startPos, endPos - startPos, std::max(waitTime, 1.f), isLoop)
 	);
 }
 
 //画像データの取得
 const ImageData& ImageLoader::GetImageData(const std::string& imageName)
 {
+	//アニメーション設定が行われていなかった場合
+	//便宜的にアニメーションを設定しておく
+	if (imageData[imageName].anim.empty())
+	{
+		AddAnimationData(imageName, 0, 0, 1, false);
+	}
+
 	return imageData[imageName];
 }
 
 //画像データの解放
-auto ImageLoader::DeleteImageData(const std::string& imageName)
+std::list<std::pair<const std::string, ImageData>, std::allocator<std::pair<const std::string, ImageData>>>::iterator ImageLoader::DeleteImageData(const std::string& imageName)
 {
 	for (int i = 0; i < imageData[imageName].sheetNum; ++i)
 	{

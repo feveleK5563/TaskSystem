@@ -9,13 +9,14 @@ namespace Scene
 	//リソースのコンストラクタ
 	Resource::Resource()
 	{
-
+		Image::imageLoader.LoadDivImage("Bomb", "data/image/bomb.png", 12, 12, 1, 64, 64);
+		imgData = Image::imageLoader.GetImageData("Bomb");
 	}
 	//----------------------------------------------
 	//リソースのデストラクタ
 	Resource::~Resource()
 	{
-
+		Image::imageLoader.DeleteImageData("Bomb");
 	}
 	//----------------------------------------------
 	//リソースの生成
@@ -37,7 +38,8 @@ namespace Scene
 	//タスクのコンストラクタ
 	Task::Task():
 		TaskAbstract(defGroupName, defPriority),
-		res(Resource::Create())
+		res(Resource::Create()),
+		imgDrawer(res->imgData, {0, 0})
 	{ 
 		Initialize();
 	}
