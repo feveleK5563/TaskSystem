@@ -13,11 +13,16 @@ private:
 	std::unordered_map<std::string, std::vector<std::shared_ptr<TaskAbstract>>> taskData;
 
 public:
-	TaskSystem() {};
+	TaskSystem();
+	~TaskSystem();
 
-	void Update();
-	void Draw();
-	void RegistrationTask(std::shared_ptr<TaskAbstract> createObj);
+	void Update();													//更新
+	void Draw();													//描画
+	void RegistrationTask(std::shared_ptr<TaskAbstract> createObj);	//タスクを追加する
+
+	void KillTask(const std::string& groupName);	//指定したグループ名のタスクの状態をKillにする
+	void AllKillTask();								//登録されているタスクの状態を全てKillにする
+	void AllDeleteTask();							//登録されているタスクを全て強制削除する(デストラクタで呼ばれる)
 	
 	//指定したグループ名の内、先頭のみを渡す
 	template<class T>
@@ -57,10 +62,10 @@ public:
 	static TaskSystem& GetInstance();
 
 private:
-	void AllUpdate();	//全てのタスクのUpdateを呼ぶ
-	void AddTask();		//追加予定のタスクを追加する
-	void DeleteTask();	//状態がDeleteのタスクを削除する
-	void SortTask();	//priorityを基に昇順にソートする
+	void AllUpdate();		//全てのタスクのUpdateを呼ぶ
+	void AddTask();			//追加予定のタスクを追加する
+	void StateDeleteTask();	//状態がDeleteのタスクを削除する
+	void SortTask();		//priorityを基に昇順にソートする
 };
 
 namespace TS

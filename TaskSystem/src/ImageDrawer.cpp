@@ -26,7 +26,9 @@ ImageDrawer::ImageDrawer(const ImageData& imageData, const Math::Vec2& criterion
 //アニメーションさせる
 bool ImageDrawer::Run()
 {
-	if (nowAnimImage > imageData.anim[nowAnimPattern]->relativePos)
+	nowAnimImage += 1.0f / imageData.anim[nowAnimPattern]->waitTime;
+
+	if (int(nowAnimImage) > abs(imageData.anim[nowAnimPattern]->relativeSheet))
 	{
 		if (imageData.anim[nowAnimPattern]->isLoop)
 		{
@@ -34,15 +36,10 @@ bool ImageDrawer::Run()
 		}
 		else
 		{
-			nowAnimImage = (float)imageData.anim[nowAnimPattern]->relativePos;
+			nowAnimImage = fabsf((float)imageData.anim[nowAnimPattern]->relativeSheet);
 		}
 		return true;
 	}
-
-	if (imageData.anim[nowAnimPattern]->relativePos >= 0)
-		nowAnimImage += 1.0f / imageData.anim[nowAnimPattern]->waitTime;
-	else
-		nowAnimImage -= 1.0f / imageData.anim[nowAnimPattern]->waitTime;
 
 	return false;
 }
@@ -64,12 +61,18 @@ void ImageDrawer::Draw(const Math::Vec2& pos, float scale, float angle, bool isT
 	SetDrawBright(color.r, color.g, color.b);
 	SetDrawBlendMode(DX_BLENDMODE_ALPHA, color.alpha);
 
+	int nai = (int)nowAnimImage;
+	if (imageData.anim[nowAnimPattern]->relativeSheet < 0)
+	{
+		nai *= -1;
+	}
+
 	DrawRotaGraph2F(
 		pos.x, pos.y,
 		criterionPos.x, criterionPos.y,
 		(double)scale,
 		(double)angle,
-		imageData.handle[imageData.anim[nowAnimPattern]->startPos + (int)nowAnimImage],
+		imageData.handle[imageData.anim[nowAnimPattern]->startSheet + nai],
 		true,
 		isTurn,
 		false);

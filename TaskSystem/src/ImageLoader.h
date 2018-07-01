@@ -7,13 +7,13 @@
 //アニメーションデータ
 struct AnimData
 {
-	int		startPos;		//開始位置
-	int		relativePos;	//終了位置までの相対
+	int		startSheet;		//開始位置
+	int		relativeSheet;	//終了位置までの相対
 	float	waitTime;		//ウェイト
 	bool	isLoop;			//ループ
 
 	AnimData();
-	AnimData(int startPos, int relativePos, float waitTime, bool isLoop);
+	AnimData(int startSheet, int relativeSheet, float waitTime, bool isLoop);
 };
 
 //画像データ
@@ -37,13 +37,13 @@ public:
 	~ImageLoader();
 
 	//画像読み込み
-	void LoadOneImage(const std::string& imgName, const std::string& filePath);
+	bool LoadOneImage(const std::string& imgName, const std::string& filePath);
 	
 	//画像分割読み込み
-	void LoadDivImage(const std::string& imgName, const std::string& filePath, int allNum, int xNum, int yNum, int xSize, int ySize);
+	bool LoadDivImage(const std::string& imgName, const std::string& filePath, int allNum, int xNum, int yNum, int xSize, int ySize);
 
 	//分割読み込み済みのデータにアニメーションデータを追加
-	void AddAnimationData(const std::string& imageName, int startPos, int endPos, float waitTime, bool isLoop);
+	void AddAnimationData(const std::string& imageName, int startSheet, int endSheet, float waitTime, bool isLoop);
 
 	//画像データの取得
 	const ImageData& GetImageData(const std::string& imgName);

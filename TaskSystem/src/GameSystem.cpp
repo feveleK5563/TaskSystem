@@ -88,6 +88,7 @@ void GameSystem::MainLoop()
 		fps.Draw();
 		TS::taskSystem.Draw();
 	}
+	TS::taskSystem.AllDeleteTask();
 }
 
 //I—¹ˆ—

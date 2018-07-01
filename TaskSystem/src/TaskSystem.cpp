@@ -1,13 +1,20 @@
 #include "TaskSystem.h"
 #include <algorithm>
 
+TaskSystem::TaskSystem() {}
+
+TaskSystem::~TaskSystem()
+{
+	AllDeleteTask();
+}
+
 //更新
 void TaskSystem::Update()
 {
-	AllUpdate();	//全てのタスクのUpdateを呼ぶ
-	AddTask();		//追加予定のタスクを追加する
-	DeleteTask();	//状態がDeleteのタスクを削除する
-	SortTask();		//priorityを基に昇順にソートする
+	AllUpdate();		//全てのタスクのUpdateを呼ぶ
+	AddTask();			//追加予定のタスクを追加する
+	StateDeleteTask();	//状態がDeleteのタスクを削除する
+	SortTask();			//priorityを基に昇順にソートする
 }
 
 //描画
@@ -35,6 +42,39 @@ TaskSystem& TaskSystem::GetInstance()
 {
 	static TaskSystem ts;
 	return ts;
+}
+
+//指定したグループ名のタスクの状態をKillにする
+void TaskSystem::KillTask(const std::string& groupName)
+{
+	for (auto it : taskData[groupName])
+	{
+		it->state = TaskState::Kill;
+	}
+}
+
+//登録されているタスクの状態を全てKillにする
+void TaskSystem::AllKillTask()
+{
+	for (auto map : taskData)
+	{
+		for (auto it : map.second)
+		{
+			it->state = TaskState::Kill;
+		}
+	}
+}
+
+//登録済、登録予定のタスクを全て強制削除する(デストラクタで呼ばれる)
+void TaskSystem::AllDeleteTask()
+{
+	task.clear();
+	task.emplace_back();
+
+	addTask.clear();
+	addTask.emplace_back();
+
+	taskData.clear();
 }
 
 //-----------------------------------------------------------------------------
@@ -71,9 +111,9 @@ void TaskSystem::AddTask()
 }
 
 //状態がDeleteのタスクを削除する
-void TaskSystem::DeleteTask()
+void TaskSystem::StateDeleteTask()
 {
-	auto deleteCondition =		//削除する条件(状態がDelete)
+	auto deleteCondition =		//削除する条件式(状態がDelete)
 		[](std::shared_ptr<TaskAbstract>& obj)
 	{
 		return (obj->state == TaskState::Delete);

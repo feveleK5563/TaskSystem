@@ -4,14 +4,14 @@
 #include "DxLib.h"
 
 AnimData::AnimData():
-	startPos(0),
-	relativePos(0),
+	startSheet(0),
+	relativeSheet(0),
 	waitTime(0),
 	isLoop(false) {}
 
-AnimData::AnimData(int startPos, int relativePos, float waitTime, bool isLoop) :
-	startPos(startPos),
-	relativePos(relativePos),
+AnimData::AnimData(int startSheet, int relativeSheet, float waitTime, bool isLoop) :
+	startSheet(startSheet),
+	relativeSheet(relativeSheet),
 	waitTime(waitTime),
 	isLoop(isLoop) {}
 
@@ -24,11 +24,11 @@ ImageLoader::~ImageLoader()
 }
 
 //画像読み込み
-void ImageLoader::LoadOneImage(const std::string& imageName, const std::string& filePath)
+bool ImageLoader::LoadOneImage(const std::string& imageName, const std::string& filePath)
 {
 	if (imageData.find(imageName) != imageData.end())
 	{
-		return;
+		return false;
 	}
 
 	//string型のfilePathをchar*に変換
@@ -43,14 +43,16 @@ void ImageLoader::LoadOneImage(const std::string& imageName, const std::string& 
 	imageData[imageName].rect = { 0, 0, xSize, ySize };
 
 	delete[] path;
+
+	return true;
 }
 
 //画像分割読み込み
-void ImageLoader::LoadDivImage(const std::string& imageName, const std::string& filePath, int allNum, int xNum, int yNum, int xSize, int ySize)
+bool ImageLoader::LoadDivImage(const std::string& imageName, const std::string& filePath, int allNum, int xNum, int yNum, int xSize, int ySize)
 {
 	if (imageData.find(imageName) != imageData.end())
 	{
-		return;
+		return false;
 	}
 
 	//string型のfilePathをchar*に変換
@@ -58,25 +60,31 @@ void ImageLoader::LoadDivImage(const std::string& imageName, const std::string& 
 	std::char_traits<char>::copy(path, filePath.c_str(), filePath.size() + 1);
 
 	imageData[imageName].handle = new int[allNum] {};
-	LoadDivGraph(path, allNum, xNum, yNum, xSize, ySize, imageData[imageName].handle);
+	if (LoadDivGraph(path, allNum, xNum, yNum, xSize, ySize, imageData[imageName].handle) == -1)
+	{
+		delete[] path;
+		return false;
+	}
 	imageData[imageName].sheetNum = allNum;
 	imageData[imageName].rect = { 0, 0, xSize, ySize };
 
 	delete[] path;
+
+	return true;
 }
 
 //分割読み込み済みのデータにアニメーションデータを追加
-void ImageLoader::AddAnimationData(const std::string& imageName, int startPos, int endPos, float waitTime, bool isLoop)
+void ImageLoader::AddAnimationData(const std::string& imageName, int startSheet, int endSheet, float waitTime, bool isLoop)
 {
 	imageData[imageName].anim.emplace_back(
-		new AnimData(startPos, endPos - startPos, std::max(waitTime, 1.f), isLoop)
+		new AnimData(startSheet, endSheet - startSheet, std::max(waitTime, 1.f), isLoop)
 	);
 }
 
 //画像データの取得
 const ImageData& ImageLoader::GetImageData(const std::string& imageName)
 {
-	//アニメーション設定が行われていなかった場合
+	//アニメーション設定が行われていなかった場合は
 	//便宜的にアニメーションを設定しておく
 	if (imageData[imageName].anim.empty())
 	{
@@ -89,6 +97,9 @@ const ImageData& ImageLoader::GetImageData(const std::string& imageName)
 //画像データの解放
 std::list<std::pair<const std::string, ImageData>, std::allocator<std::pair<const std::string, ImageData>>>::iterator ImageLoader::DeleteImageData(const std::string& imageName)
 {
+	if (imageData.find(imageName) == imageData.end())
+		return imageData.end();
+
 	for (int i = 0; i < imageData[imageName].sheetNum; ++i)
 	{
 		DeleteGraph(imageData[imageName].handle[i]);
@@ -119,6 +130,7 @@ void ImageLoader::AllDeleteImageData()
 	{
 		it = DeleteImageData(it->first);
 	}
+	imageData.clear();
 }
 
 //インスタンスを得る
