@@ -44,9 +44,18 @@ TaskSystem& TaskSystem::GetInstance()
 	return ts;
 }
 
+//指定したグループ名のタスクが存在しているか調べ、あったらtrueを返す
+bool TaskSystem::FindTask(const std::string& groupName)
+{
+	return taskData.count(groupName);
+}
+
 //指定したグループ名のタスクの状態をKillにする
 void TaskSystem::KillTask(const std::string& groupName)
 {
+	if (!taskData.count(groupName))
+		return;
+
 	for (auto it : taskData[groupName])
 	{
 		it->state = TaskState::Kill;

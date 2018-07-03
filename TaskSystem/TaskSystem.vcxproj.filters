@@ -5,102 +5,105 @@
       <UniqueIdentifier>{4FC737F1-C7A5-4376-A066-2A32D752A2FF}</UniqueIdentifier>
       <Extensions>cpp;c;cc;cxx;def;odl;idl;hpj;bat;asm;asmx</Extensions>
     </Filter>
-    <Filter Include="ソース ファイル\System">
-      <UniqueIdentifier>{8bbf3bd2-baa7-4ca3-a91b-8ad0c2e46790}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="ソース ファイル\Input">
-      <UniqueIdentifier>{64d89c6f-b34c-41c4-8172-dc83545166c7}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="ソース ファイル\Exe">
-      <UniqueIdentifier>{1b1dd403-1bbf-41cb-aa54-5db5c0f85585}</UniqueIdentifier>
-    </Filter>
     <Filter Include="ソース ファイル\Task_Scene%28Test%29">
       <UniqueIdentifier>{1644d8d5-b98e-4e7a-be91-545459ba8508}</UniqueIdentifier>
     </Filter>
-    <Filter Include="ソース ファイル\Image">
+    <Filter Include="システム">
+      <UniqueIdentifier>{b62d9bf3-85bb-40d7-8d9e-a50722211543}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="システム\Exe">
+      <UniqueIdentifier>{1b1dd403-1bbf-41cb-aa54-5db5c0f85585}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="システム\Image">
       <UniqueIdentifier>{6efafe19-41e4-4454-b93c-354154564618}</UniqueIdentifier>
     </Filter>
-    <Filter Include="ソース ファイル\TaskSystem">
+    <Filter Include="システム\Input">
+      <UniqueIdentifier>{64d89c6f-b34c-41c4-8172-dc83545166c7}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="システム\System">
+      <UniqueIdentifier>{8bbf3bd2-baa7-4ca3-a91b-8ad0c2e46790}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="システム\TaskSystem">
       <UniqueIdentifier>{269b6ff9-6fd9-4bf1-8afd-77d94eaeac39}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
   <ItemGroup>
-    <ClCompile Include="src\main.cpp">
-      <Filter>ソース ファイル</Filter>
-    </ClCompile>
     <ClCompile Include="src\SystemDefine.cpp">
-      <Filter>ソース ファイル\System</Filter>
+      <Filter>システム\System</Filter>
     </ClCompile>
     <ClCompile Include="src\GameSystem.cpp">
-      <Filter>ソース ファイル\System</Filter>
+      <Filter>システム\System</Filter>
     </ClCompile>
     <ClCompile Include="src\ButtonInfo.cpp">
-      <Filter>ソース ファイル\Input</Filter>
+      <Filter>システム\Input</Filter>
     </ClCompile>
     <ClCompile Include="src\InputState.cpp">
-      <Filter>ソース ファイル\Input</Filter>
+      <Filter>システム\Input</Filter>
     </ClCompile>
     <ClCompile Include="src\Math.cpp">
-      <Filter>ソース ファイル\Exe</Filter>
+      <Filter>システム\Exe</Filter>
     </ClCompile>
     <ClCompile Include="src\TimeCounter.cpp">
-      <Filter>ソース ファイル\Exe</Filter>
+      <Filter>システム\Exe</Filter>
     </ClCompile>
     <ClCompile Include="src\Task_Scene.cpp">
       <Filter>ソース ファイル\Task_Scene%28Test%29</Filter>
     </ClCompile>
     <ClCompile Include="src\TaskAbstract.cpp">
-      <Filter>ソース ファイル\TaskSystem</Filter>
+      <Filter>システム\TaskSystem</Filter>
     </ClCompile>
     <ClCompile Include="src\Fps.cpp">
-      <Filter>ソース ファイル\System</Filter>
+      <Filter>システム\System</Filter>
     </ClCompile>
     <ClCompile Include="src\TaskSystem.cpp">
-      <Filter>ソース ファイル\TaskSystem</Filter>
+      <Filter>システム\TaskSystem</Filter>
     </ClCompile>
     <ClCompile Include="src\ImageLoader.cpp">
-      <Filter>ソース ファイル\Image</Filter>
+      <Filter>システム\Image</Filter>
     </ClCompile>
     <ClCompile Include="src\ImageDrawer.cpp">
-      <Filter>ソース ファイル\Image</Filter>
+      <Filter>システム\Image</Filter>
+    </ClCompile>
+    <ClCompile Include="src\main.cpp">
+      <Filter>システム</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="src\SystemDefine.h">
-      <Filter>ソース ファイル\System</Filter>
+      <Filter>システム\System</Filter>
     </ClInclude>
     <ClInclude Include="src\GameSystem.h">
-      <Filter>ソース ファイル\System</Filter>
+      <Filter>システム\System</Filter>
     </ClInclude>
     <ClInclude Include="src\ButtonInfo.h">
-      <Filter>ソース ファイル\Input</Filter>
+      <Filter>システム\Input</Filter>
     </ClInclude>
     <ClInclude Include="src\InputState.h">
-      <Filter>ソース ファイル\Input</Filter>
+      <Filter>システム\Input</Filter>
     </ClInclude>
     <ClInclude Include="src\Math.h">
-      <Filter>ソース ファイル\Exe</Filter>
+      <Filter>システム\Exe</Filter>
     </ClInclude>
     <ClInclude Include="src\TimeCounter.h">
-      <Filter>ソース ファイル\Exe</Filter>
+      <Filter>システム\Exe</Filter>
     </ClInclude>
     <ClInclude Include="src\Task_Scene.h">
       <Filter>ソース ファイル\Task_Scene%28Test%29</Filter>
     </ClInclude>
     <ClInclude Include="src\TaskAbstract.h">
-      <Filter>ソース ファイル\TaskSystem</Filter>
+      <Filter>システム\TaskSystem</Filter>
     </ClInclude>
     <ClInclude Include="src\Fps.h">
-      <Filter>ソース ファイル\System</Filter>
+      <Filter>システム\System</Filter>
     </ClInclude>
     <ClInclude Include="src\TaskSystem.h">
-      <Filter>ソース ファイル\TaskSystem</Filter>
+      <Filter>システム\TaskSystem</Filter>
     </ClInclude>
     <ClInclude Include="src\ImageLoader.h">
-      <Filter>ソース ファイル\Image</Filter>
+      <Filter>システム\Image</Filter>
     </ClInclude>
     <ClInclude Include="src\ImageDrawer.h">
-      <Filter>ソース ファイル\Image</Filter>
+      <Filter>システム\Image</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

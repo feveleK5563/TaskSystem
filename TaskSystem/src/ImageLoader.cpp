@@ -26,7 +26,7 @@ ImageLoader::~ImageLoader()
 //‰æ‘œ“Ç‚İ‚İ
 bool ImageLoader::LoadOneImage(const std::string& imageName, const std::string& filePath)
 {
-	if (imageData.find(imageName) != imageData.end())
+	if (imageData.count(imageName))
 	{
 		return false;
 	}
@@ -50,7 +50,7 @@ bool ImageLoader::LoadOneImage(const std::string& imageName, const std::string& 
 //‰æ‘œ•ªŠ„“Ç‚İ‚İ
 bool ImageLoader::LoadDivImage(const std::string& imageName, const std::string& filePath, int allNum, int xNum, int yNum, int xSize, int ySize)
 {
-	if (imageData.find(imageName) != imageData.end())
+	if (imageData.count(imageName))
 	{
 		return false;
 	}
@@ -97,7 +97,7 @@ const ImageData& ImageLoader::GetImageData(const std::string& imageName)
 //‰æ‘œƒf[ƒ^‚Ì‰ğ•ú
 std::list<std::pair<const std::string, ImageData>, std::allocator<std::pair<const std::string, ImageData>>>::iterator ImageLoader::DeleteImageData(const std::string& imageName)
 {
-	if (imageData.find(imageName) == imageData.end())
+	if (!imageData.count(imageName))
 		return imageData.end();
 
 	for (int i = 0; i < imageData[imageName].sheetNum; ++i)
