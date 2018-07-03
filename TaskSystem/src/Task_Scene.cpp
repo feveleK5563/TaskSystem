@@ -41,7 +41,7 @@ namespace Scene
 	Task::Task():
 		TaskAbstract(defGroupName, defPriority),
 		res(Resource::Create()),
-		imgDrawer(res->imgData, {0, 0})
+		imgDrawer(res->imgData, true)
 	{ 
 		Initialize();
 	}
@@ -95,6 +95,7 @@ namespace Scene
 	{
 		//DrawString(100, 100, "hogehoge", GetColor(255, 255, 255));
 		imgDrawer.Draw(	Math::Vec2(100, 100),
+						1.f,
 						1.f,
 						0.f,
 						false,

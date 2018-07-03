@@ -23,7 +23,9 @@ private:
 	float		nowAnimImage;	//現在のアニメーション画像
 
 public:
-	//コンストラクタ(描画したい画像データを指定)
+	//コンストラクタ(描画したい画像データを指定、第二引数trueで描画基準位置が中心)
+	ImageDrawer(const ImageData& imageData, bool isCriterrionPosCenter);
+	//コンストラクタ(描画したい画像データと描画基準位置を指定)
 	ImageDrawer(const ImageData& imageData, const Math::Vec2& criterionPos);
 
 	bool Run();	//アニメーションさせる(アニメーションが一周したらtrueが返る)
@@ -31,8 +33,12 @@ public:
 
 	//描画する
 	void Draw(const Math::Vec2& pos, float scale, float angle, bool isTurn, const Color& color);
+	//描画する(拡大率縦横別)
+	void Draw(const Math::Vec2& pos, float scaleX, float scaleY, float angle, bool isTurn, const Color& color);
 	//指定番号の画像を描画する
 	void DrawOne(const Math::Vec2& pos, float scale, float angle, bool isTurnint, int imageSheet, const Color& color);
+	//指定番号の画像を描画する(拡大率縦横別)
+	void DrawOne(const Math::Vec2& pos, float scaleX, float scaleY, float angle, bool isTurnint, int imageSheet, const Color& color);
 
 	const ImageData& GetImageData() const;	//画像データを取得
 };
