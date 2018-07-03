@@ -1,7 +1,7 @@
 #pragma once
 #include "TaskSystem.h"
 
-namespace Scene
+namespace Template
 {
 	const std::string	defGroupName("グループ名");	//グループ名
 	const float			defPriority(0.f);			//デフォルトの処理優先度

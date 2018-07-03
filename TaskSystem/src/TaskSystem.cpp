@@ -127,8 +127,7 @@ void TaskSystem::StateDeleteTask()
 
 	//ƒf[ƒ^‚Ìíœ
 	for (auto it = taskData.begin();
-		 it != taskData.end();
-		 ++it)
+		 it != taskData.end();)
 	{
 		const auto& removeIt = std::remove_if(it->second.begin(), it->second.end(), deleteCondition);
 		it->second.erase(removeIt, it->second.end());
@@ -136,8 +135,10 @@ void TaskSystem::StateDeleteTask()
 
 		if ((int)it->second.size() == 0)
 		{
-			taskData.erase(it);
+			it = taskData.erase(it);
+			continue;
 		}
+		++it;
 	}
 }
 

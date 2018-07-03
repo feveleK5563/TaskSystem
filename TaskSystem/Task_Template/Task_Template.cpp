@@ -1,7 +1,7 @@
-#include "Task_Scene.h"
+#include "Task_Template.h"
 #include "DxLib.h"
 
-namespace Scene
+namespace Template
 {
 	std::weak_ptr<Resource> Resource::instance;
 	//----------------------------------------------
