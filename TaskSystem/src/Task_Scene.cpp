@@ -86,7 +86,6 @@ namespace Scene
 	void Task::Update()
 	{
 		imgDrawer.Run();
-		int uc = res.use_count();
 	}
 
 	//----------------------------------------------

@@ -16,13 +16,6 @@ ImageDrawer::ImageDrawer(const ImageData& imageData, const Math::Vec2& criterion
 	nowAnimPattern(0),
 	nowAnimImage(0) {}
 
-//コンストラクタ(描画したい画像データとループするか否かを指定)
-ImageDrawer::ImageDrawer(const ImageData& imageData, const Math::Vec2& criterionPos, const Color& color):
-	imageData(imageData),
-	criterionPos(criterionPos),
-	nowAnimPattern(0),
-	nowAnimImage(0) {}
-
 //アニメーションさせる
 bool ImageDrawer::Run()
 {

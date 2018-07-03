@@ -25,8 +25,6 @@ private:
 public:
 	//コンストラクタ(描画したい画像データを指定)
 	ImageDrawer(const ImageData& imageData, const Math::Vec2& criterionPos);
-	//コンストラクタ(描画したい画像データと描画輝度を指定)
-	ImageDrawer(const ImageData& imageData, const Math::Vec2& criterionPos, const Color& color);
 
 	bool Run();	//アニメーションさせる(アニメーションが一周したらtrueが返る)
 	void ChangeAnimPattern(int pattern, bool isResetTime);	//アニメーションパターン番号の変更
