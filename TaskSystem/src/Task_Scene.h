@@ -27,7 +27,7 @@ namespace Scene
 	private:
 		std::shared_ptr<Resource> res;	//確保したリソース
 
-		//ImageDrawer imgDrawer;
+		ImageDrawer imgDrawer;
 
 	public:
 		Task();		//コンストラクタ

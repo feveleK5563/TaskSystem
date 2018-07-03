@@ -11,8 +11,8 @@ namespace Scene
 	Resource::Resource()
 	{
 		Image::imageLoader.LoadDivImage("Bomb", "data/image/bomb.png", 12, 12, 1, 64, 64);
-		Image::imageLoader.AddAnimationData("Bomb", 0, 11, 1.f, false);
-		//imgData = Image::imageLoader.GetImageData("Bomb");
+		Image::imageLoader.AddAnimationData("Bomb", 0, 11, 5.f, true);
+		imgData = Image::imageLoader.GetImageData("Bomb");
 	}
 	//----------------------------------------------
 	//リソースのデストラクタ
@@ -40,8 +40,8 @@ namespace Scene
 	//タスクのコンストラクタ
 	Task::Task():
 		TaskAbstract(defGroupName, defPriority),
-		res(Resource::Create())/*,
-		imgDrawer(res->imgData, {0, 0})*/
+		res(Resource::Create()),
+		imgDrawer(res->imgData, {0, 0})
 	{ 
 		Initialize();
 	}
@@ -85,7 +85,7 @@ namespace Scene
 	//----------------------------------------------
 	void Task::Update()
 	{
-		//imgDrawer.Run();
+		imgDrawer.Run();
 		int uc = res.use_count();
 	}
 
@@ -95,10 +95,10 @@ namespace Scene
 	void Task::Draw()
 	{
 		//DrawString(100, 100, "hogehoge", GetColor(255, 255, 255));
-		/*imgDrawer.Draw(	Math::Vec2(100, 100),
+		imgDrawer.Draw(	Math::Vec2(100, 100),
 						1.f,
 						0.f,
 						false,
-						Color(255, 255, 255, 255));*/
+						Color(255, 255, 255, 255));
 	}
 }
