@@ -3,7 +3,7 @@
 
 namespace Math
 {
-	static const float PI = 3.14159265358979323846264338327950288419f;
+	static const float PI = 3.1415926535897932384626433832795028841971f;
 
 	//弧度法変換
 	float ToRadian(float val);
@@ -20,11 +20,15 @@ namespace Math
 		Vec2(const Vec2& setVec);
 		Vec2(float setX, float setY);
 
-		void operator =(const Vec2& vec);
-		Vec2 operator +(const Vec2& vec) const;
-		Vec2 operator -(const Vec2& vec) const;
-		void operator +=(const Vec2& vec);
-		void operator -=(const Vec2& vec);
+		Vec2&	operator =(const Vec2& vec);
+		Vec2	operator +(const Vec2& vec) const;
+		Vec2	operator -(const Vec2& vec) const;
+		Vec2	operator *(float mul) const;
+		Vec2	operator /(float div) const;
+		Vec2&	operator +=(const Vec2& vec);
+		Vec2&	operator -=(const Vec2& vec);
+		Vec2&	operator *=(float mul);
+		Vec2&	operator /=(float div);
 	};
 
 	//当たり判定機能つき矩形クラス
@@ -38,8 +42,8 @@ namespace Math
 		Box2D(const Box2D& setBox);
 		Box2D(int setX, int setY, int setW, int setH);
 
-		bool Hit(const Box2D& box) const;
-		bool In(const Box2D& box) const;
+		bool IsHit(const Box2D& box) const;
+		bool IsIn(const Box2D& box) const;
 
 		void Offset(int setX, int setY);
 		void Offset(const Vec2& vec);
@@ -47,10 +51,14 @@ namespace Math
 		Box2D OffsetCpy(int setX, int setY) const;
 		Box2D OffsetCpy(const Vec2& vec) const;
 
-		void operator =(const Box2D& box);
-		Box2D operator +(const Box2D& box) const;
-		Box2D operator -(const Box2D& box) const;
-		void operator +=(const Box2D& box);
-		void operator -=(const Box2D& box);
+		Box2D&	operator =(const Box2D& box);
+		Box2D	operator +(const Box2D& box) const;
+		Box2D	operator -(const Box2D& box) const;
+		Box2D	operator *(int mul) const;
+		Box2D	operator /(int div) const;
+		Box2D&	operator +=(const Box2D& box);
+		Box2D&	operator -=(const Box2D& box);
+		Box2D&	operator *=(int mul);
+		Box2D&	operator /=(int div);
 	};
 }

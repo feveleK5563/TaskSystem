@@ -4,11 +4,11 @@
 #include "SystemDefine.h"
 #include "InputState.h"
 #include "TaskSystem.h"
-
-#include "Task_Scene.h"
+#include "Task_TestScene.h"
 
 GameSystem::GameSystem(){}
 
+//-----------------------------------------------------------------------------
 //初期化処理
 void GameSystem::Initialize()
 {
@@ -34,7 +34,7 @@ void GameSystem::Initialize()
 	//画面解像度とカラービット数
 	SetGraphMode(SystemDefine::windowSizeX, SystemDefine::windowSizeY, 32);
 	//ウィンドウタイトルを付ける
-	SetWindowText("DxLib");
+	SetWindowText("Speed++");
 
 	//初期化と裏画面化
 	if (DxLib_Init() == -1 || SetDrawScreen(DX_SCREEN_BACK) != 0)
@@ -42,9 +42,39 @@ void GameSystem::Initialize()
 		return;
 	}
 
-	auto it = Scene::Task::Create();
+	FirstCreateTask();
 }
 
+//-----------------------------------------------------------------------------
+//メインループ
+void GameSystem::MainLoop()
+{
+	Fps fps;
+
+	while (Run())
+	{
+		fps.Wait();
+		fps.Update();
+		//タスクが存在しなかった場合終了する
+		if (!TS::taskSystem.Update())
+		{
+			break;
+		}
+
+		fps.Draw();
+		TS::taskSystem.Draw();
+	}
+	TS::taskSystem.AllDeleteTask();
+}
+
+//-----------------------------------------------------------------------------
+//終了処理
+void GameSystem::Finalize()
+{
+	DxLib_End();
+}
+
+//-----------------------------------------------------------------------------
 //フルスクリーンモードにするか否かをメッセージボックスで問う
 bool GameSystem::IsFullScreenMode()
 {
@@ -63,36 +93,21 @@ bool GameSystem::IsFullScreenMode()
 	return false;
 }
 
+//-----------------------------------------------------------------------------
 //ループを回す際の判定処理
 bool GameSystem::Run()
 {
 	return	ScreenFlip() == 0 &&					//裏画面を表画面に反映
 		ProcessMessage() == 0 &&					//メッセージ処理
 		ClearDrawScreen() == 0 &&					//画面をクリア
-		Input::key.GetInputStateAll() == 0 &&		//キーボード入力状態を保存
-		Input::joypad1.GetInputStateAll() == 0 &&	//ゲームパッド入力状態を保存
+		Input::GetInputStateAll() &&				//入力情報を取得
 		Input::key[KEY_INPUT_ESCAPE] == OFF;		//ESCが押されていない
 }
 
-//メインループ
-void GameSystem::MainLoop()
+//-----------------------------------------------------------------------------
+//最初に作成するタスク
+void GameSystem::FirstCreateTask()
 {
-	Fps fps;
-
-	while (Run())
-	{
-		fps.Wait();
-		fps.Update();
-		TS::taskSystem.Update();
-
-		fps.Draw();
-		TS::taskSystem.Draw();
-	}
-	TS::taskSystem.AllDeleteTask();
-}
-
-//終了処理
-void GameSystem::Finalize()
-{
-	DxLib_End();
+	//最初に作成するタスクをここに入力
+	TestScene::Task::Create();
 }

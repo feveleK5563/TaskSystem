@@ -16,9 +16,9 @@ public:
 	TaskSystem();
 	~TaskSystem();
 
-	void Update();													//更新
-	void Draw();													//描画
-	void RegistrationTask(std::shared_ptr<TaskAbstract> createObj);	//タスクを追加する
+	bool Update();											//更新(タスクが存在しなかった場合falseを返す)
+	void Draw();											//描画
+	void AddTask(std::shared_ptr<TaskAbstract> createObj);	//タスクを追加する
 
 	bool FindTask(const std::string& groupName);	//指定したグループ名のタスクが存在しているか調べ、あったらtrueを返す
 	void KillTask(const std::string& groupName);	//指定したグループ名のタスクの状態をKillにする
@@ -29,22 +29,25 @@ public:
 	template<class T>
 	std::shared_ptr<const T> GetTaskOne(const std::string& groupName)
 	{
+		std::shared_ptr<const T> cpyTask;
+
 		if (taskData.count(groupName))
 		{
-			return std::static_pointer_cast<const T>(taskData[groupName].front());
+			cpyTask = std::static_pointer_cast<const T>(taskData[groupName].front());
 		}
 
-		return nullptr;
+		return cpyTask;
 	}
 
 	//指定したグループ名のタスクをまとめて渡す
 	template<class T>
 	std::shared_ptr<std::vector<std::shared_ptr<const T>>> GetTaskGroup(const std::string& groupName)
 	{
+		std::shared_ptr<std::vector<std::shared_ptr<const T>>> gd;
+
 		if (taskData.count(groupName))
 		{
-			std::shared_ptr<std::vector<std::shared_ptr<const T>>> gd =
-				std::make_shared<std::vector<std::shared_ptr<const T>>>();
+			gd = std::make_shared<std::vector<std::shared_ptr<const T>>>();
 
 			gd->reserve(taskData[groupName].size() * sizeof(gd));
 
@@ -52,18 +55,16 @@ public:
 			{
 				gd->emplace_back(std::static_pointer_cast<const T>(it));
 			}
-
-			return gd;
 		}
 
-		return nullptr;
+		return gd;
 	}
 
 	//インスタンスを得る
 	static TaskSystem& GetInstance();
 
 private:
-	void AllUpdate();		//全てのタスクのUpdateを呼ぶ
+	bool AllUpdate();		//全てのタスクのUpdateを呼ぶ(タスクが存在しなかった場合falseを返す)
 	void AddTask();			//追加予定のタスクを追加する
 	void StateDeleteTask();	//状態がDeleteのタスクを削除する
 	void SortTask();		//priorityを基に昇順にソートする

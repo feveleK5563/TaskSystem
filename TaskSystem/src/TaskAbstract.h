@@ -15,10 +15,12 @@ enum struct TaskState
 
 class TaskAbstract
 {
-public:
+private:
 	const std::string	groupName;	//グループ名
 	float				priority;	//描画優先度
-	TaskState			state;		//状態
+	TaskState			taskState;	//状態
+
+public:
 
 	//コンストラクタ
 	TaskAbstract(	const std::string& groupName,
@@ -33,6 +35,12 @@ public:
 	virtual void Update() = 0;		//更新
 	virtual void Draw() = 0;		//描画
 
-protected:
 	void KillMe();	//自分を殺す
+
+	void SetPriority(float priority);		//描画優先度を設定
+	void SetTaskState(TaskState taskState);	//タスクの状態を設定
+
+	const std::string&	GetGroupName();	//タスクのグループ名を取得
+	const float&		GetPriority();	//描画優先度を取得
+	const TaskState&	GetTaskState();	//タスクの状態を取得
 };

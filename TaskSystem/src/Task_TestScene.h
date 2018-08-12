@@ -1,9 +1,10 @@
 #pragma once
 #include "TaskSystem.h"
+#include "ImageDrawer.h"
 
-namespace Template
+namespace TestScene
 {
-	const std::string	defGroupName("グループ名");	//グループ名
+	const std::string	defGroupName("テスト用タスク");	//グループ名
 	const float			defPriority(0.f);			//デフォルトの処理優先度
 
 	//----------------------------------------------
@@ -13,6 +14,7 @@ namespace Template
 		static std::weak_ptr<Resource> instance;
 
 	public:
+		ImageData imgData;
 
 		Resource();		//コンストラクタ
 		~Resource();	//デストラクタ
@@ -25,10 +27,17 @@ namespace Template
 	private:
 		std::shared_ptr<Resource> res;	//確保したリソース
 
+		ImageDrawer imgDrawer;
+
 	public:
-		Task();		//コンストラクタ
-		~Task();	//デストラクタ
-		static const std::shared_ptr<const Task> Create();	//タスクの生成
+		//コンストラクタ
+		Task();
+		
+		//デストラクタ
+		~Task();
+		
+		//タスクの生成
+		static std::shared_ptr<Task> Create();
 
 		void Initialize() override;	//初期化処理
 		void Finalize() override;	//終了処理

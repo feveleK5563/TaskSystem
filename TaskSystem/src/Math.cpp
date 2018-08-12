@@ -25,30 +25,51 @@ namespace Math
 	Vec2::Vec2(float setX, float setY):
 		x(setX), y(setY){}
 
-	void Vec2::operator =(const Vec2& vec)
+	Vec2& Vec2::operator =(const Vec2& vec)
 	{
 		x = vec.x;
 		y = vec.y;
+		return *this;
 	}
 	Vec2 Vec2::operator +(const Vec2& vec) const
 	{
-		Vec2 retVec(x + vec.x, y + vec.y);
-		return retVec;
+		return Vec2(x + vec.x, y + vec.y);
 	}
 	Vec2 Vec2::operator -(const Vec2& vec) const
 	{
-		Vec2 retVec(x - vec.x, y - vec.y);
-		return retVec;
+		return Vec2(x - vec.x, y - vec.y);
 	}
-	void Vec2::operator +=(const Vec2& vec)
+	Vec2 Vec2::operator *(float mul) const
+	{
+		return Vec2(x * mul, y * mul);
+	}
+	Vec2 Vec2::operator /(float div) const
+	{
+		return Vec2(x * div, y * div);
+	}
+	Vec2& Vec2::operator +=(const Vec2& vec)
 	{
 		x += vec.x;
 		y += vec.y;
+		return *this;
 	}
-	void Vec2::operator -=(const Vec2& vec)
+	Vec2& Vec2::operator -=(const Vec2& vec)
 	{
 		x -= vec.x;
 		y -= vec.y;
+		return *this;
+	}
+	Vec2& Vec2::operator *=(float mul)
+	{
+		x *= mul;
+		y *= mul;
+		return *this;
+	}
+	Vec2& Vec2::operator /=(float div)
+	{
+		x /= div;
+		y /= div;
+		return *this;
 	}
 
 	//--------------------------------------------------------
@@ -65,13 +86,13 @@ namespace Math
 		x(setX), y(setY), w(setW), h(setH),
 		baseX(setX), baseY(setY) {}
 
-	bool Box2D::Hit(const Box2D& box) const
+	bool Box2D::IsHit(const Box2D& box) const
 	{
 		return	x <= box.x + box.w && box.x < x + w &&
 				y <= box.y + box.h && box.y < y + h;
 	}
 	
-	bool Box2D::In(const Box2D& box) const
+	bool Box2D::IsIn(const Box2D& box) const
 	{
 		return	x <= box.x && box.x + box.w < x + w &&
 				y <= box.y && box.y + box.h < y + h;
@@ -95,11 +116,11 @@ namespace Math
 	}
 	Box2D Box2D::OffsetCpy(const Vec2& vec) const
 	{
-		Box2D cpy(baseX + (int)vec.x, baseY + (int)vec.y, w , h);
+		Box2D cpy(baseX + (int)vec.x, baseY + (int)vec.y, w, h);
 		return cpy;
 	}
 
-	void Box2D::operator =(const Box2D& box)
+	Box2D& Box2D::operator =(const Box2D& box)
 	{
 		x = box.x;
 		y = box.y;
@@ -107,18 +128,25 @@ namespace Math
 		h = box.h;
 		baseX = x;
 		baseY = y;
+		return *this;
 	}
 	Box2D Box2D::operator +(const Box2D& box) const
 	{
-		Box2D retBox(x + box.x, y + box.y, w + box.w, h + box.h);
-		return retBox;
+		return Box2D(x + box.x, y + box.y, w + box.w, h + box.h);
 	}
 	Box2D Box2D::operator -(const Box2D& box) const
 	{
-		Box2D retBox(x - box.x, y - box.y, w - box.w, h - box.h);
-		return retBox;
+		return Box2D(x - box.x, y - box.y, w - box.w, h - box.h);
 	}
-	void Box2D::operator +=(const Box2D& box)
+	Box2D Box2D::operator *(int mul) const
+	{
+		return Box2D(x, y, w * mul, h * mul);
+	}
+	Box2D Box2D::operator /(int div) const
+	{
+		return Box2D(x, y, w / div, h / div);
+	}
+	Box2D& Box2D::operator +=(const Box2D& box)
 	{
 		x += box.x;
 		y += box.y;
@@ -126,8 +154,9 @@ namespace Math
 		h += box.h;
 		baseX = x;
 		baseY = y;
+		return *this;
 	}
-	void Box2D::operator -=(const Box2D& box)
+	Box2D& Box2D::operator -=(const Box2D& box)
 	{
 		x -= box.x;
 		y -= box.y;
@@ -135,5 +164,18 @@ namespace Math
 		h -= box.h;
 		baseX = x;
 		baseY = y;
+		return *this;
+	}
+	Box2D& Box2D::operator *=(int mul)
+	{
+		w *= mul;
+		h *= mul;
+		return *this;
+	}
+	Box2D& Box2D::operator /=(int div)
+	{
+		w /= div;
+		h /= div;
+		return *this;
 	}
 }

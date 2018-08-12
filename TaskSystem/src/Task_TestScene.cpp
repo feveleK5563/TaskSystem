@@ -1,14 +1,17 @@
-#include "Task_Template.h"
+#include "Task_TestScene.h"
 #include "DxLib.h"
+#include "ImageLoader.h"
 
-namespace Template
+namespace TestScene
 {
 	std::weak_ptr<Resource> Resource::instance;
 	//----------------------------------------------
 	//リソースのコンストラクタ
 	Resource::Resource()
 	{
-		
+		Image::imageLoader.LoadDivImage("Bomb", "data/image/bomb.png", 12, 12, 1, 64, 64);
+		Image::imageLoader.AddAnimationData("Bomb", 0, 11, 5.f, true);
+		imgData = Image::imageLoader.GetImageData("Bomb");
 	}
 	//----------------------------------------------
 	//リソースのデストラクタ
@@ -36,9 +39,9 @@ namespace Template
 	//タスクのコンストラクタ
 	Task::Task():
 		TaskAbstract(defGroupName, defPriority),
-		res(Resource::Create())
-	{ 
-		Initialize();
+		res(Resource::Create()),
+		imgDrawer(res->imgData, true)
+	{
 	}
 	//----------------------------------------------
 	//タスクのデストラクタ
@@ -48,11 +51,13 @@ namespace Template
 	}
 	//----------------------------------------------
 	//タスクの生成
-	const std::shared_ptr<const Task> Task::Create()
+	std::shared_ptr<Task> Task::Create()
 	{
-		std::shared_ptr<Task> task = std::make_shared<Task>();
-		TS::taskSystem.RegistrationTask(task);
+		std::shared_ptr<Task> task = 
+			std::make_shared<Task>();
+		TS::taskSystem.AddTask(task);
 
+		task->Initialize();
 		return task;
 	}
 
@@ -80,7 +85,7 @@ namespace Template
 	//----------------------------------------------
 	void Task::Update()
 	{
-		
+		imgDrawer.AnimUpdate();
 	}
 
 	//----------------------------------------------
@@ -88,6 +93,11 @@ namespace Template
 	//----------------------------------------------
 	void Task::Draw()
 	{
-		
+		imgDrawer.Draw(Math::Vec2(100, 100),
+			1.f,
+			1.f,
+			0.f,
+			false,
+			Color(255, 255, 255, 255));
 	}
 }

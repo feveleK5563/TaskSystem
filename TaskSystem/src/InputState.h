@@ -21,6 +21,25 @@ public:
 
 //-----------------------------------------------------------------------------
 //ゲームパッドの入力情報を保持する
+
+enum struct PadInput
+{
+	DOWN	= 0x00000001,
+	LEFT	= 0x00000002,
+	RIGHT	= 0x00000004,
+	UP		= 0x00000008,
+	A		= 0x00000010,
+	B		= 0x00000020,
+	X		= 0x00000040,
+	Y		= 0x00000080,
+	L1		= 0x00000100,
+	R1		= 0x00000200,
+	SELECT	= 0x00000400,
+	START	= 0x00000800,
+	L3		= 0x00001000,
+	R3		= 0x00002000,
+};
+
 class JoypadInput
 {
 private:
@@ -39,7 +58,8 @@ public:
 	float GetAngleStickR();
 	float GetVolumeStickL();
 	float GetVolumeStickR();
-	const ButtonInfo& operator [](const int PAD_INPUT);
+
+	const ButtonInfo& operator [](const PadInput PAD_INPUT);
 
 	static JoypadInput& GetInstance(int type);
 };
@@ -50,5 +70,8 @@ public:
 namespace Input
 {
 	static KeyInput& key = KeyInput::GetInstance();
-	static JoypadInput& joypad1 = JoypadInput::GetInstance(DX_INPUT_KEY_PAD1);
+	static JoypadInput& joypad1 = JoypadInput::GetInstance(DX_INPUT_PAD1);
+
+	//入力情報を取得
+	bool GetInputStateAll();
 }

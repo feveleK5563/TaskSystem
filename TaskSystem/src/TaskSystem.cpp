@@ -9,12 +9,16 @@ TaskSystem::~TaskSystem()
 }
 
 //更新
-void TaskSystem::Update()
+bool TaskSystem::Update()
 {
-	AllUpdate();		//全てのタスクのUpdateを呼ぶ
-	AddTask();			//追加予定のタスクを追加する
-	StateDeleteTask();	//状態がDeleteのタスクを削除する
-	SortTask();			//priorityを基に昇順にソートする
+	bool isHaveTask;
+	if (isHaveTask = AllUpdate()) //全てのタスクのUpdateを呼ぶ
+	{
+		AddTask();			//追加予定のタスクを追加する
+		StateDeleteTask();	//状態がDeleteのタスクを削除する
+		SortTask();			//priorityを基に昇順にソートする
+	}
+	return isHaveTask;
 }
 
 //描画
@@ -22,18 +26,18 @@ void TaskSystem::Draw()
 {
 	for (auto& it : task)
 	{
-		if (it->state != TaskState::Kill)
+		if (it->GetTaskState() != TaskState::Kill)
 			it->Draw();
 	}
 }
 
 //タスクを追加する
-void TaskSystem::RegistrationTask(std::shared_ptr<TaskAbstract> createObj)
+void TaskSystem::AddTask(std::shared_ptr<TaskAbstract> createObj)
 {
 	if (createObj != nullptr)
 	{
 		addTask.emplace_back(createObj);
-		taskData[addTask.back()->groupName].emplace_back(createObj);
+		taskData[addTask.back()->GetGroupName()].emplace_back(createObj);
 	}
 }
 
@@ -58,7 +62,7 @@ void TaskSystem::KillTask(const std::string& groupName)
 
 	for (auto it : taskData[groupName])
 	{
-		it->state = TaskState::Kill;
+		it->KillMe();
 	}
 }
 
@@ -69,7 +73,7 @@ void TaskSystem::AllKillTask()
 	{
 		for (auto it : map.second)
 		{
-			it->state = TaskState::Kill;
+			it->KillMe();
 		}
 	}
 }
@@ -90,11 +94,24 @@ void TaskSystem::AllDeleteTask()
 //-----------------------------------------------------------------------------
 
 //全てのタスクのUpdateを呼ぶ
-void TaskSystem::AllUpdate()
+bool TaskSystem::AllUpdate()
 {
+	//タスクが存在しなかった場合falseを返す
+	if (addTask.empty() && task.empty())
+	{
+		return false;
+	}
+
+	//先に登録予定タスクのUpdateを呼ぶ
+	for (auto& it : addTask)
+	{
+		it->Update();
+	}
+
+	//登録済みタスクのUpdateを呼ぶ
 	for (auto& it : task)
 	{
-		switch (it->state)
+		switch (it->GetTaskState())
 		{
 		case TaskState::Active:	//状態が通常の場合は普通に更新
 			it->Update();
@@ -102,10 +119,12 @@ void TaskSystem::AllUpdate()
 
 		case TaskState::Kill:	//状態が削除要請中の場合は終了処理を呼ぶ
 			it->Finalize();
-			it->state = TaskState::Delete;
+			it->SetTaskState(TaskState::Delete);
 			break;
 		}
 	}
+
+	return true;
 }
 
 //追加予定のタスクを追加する
@@ -122,10 +141,10 @@ void TaskSystem::AddTask()
 //状態がDeleteのタスクを削除する
 void TaskSystem::StateDeleteTask()
 {
-	auto deleteCondition =		//削除する条件式(状態がDelete)
+	auto deleteCondition =		//削除する条件式(状態がDeleteの時に削除)
 		[](std::shared_ptr<TaskAbstract>& obj)
 	{
-		return (obj->state == TaskState::Delete);
+		return (obj->GetTaskState() == TaskState::Delete);
 	};
 
 	{//オブジェクトの削除
@@ -157,7 +176,7 @@ void TaskSystem::SortTask()
 	std::sort(task.begin(), task.end(), 
 		[](std::shared_ptr<TaskAbstract>& left, std::shared_ptr<TaskAbstract>& right)
 		{
-			return (left->priority < right->priority);
+			return (left->GetPriority() < right->GetPriority());
 		}
 	);
 }

@@ -22,7 +22,7 @@ ImageDrawer::ImageDrawer(const ImageData& imageData, const Math::Vec2& criterion
 	nowAnimImage(0) {}
 
 //アニメーションさせる
-bool ImageDrawer::Run()
+bool ImageDrawer::AnimUpdate()
 {
 	nowAnimImage += 1.0f / imageData.anim[nowAnimPattern]->waitTime;
 

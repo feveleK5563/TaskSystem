@@ -81,7 +81,7 @@ float JoypadInput::GetVolumeStickR()
 }
 //-----------------------------------------------------------------------------
 //指定ボタンの入力情報を取得する
-const ButtonInfo& JoypadInput::operator [](const int PAD_INPUT)
+const ButtonInfo& JoypadInput::operator [](const PadInput PAD_INPUT)
 {
 	int padInput = int(log2f((float)PAD_INPUT));
 	return padInfo[padInput];
@@ -92,4 +92,17 @@ JoypadInput& JoypadInput::GetInstance(int type)
 {
 	static JoypadInput joypad(type);
 	return joypad;
+}
+
+
+//-----------------------------------------------------------------------------
+// ゲーム内で使用する奴を以下に追加
+//-----------------------------------------------------------------------------
+
+//-----------------------------------------------------------------------------
+//入力情報を取得
+bool Input::GetInputStateAll()
+{
+	return	key.GetInputStateAll()		== 0 &&
+			joypad1.GetInputStateAll()	== 0;
 }

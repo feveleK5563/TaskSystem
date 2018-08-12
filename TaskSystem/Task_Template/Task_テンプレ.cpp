@@ -1,24 +1,20 @@
-#include "Task_Scene.h"
+#include "Task_タスク名.h"
 #include "DxLib.h"
-#include "ImageLoader.h"
-#include "SystemDefine.h"
 
-namespace Scene
+namespace タスク名
 {
 	std::weak_ptr<Resource> Resource::instance;
 	//----------------------------------------------
 	//リソースのコンストラクタ
 	Resource::Resource()
 	{
-		Image::imageLoader.LoadDivImage("Bomb", "data/image/bomb.png", 12, 12, 1, 64, 64);
-		Image::imageLoader.AddAnimationData("Bomb", 0, 11, 5.f, true);
-		imgData = Image::imageLoader.GetImageData("Bomb");
+		
 	}
 	//----------------------------------------------
 	//リソースのデストラクタ
 	Resource::~Resource()
 	{
-		Image::imageLoader.DeleteImageData("Bomb");
+		
 	}
 	//----------------------------------------------
 	//リソースの生成
@@ -40,10 +36,8 @@ namespace Scene
 	//タスクのコンストラクタ
 	Task::Task():
 		TaskAbstract(defGroupName, defPriority),
-		res(Resource::Create()),
-		imgDrawer(res->imgData, true)
-	{ 
-		Initialize();
+		res(Resource::Create())
+	{
 	}
 	//----------------------------------------------
 	//タスクのデストラクタ
@@ -53,11 +47,13 @@ namespace Scene
 	}
 	//----------------------------------------------
 	//タスクの生成
-	const std::shared_ptr<const Task> Task::Create()
+	std::shared_ptr<Task> Task::Create()
 	{
-		std::shared_ptr<Task> task = std::make_shared<Task>();
+		std::shared_ptr<Task> task = 
+			std::make_shared<Task>();
 		TS::taskSystem.RegistrationTask(task);
 
+		task->Initialize();
 		return task;
 	}
 
@@ -85,7 +81,7 @@ namespace Scene
 	//----------------------------------------------
 	void Task::Update()
 	{
-		imgDrawer.Run();
+		
 	}
 
 	//----------------------------------------------
@@ -93,12 +89,6 @@ namespace Scene
 	//----------------------------------------------
 	void Task::Draw()
 	{
-		//DrawString(100, 100, "hogehoge", GetColor(255, 255, 255));
-		imgDrawer.Draw(	Math::Vec2(100, 100),
-						1.f,
-						1.f,
-						0.f,
-						false,
-						Color(255, 255, 255, 255));
+		
 	}
 }
