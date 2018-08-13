@@ -37,7 +37,7 @@ void TaskSystem::AddTask(std::shared_ptr<TaskAbstract> createObj)
 	if (createObj != nullptr)
 	{
 		addTask.emplace_back(createObj);
-		taskData[addTask.back()->GetGroupName()].emplace_back(createObj);
+		taskData[addTask.back()->GetGroupName()][addTask.back()->GetTaskName()].emplace_back(createObj);
 	}
 }
 
@@ -49,18 +49,39 @@ TaskSystem& TaskSystem::GetInstance()
 }
 
 //指定したグループ名のタスクが存在しているか調べ、あったらtrueを返す
-bool TaskSystem::FindTask(const std::string& groupName)
+bool TaskSystem::IsExistGroup(const std::string& groupName)
 {
 	return taskData.count(groupName);
 }
 
 //指定したグループ名のタスクの状態をKillにする
-void TaskSystem::KillTask(const std::string& groupName)
+void TaskSystem::KillGroup(const std::string& groupName)
 {
-	if (!taskData.count(groupName))
+	if (!IsExistGroup(groupName))
 		return;
 
-	for (auto it : taskData[groupName])
+	for (auto itg : taskData[groupName])
+	{
+		for (auto itt : itg.second)
+		{
+			itt->KillMe();
+		}
+	}
+}
+
+//指定したタスクが存在しているか調べる
+bool TaskSystem::IsExistTask(const std::string& groupName, const std::string& taskName)
+{
+	return taskData.count(groupName) && taskData[groupName].count(taskName);
+}
+
+//指定したタスクの状態をKillにする
+void TaskSystem::KillTask(const std::string& groupName, const std::string& taskName)
+{
+	if (!IsExistTask(groupName, taskName))
+		return;
+
+	for (auto it : taskData[groupName][taskName])
 	{
 		it->KillMe();
 	}
@@ -71,9 +92,12 @@ void TaskSystem::AllKillTask()
 {
 	for (auto map : taskData)
 	{
-		for (auto it : map.second)
+		for (auto itg : map.second)
 		{
-			it->KillMe();
+			for (auto itt : itg.second)
+			{
+				itt->KillMe();
+			}
 		}
 	}
 }
@@ -154,19 +178,30 @@ void TaskSystem::StateDeleteTask()
 	}
 
 	//データの削除
-	for (auto it = taskData.begin();
-		 it != taskData.end();)
+	for (auto map = taskData.begin();
+		map != taskData.end();)
 	{
-		const auto& removeIt = std::remove_if(it->second.begin(), it->second.end(), deleteCondition);
-		it->second.erase(removeIt, it->second.end());
-		it->second.shrink_to_fit();
-
-		if ((int)it->second.size() == 0)
+		for (auto itg = map->second.begin();
+			itg != map->second.end();)
 		{
-			it = taskData.erase(it);
+			const auto& removeIt = std::remove_if(itg->second.begin(), itg->second.end(), deleteCondition);
+			itg->second.erase(removeIt, itg->second.end());
+			itg->second.shrink_to_fit();
+
+			if (itg->second.empty())
+			{
+				itg = map->second.erase(itg);
+				continue;
+			}
+			++itg;
+		}
+
+		if (map->second.empty())
+		{
+			map = taskData.erase(map);
 			continue;
 		}
-		++it;
+		++map;
 	}
 }
 

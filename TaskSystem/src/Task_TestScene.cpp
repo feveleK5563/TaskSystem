@@ -1,6 +1,7 @@
 #include "Task_TestScene.h"
 #include "DxLib.h"
 #include "ImageLoader.h"
+#include "InputState.h"
 
 namespace TestScene
 {
@@ -38,7 +39,7 @@ namespace TestScene
 	//----------------------------------------------
 	//タスクのコンストラクタ
 	Task::Task():
-		TaskAbstract(defGroupName, defPriority),
+		TaskAbstract(defGroupName, defTaskName, defPriority),
 		res(Resource::Create()),
 		imgDrawer(res->imgData, true)
 	{
@@ -86,6 +87,11 @@ namespace TestScene
 	void Task::Update()
 	{
 		imgDrawer.AnimUpdate();
+
+		if (Input::key[KEY_INPUT_SPACE] == DOWN)
+		{
+			TS::taskSystem.AllKillTask();
+		}
 	}
 
 	//----------------------------------------------

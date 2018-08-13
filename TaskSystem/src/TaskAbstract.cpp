@@ -1,9 +1,11 @@
 #include "TaskAbstract.h"
 
 TaskAbstract::TaskAbstract(	const std::string& groupName,
+							const std::string& taskName,
 							float priority,
 							TaskState state):
 	groupName(groupName),
+	taskName(taskName),
 	priority(priority),
 	taskState(state) {}
 
@@ -29,6 +31,10 @@ void TaskAbstract::SetTaskState(TaskState taskState)
 const std::string& TaskAbstract::GetGroupName()
 {
 	return groupName;
+}
+const std::string& TaskAbstract::GetTaskName()
+{
+	return taskName;
 }
 //•`‰æ—Dæ“x‚ğæ“¾
 const float& TaskAbstract::GetPriority()

@@ -3,7 +3,8 @@
 
 namespace タスク名
 {
-	const std::string	defGroupName(グループ名);	//グループ名
+	const std::string	defGroupName	(グループ名);	//グループ名
+	const std::string	defTaskName		(タスク名);		//タスク名
 	const float			defPriority(0.f);			//デフォルトの処理優先度
 
 	//----------------------------------------------

@@ -17,6 +17,7 @@ class TaskAbstract
 {
 private:
 	const std::string	groupName;	//グループ名
+	const std::string	taskName;	//タスク名
 	float				priority;	//描画優先度
 	TaskState			taskState;	//状態
 
@@ -24,6 +25,7 @@ public:
 
 	//コンストラクタ
 	TaskAbstract(	const std::string& groupName,
+					const std::string& taskName,
 					float priority,
 					TaskState state = TaskState::Active);
 
@@ -41,6 +43,7 @@ public:
 	void SetTaskState(TaskState taskState);	//タスクの状態を設定
 
 	const std::string&	GetGroupName();	//タスクのグループ名を取得
+	const std::string&	GetTaskName();	//タスク名を取得
 	const float&		GetPriority();	//描画優先度を取得
 	const TaskState&	GetTaskState();	//タスクの状態を取得
 };

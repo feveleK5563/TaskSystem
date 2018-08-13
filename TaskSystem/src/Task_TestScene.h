@@ -4,8 +4,9 @@
 
 namespace TestScene
 {
-	const std::string	defGroupName("テスト用タスク");	//グループ名
-	const float			defPriority(0.f);			//デフォルトの処理優先度
+	const std::string	defGroupName	("テスト用シーン");	//グループ名
+	const std::string	defTaskName		("テスト用タスク");	//タスク名
+	const float			defPriority(0.f);	//デフォルトの処理優先度
 
 	//----------------------------------------------
 	class Resource

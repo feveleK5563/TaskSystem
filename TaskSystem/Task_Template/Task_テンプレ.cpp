@@ -35,7 +35,7 @@ namespace タスク名
 	//----------------------------------------------
 	//タスクのコンストラクタ
 	Task::Task():
-		TaskAbstract(defGroupName, defPriority),
+		TaskAbstract(defGroupName, defTaskName, defPriority),
 		res(Resource::Create())
 	{
 	}
