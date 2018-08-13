@@ -32,6 +32,7 @@ const std::string& TaskAbstract::GetGroupName()
 {
 	return groupName;
 }
+//ƒ^ƒXƒN–¼‚ğæ“¾
 const std::string& TaskAbstract::GetTaskName()
 {
 	return taskName;
