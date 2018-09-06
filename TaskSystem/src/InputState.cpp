@@ -101,7 +101,7 @@ JoypadInput& JoypadInput::GetInstance(int type)
 
 //-----------------------------------------------------------------------------
 //“ü—Íî•ñ‚ğæ“¾
-bool Input::GetInputStateAll()
+bool INP::GetInputStateAll()
 {
 	return	key.GetInputStateAll()		== 0 &&
 			joypad1.GetInputStateAll()	== 0;

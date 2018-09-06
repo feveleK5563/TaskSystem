@@ -26,9 +26,9 @@ void TimeCounter::ResetCntTime()
 }
 
 //I—¹ŽžŠÔ‚ðÝ’è‚·‚é
-void TimeCounter::SetEndTime(int endTime)
+void TimeCounter::SetEndTime(int setEndTime)
 {
-	this->endTime = endTime;
+	endTime = setEndTime;
 	isTimeEnd = false;
 }
 
@@ -99,9 +99,9 @@ void TimeCounterF::ResetCntTime()
 }
 
 //I—¹ŽžŠÔ‚ðÝ’è‚·‚é
-void TimeCounterF::SetEndTime(float endTime)
+void TimeCounterF::SetEndTime(float setEndTime)
 {
-	this->endTime = endTime;
+	endTime = setEndTime;
 	isTimeEnd = false;
 }
 

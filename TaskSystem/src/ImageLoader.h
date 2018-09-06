@@ -22,7 +22,7 @@ struct ImageData
 	int*					handle;		//グラフィックハンドル
 	int						sheetNum;	//画像枚数
 	std::vector<AnimData*>	anim;		//アニメーション
-	Math::Box2D				rect;		//画像矩形
+	MATH::Box2D				rect;		//画像矩形
 };
 
 //画像読み込みくん
@@ -59,7 +59,7 @@ public:
 };
 
 //-----------------------------------------------------------------------------
-namespace Image
+namespace IMG
 {
 	static ImageLoader& imageLoader = ImageLoader::GetInstance();
 }

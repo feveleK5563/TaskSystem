@@ -21,7 +21,7 @@ public:
 	void ResetCntTime();
 
 	//終了時間を設定する(-1で無効)
-	void SetEndTime(int endTime);
+	void SetEndTime(int setEndTime);
 
 	//時間を測る
 	//終了時間が有効の場合、その時間以上になったら停止する
@@ -63,7 +63,7 @@ public:
 	void ResetCntTime();
 
 	//終了時間を設定する(-1.fで無効)
-	void SetEndTime(float endTime);
+	void SetEndTime(float setEndTime);
 
 	//時間を測る
 	//終了時間が有効の場合、その時間以上になったら停止する

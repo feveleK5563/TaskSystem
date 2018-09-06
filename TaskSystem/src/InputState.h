@@ -67,7 +67,7 @@ public:
 //-----------------------------------------------------------------------------
 // ƒQ[ƒ€“à‚Åg—p‚·‚é“z‚ğˆÈ‰º‚É’Ç‰Á
 //-----------------------------------------------------------------------------
-namespace Input
+namespace INP
 {
 	static KeyInput& key = KeyInput::GetInstance();
 	static JoypadInput& joypad1 = JoypadInput::GetInstance(DX_INPUT_PAD1);

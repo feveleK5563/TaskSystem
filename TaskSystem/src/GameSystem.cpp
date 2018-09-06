@@ -28,13 +28,13 @@ void GameSystem::Initialize()
 		//ウインドウのサイズを手動で変更できず、且つウインドウのサイズに合わせて拡大もしないようにする
 		SetWindowSizeChangeEnableFlag(FALSE, FALSE);
 		//ウィンドウサイズ(解像度以下に設定)
-		SetWindowSize(SystemDefine::windowSizeX, SystemDefine::windowSizeY);
+		SetWindowSize(DEF::SizeX, DEF::SizeY);
 	}
 
 	//画面解像度とカラービット数
-	SetGraphMode(SystemDefine::windowSizeX, SystemDefine::windowSizeY, 32);
+	SetGraphMode(DEF::SizeX, DEF::SizeY, 32);
 	//ウィンドウタイトルを付ける
-	SetWindowText("Speed++");
+	SetWindowText("DXlib");
 
 	//初期化と裏画面化
 	if (DxLib_Init() == -1 || SetDrawScreen(DX_SCREEN_BACK) != 0)
@@ -61,10 +61,9 @@ void GameSystem::MainLoop()
 			break;
 		}
 
-		fps.Draw();
 		TS::taskSystem.Draw();
+		fps.Draw();
 	}
-	TS::taskSystem.AllDeleteTask();
 }
 
 //-----------------------------------------------------------------------------
@@ -100,8 +99,8 @@ bool GameSystem::Run()
 	return	ScreenFlip() == 0 &&					//裏画面を表画面に反映
 		ProcessMessage() == 0 &&					//メッセージ処理
 		ClearDrawScreen() == 0 &&					//画面をクリア
-		Input::GetInputStateAll() &&				//入力情報を取得
-		Input::key[KEY_INPUT_ESCAPE] == OFF;		//ESCが押されていない
+		INP::GetInputStateAll() &&				//入力情報を取得
+		INP::key[KEY_INPUT_ESCAPE] == OFF;		//ESCが押されていない
 }
 
 //-----------------------------------------------------------------------------

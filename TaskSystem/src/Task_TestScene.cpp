@@ -10,9 +10,9 @@ namespace TestScene
 	//リソースのコンストラクタ
 	Resource::Resource()
 	{
-		Image::imageLoader.LoadDivImage("Bomb", "data/image/bomb.png", 12, 12, 1, 64, 64);
-		Image::imageLoader.AddAnimationData("Bomb", 0, 11, 5.f, true);
-		imgData = Image::imageLoader.GetImageData("Bomb");
+		IMG::imageLoader.LoadDivImage("Bomb", "data/image/bomb.png", 12, 12, 1, 64, 64);
+		IMG::imageLoader.AddAnimationData("Bomb", 0, 11, 5.f, true);
+		imgData = IMG::imageLoader.GetImageData("Bomb");
 	}
 	//----------------------------------------------
 	//リソースのデストラクタ
@@ -88,7 +88,7 @@ namespace TestScene
 	{
 		imgDrawer.AnimUpdate();
 
-		if (Input::key[KEY_INPUT_SPACE] == DOWN)
+		if (INP::key[KEY_INPUT_SPACE] == DOWN)
 		{
 			TS::taskSystem.AllKillTask();
 		}
@@ -99,7 +99,7 @@ namespace TestScene
 	//----------------------------------------------
 	void Task::Draw()
 	{
-		imgDrawer.Draw(Math::Vec2(100, 100),
+		imgDrawer.Draw(MATH::Vec2(100, 100),
 			1.f,
 			1.f,
 			0.f,

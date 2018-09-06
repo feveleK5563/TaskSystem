@@ -1,9 +1,10 @@
 #pragma once
 #include <math.h>
 
-namespace Math
+namespace MATH
 {
-	static const float PI = 3.1415926535897932384626433832795028841971f;
+	static const float	PI	= 3.1415926535897932384626433832795028841971f;
+	static const double	dPI = 3.1415926535897932384626433832795028841971;
 
 	//弧度法変換
 	float ToRadian(float val);
@@ -11,9 +12,8 @@ namespace Math
 	float ToDegree(float val);
 
 	//二次元ベクトルクラス
-	class Vec2
+	struct Vec2
 	{
-	public:
 		float x, y;
 
 		Vec2();
@@ -21,20 +21,31 @@ namespace Math
 		Vec2(float setX, float setY);
 
 		Vec2&	operator =(const Vec2& vec);
+		Vec2	operator +(int val) const;
 		Vec2	operator +(const Vec2& vec) const;
+		Vec2	operator -(int val) const;
 		Vec2	operator -(const Vec2& vec) const;
 		Vec2	operator *(float mul) const;
+		Vec2	operator *(const Vec2& vec) const;
 		Vec2	operator /(float div) const;
+		Vec2	operator /(const Vec2& vec) const;
+		Vec2&	operator +=(float val);
 		Vec2&	operator +=(const Vec2& vec);
+		Vec2&	operator -=(float val);
 		Vec2&	operator -=(const Vec2& vec);
 		Vec2&	operator *=(float mul);
+		Vec2&	operator *=(const Vec2& vec);
 		Vec2&	operator /=(float div);
+		Vec2&	operator /=(const Vec2& vec);
+		Vec2&	operator ++();
+		Vec2	operator ++(int);
+		Vec2&	operator --();
+		Vec2	operator --(int);
 	};
 
 	//当たり判定機能つき矩形クラス
-	class Box2D
+	struct Box2D
 	{
-	public:
 		int x, y, w, h;
 		int baseX, baseY;
 
@@ -43,11 +54,11 @@ namespace Math
 		Box2D(int setX, int setY, int setW, int setH);
 
 		bool IsHit(const Box2D& box) const;
+		bool IsHit(const Vec2& pos) const;
 		bool IsIn(const Box2D& box) const;
 
 		void Offset(int setX, int setY);
 		void Offset(const Vec2& vec);
-
 		Box2D OffsetCpy(int setX, int setY) const;
 		Box2D OffsetCpy(const Vec2& vec) const;
 

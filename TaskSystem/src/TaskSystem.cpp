@@ -11,8 +11,10 @@ TaskSystem::~TaskSystem()
 //更新
 bool TaskSystem::Update()
 {
-	bool isHaveTask;
-	if (isHaveTask = AllUpdate()) //全てのタスクのUpdateを呼ぶ
+	//全てのタスクのUpdateを呼ぶ
+	bool isHaveTask = AllUpdate();
+
+	if (isHaveTask)
 	{
 		AddTask();			//追加予定のタスクを追加する
 		StateDeleteTask();	//状態がDeleteのタスクを削除する
@@ -48,13 +50,13 @@ TaskSystem& TaskSystem::GetInstance()
 	return ts;
 }
 
-//指定したグループ名のタスクが存在しているか調べ、あったらtrueを返す
+//指定したグループ名のタスクが存在しているか調べる
 bool TaskSystem::IsExistGroup(const std::string& groupName)
 {
-	return taskData.count(groupName);
+	return taskData.find(groupName) != taskData.end();
 }
 
-//指定したグループ名のタスクの状態をKillにする
+//指定したグループ名のタスクを全て殺す
 void TaskSystem::KillGroup(const std::string& groupName)
 {
 	if (!IsExistGroup(groupName))
@@ -69,10 +71,26 @@ void TaskSystem::KillGroup(const std::string& groupName)
 	}
 }
 
+//指定したグループ名のタスクの停止、再生を切り替える
+void TaskSystem::SleepGroup(const std::string& groupName)
+{
+	if (!IsExistGroup(groupName))
+		return;
+
+	for (auto itg : taskData[groupName])
+	{
+		for (auto itt : itg.second)
+		{
+			itt->SleepMe();
+		}
+	}
+}
+
 //指定したタスクが存在しているか調べる
 bool TaskSystem::IsExistTask(const std::string& groupName, const std::string& taskName)
 {
-	return taskData.count(groupName) && taskData[groupName].count(taskName);
+	return	IsExistGroup(groupName) &&
+			taskData[groupName].find(taskName) != taskData[groupName].end();
 }
 
 //指定したタスクの状態をKillにする
@@ -84,6 +102,18 @@ void TaskSystem::KillTask(const std::string& groupName, const std::string& taskN
 	for (auto it : taskData[groupName][taskName])
 	{
 		it->KillMe();
+	}
+}
+
+//指定したタスクの停止、再生を切り替える
+void TaskSystem::SleepTask(const std::string& groupName, const std::string& taskName)
+{
+	if (!IsExistTask(groupName, taskName))
+		return;
+
+	for (auto it : taskData[groupName][taskName])
+	{
+		it->SleepMe();
 	}
 }
 

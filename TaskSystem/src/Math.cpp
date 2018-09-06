@@ -1,6 +1,6 @@
 #include "Math.h"
 
-namespace Math
+namespace MATH
 {
 	//弧度法変換
 	float ToRadian(float val)
@@ -17,7 +17,7 @@ namespace Math
 	//--------------------------------------------------------
 	//二次元ベクトルクラス
 	Vec2::Vec2():
-		x(0.0f), y(0.0f) {}
+		x(0.f), y(0.f) {}
 
 	Vec2::Vec2(const Vec2& setVec):
 		x(setVec.x), y(setVec.y){}
@@ -31,9 +31,17 @@ namespace Math
 		y = vec.y;
 		return *this;
 	}
+	Vec2 Vec2::operator +(int val) const
+	{
+		return Vec2(x + val, y + val);
+	}
 	Vec2 Vec2::operator +(const Vec2& vec) const
 	{
 		return Vec2(x + vec.x, y + vec.y);
+	}
+	Vec2 Vec2::operator -(int val) const
+	{
+		return Vec2(x - val, y - val);
 	}
 	Vec2 Vec2::operator -(const Vec2& vec) const
 	{
@@ -43,14 +51,34 @@ namespace Math
 	{
 		return Vec2(x * mul, y * mul);
 	}
+	Vec2 Vec2::operator *(const Vec2& vec) const
+	{
+		return Vec2(x * vec.x, y * vec.y);
+	}
 	Vec2 Vec2::operator /(float div) const
 	{
 		return Vec2(x * div, y * div);
+	}
+	Vec2 Vec2::operator /(const Vec2& vec) const
+	{
+		return Vec2(x / vec.x, y / vec.y);
+	}
+	Vec2& Vec2::operator +=(float val)
+	{
+		x += val;
+		y += val;
+		return *this;
 	}
 	Vec2& Vec2::operator +=(const Vec2& vec)
 	{
 		x += vec.x;
 		y += vec.y;
+		return *this;
+	}
+	Vec2& Vec2::operator -=(float val)
+	{
+		x -= val;
+		y -= val;
 		return *this;
 	}
 	Vec2& Vec2::operator -=(const Vec2& vec)
@@ -65,12 +93,47 @@ namespace Math
 		y *= mul;
 		return *this;
 	}
+	Vec2& Vec2::operator *=(const Vec2& vec)
+	{
+		x *= vec.x;
+		y *= vec.y;
+		return *this;
+	}
 	Vec2& Vec2::operator /=(float div)
 	{
 		x /= div;
 		y /= div;
 		return *this;
 	}
+	Vec2& Vec2::operator /=(const Vec2& vec)
+	{
+		x /= vec.x;
+		y /= vec.y;
+		return *this;
+	}
+	Vec2& Vec2::operator ++()
+	{
+		++x; ++y;
+		return *this;
+	}
+	Vec2 Vec2::operator ++(int)
+	{
+		Vec2 tmp = *this;
+		++*this;
+		return tmp;
+	} 
+	Vec2& Vec2::operator --()
+	{
+		--x; --y;
+		return *this;
+	}
+	Vec2 Vec2::operator --(int)
+	{
+		Vec2 tmp = *this;
+		--*this;
+		return tmp;
+	}
+
 
 	//--------------------------------------------------------
 	//矩形クラス
@@ -91,7 +154,11 @@ namespace Math
 		return	x <= box.x + box.w && box.x < x + w &&
 				y <= box.y + box.h && box.y < y + h;
 	}
-	
+	bool Box2D::IsHit(const Vec2& pos) const
+	{
+		return	x <= pos.x && pos.x < x + w &&
+				y <= pos.y && pos.y < y + h;
+	}
 	bool Box2D::IsIn(const Box2D& box) const
 	{
 		return	x <= box.x && box.x + box.w < x + w &&
@@ -108,7 +175,6 @@ namespace Math
 		x = baseX + (int)vec.x;
 		y = baseY + (int)vec.y;
 	}
-
 	Box2D Box2D::OffsetCpy(int setX, int setY) const
 	{
 		Box2D cpy(baseX + setX, baseY + setY, w, h);

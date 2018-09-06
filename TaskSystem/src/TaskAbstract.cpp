@@ -14,16 +14,28 @@ void TaskAbstract::KillMe()
 {
 	taskState = TaskState::Kill;
 }
+//©•ª‚ğ’â~ó‘Ô‚É‚·‚é
+void TaskAbstract::SleepMe()
+{
+	if (taskState == TaskState::Active)
+	{
+		taskState = TaskState::Sleep;
+	}
+	else if (taskState == TaskState::Sleep)
+	{
+		taskState = TaskState::Active;
+	}
+}
 
 //•`‰æ—Dæ“x‚ğİ’è
-void TaskAbstract::SetPriority(float priority)
+void TaskAbstract::SetPriority(float setPriority)
 {
-	this->priority = priority;
+	priority = setPriority;
 }
 //ƒ^ƒXƒN‚Ìó‘Ô‚ğİ’è
-void TaskAbstract::SetTaskState(TaskState taskState)
+void TaskAbstract::SetTaskState(TaskState setTaskState)
 {
-	this->taskState = taskState;
+	taskState = setTaskState;
 }
 
 

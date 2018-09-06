@@ -11,11 +11,11 @@ Color::Color(const Color& color): r(color.r), g(color.g), b(color.b), alpha(colo
 //コンストラクタ(描画したい画像データを指定、第二引数trueで描画基準位置が中心)
 ImageDrawer::ImageDrawer(const ImageData& imageData, bool isCriterrionPosCenter) :
 	imageData(imageData),
-	criterionPos(isCriterrionPosCenter ? Math::Vec2(imageData.rect.w / 2.f, imageData.rect.h / 2.f) : Math::Vec2(0, 0)),
+	criterionPos(isCriterrionPosCenter ? MATH::Vec2(imageData.rect.w / 2.f, imageData.rect.h / 2.f) : MATH::Vec2(0, 0)),
 	nowAnimPattern(0),
 	nowAnimImage(0) {}
 //コンストラクタ(描画したい画像データと描画基準位置を指定)
-ImageDrawer::ImageDrawer(const ImageData& imageData, const Math::Vec2& criterionPos):
+ImageDrawer::ImageDrawer(const ImageData& imageData, const MATH::Vec2& criterionPos):
 	imageData(imageData),
 	criterionPos(criterionPos),
 	nowAnimPattern(0),
@@ -54,7 +54,7 @@ void ImageDrawer::ChangeAnimPattern(int pattern, bool isResetTime)
 }
 
 //描画する
-void ImageDrawer::Draw(const Math::Vec2& pos, float scale, float angle, bool isTurn, const Color& color)
+void ImageDrawer::Draw(const MATH::Vec2& pos, float scale, float angle, bool isTurn, const Color& color)
 {
 	SetDrawBright(color.r, color.g, color.b);
 	SetDrawBlendMode(DX_BLENDMODE_ALPHA, color.alpha);
@@ -78,8 +78,9 @@ void ImageDrawer::Draw(const Math::Vec2& pos, float scale, float angle, bool isT
 	SetDrawBright(255, 255, 255);
 	SetDrawBlendMode(DX_BLENDMODE_NOBLEND, 0);
 }
+
 //描画する(拡大率縦横別)
-void ImageDrawer::Draw(const Math::Vec2& pos, float scaleX, float scaleY, float angle, bool isTurn, const Color& color)
+void ImageDrawer::Draw(const MATH::Vec2& pos, float scaleX, float scaleY, float angle, bool isTurn, const Color& color)
 {
 	SetDrawBright(color.r, color.g, color.b);
 	SetDrawBlendMode(DX_BLENDMODE_ALPHA, color.alpha);
@@ -105,7 +106,7 @@ void ImageDrawer::Draw(const Math::Vec2& pos, float scaleX, float scaleY, float 
 }
 
 //指定番号の画像を描画する(アニメーションしない)
-void ImageDrawer::DrawOne(const Math::Vec2& pos, float scale, float angle, bool isTurn, int imageSheet, const Color& color)
+void ImageDrawer::DrawOne(const MATH::Vec2& pos, float scale, float angle, bool isTurn, int imageSheet, const Color& color)
 {
 	SetDrawBright(color.r, color.g, color.b);
 	SetDrawBlendMode(DX_BLENDMODE_ALPHA, color.alpha);
@@ -123,8 +124,9 @@ void ImageDrawer::DrawOne(const Math::Vec2& pos, float scale, float angle, bool 
 	SetDrawBright(255, 255, 255);
 	SetDrawBlendMode(DX_BLENDMODE_NOBLEND, 0);
 }
+
 //指定番号の画像を描画する(拡大率縦横別)
-void ImageDrawer::DrawOne(const Math::Vec2& pos, float scaleX, float scaleY, float angle, bool isTurn, int imageSheet, const Color& color)
+void ImageDrawer::DrawOne(const MATH::Vec2& pos, float scaleX, float scaleY, float angle, bool isTurn, int imageSheet, const Color& color)
 {
 	SetDrawBright(color.r, color.g, color.b);
 	SetDrawBlendMode(DX_BLENDMODE_ALPHA, color.alpha);

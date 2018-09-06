@@ -8,7 +8,7 @@ enum struct TaskState
 {
 	Ready,		//準備
 	Active,		//通常
-	Stop,		//停止
+	Sleep,		//停止
 	Kill,		//消滅要請
 	Delete,		//消滅
 }; 
@@ -38,9 +38,10 @@ public:
 	virtual void Draw() = 0;		//描画
 
 	void KillMe();	//自分を殺す
+	void SleepMe();	//自分を停止状態にする
 
-	void SetPriority(float priority);		//描画優先度を設定
-	void SetTaskState(TaskState taskState);	//タスクの状態を設定
+	void SetPriority(float setPriority);		//描画優先度を設定
+	void SetTaskState(TaskState setTaskState);	//タスクの状態を設定
 
 	const std::string&	GetGroupName();	//タスクのグループ名を取得
 	const std::string&	GetTaskName();	//タスク名を取得

@@ -2,6 +2,7 @@
 #include <algorithm>
 #include "ImageLoader.h"
 #include "DxLib.h"
+#include "UtilityFunctions.h"
 
 AnimData::AnimData():
 	startSheet(0),
@@ -26,23 +27,17 @@ ImageLoader::~ImageLoader()
 //‰æ‘œ“Ç‚İ‚İ
 bool ImageLoader::LoadOneImage(const std::string& imageName, const std::string& filePath)
 {
-	if (imageData.count(imageName))
+	if (imageData.find(imageName) != imageData.end())
 	{
 		return false;
 	}
 
-	//stringŒ^‚ÌfilePath‚ğchar*‚É•ÏŠ·
-	char* path = new char[filePath.size() + 1];
-	std::char_traits<char>::copy(path, filePath.c_str(), filePath.size() + 1);
-
 	//“Ç‚İ‚ñ‚¾‰æ‘œ‚Ìƒf[ƒ^‚ğŠi”[
-	imageData[imageName].handle = new int[1]{LoadGraph(path)};
+	imageData[imageName].handle = new int[1]{ LoadGraph(filePath.c_str()) };
 	imageData[imageName].sheetNum = 1;
 	int xSize, ySize;
 	GetGraphSize(*(imageData[imageName].handle), &xSize, &ySize);
 	imageData[imageName].rect = { 0, 0, xSize, ySize };
-
-	delete[] path;
 
 	return true;
 }
@@ -50,25 +45,19 @@ bool ImageLoader::LoadOneImage(const std::string& imageName, const std::string& 
 //‰æ‘œ•ªŠ„“Ç‚İ‚İ
 bool ImageLoader::LoadDivImage(const std::string& imageName, const std::string& filePath, int allNum, int xNum, int yNum, int xSize, int ySize)
 {
-	if (imageData.count(imageName))
+	if (imageData.find(imageName) != imageData.end())
 	{
 		return false;
 	}
 
-	//stringŒ^‚ÌfilePath‚ğchar*‚É•ÏŠ·
-	char* path = new char[filePath.size() + 1];
-	std::char_traits<char>::copy(path, filePath.c_str(), filePath.size() + 1);
-
+	//“Ç‚İ‚ñ‚¾‰æ‘œ‚Ìƒf[ƒ^‚ğŠi”[
 	imageData[imageName].handle = new int[allNum] {};
-	if (LoadDivGraph(path, allNum, xNum, yNum, xSize, ySize, imageData[imageName].handle) == -1)
+	if (LoadDivGraph(filePath.c_str(), allNum, xNum, yNum, xSize, ySize, imageData[imageName].handle) == -1)
 	{
-		delete[] path;
 		return false;
 	}
 	imageData[imageName].sheetNum = allNum;
 	imageData[imageName].rect = { 0, 0, xSize, ySize };
-
-	delete[] path;
 
 	return true;
 }
@@ -107,16 +96,16 @@ std::list<std::pair<const std::string, ImageData>, std::allocator<std::pair<cons
 
 	if (imageData[imageName].sheetNum == 1)
 	{
-		delete imageData[imageName].handle;
+		UTIL::SafeDelete(imageData[imageName].handle);
 	}
 	else
 	{
-		delete[] imageData[imageName].handle;
+		UTIL::SafeDeleteArr(imageData[imageName].handle);
 	}
 
 	for (auto animit : imageData[imageName].anim)
 	{
-		delete animit;
+		UTIL::SafeDelete(animit);
 	}
 
 	return imageData.erase(imageData.lower_bound(imageName));

@@ -20,16 +20,18 @@ public:
 	void Draw();											//描画
 	void AddTask(std::shared_ptr<TaskAbstract> createObj);	//タスクを追加する
 
-	bool IsExistGroup(const std::string& groupName);	//指定したグループが存在しているか調べ、あったらtrueを返す
-	void KillGroup(const std::string& groupName);		//指定したグループ名のタスクの状態をKillにする
+	bool IsExistGroup(const std::string& groupName);	//指定したグループが存在しているか調べる
+	void KillGroup(const std::string& groupName);		//指定したグループ名のタスクを全て殺す
+	void SleepGroup(const std::string& groupName);		//指定したグループ名のタスクの停止、再生を切り替える
 
 	bool IsExistTask(const std::string& groupName, const std::string& taskName);	//指定したタスクが存在しているか調べる
-	void KillTask(const std::string& groupName, const std::string& taskName);		//指定したタスクの状態をKillにする
+	void KillTask(const std::string& groupName, const std::string& taskName);		//指定したタスクを全て殺す
+	void SleepTask(const std::string& groupName, const std::string& taskName);		//指定したタスクの停止、再生を切り替える
 
-	void AllKillTask();									//登録されているタスクの状態を全てKillにする
-	void AllDeleteTask();								//登録されているタスクを全て強制削除する(デストラクタで呼ばれる)
+	void AllKillTask();		//登録されているタスクを全て殺す
+	void AllDeleteTask();	//登録されているタスクを全て強制削除する(デストラクタで呼ばれる)
 	
-	//指定したグループ名の内、先頭のみを渡す
+	//指定したタスクの内、先頭のみを渡す
 	template<class T>
 	std::shared_ptr<const T> GetTaskOne(const std::string& groupName, const std::string& taskName)
 	{
@@ -42,7 +44,7 @@ public:
 
 		return cpyTask;
 	}
-	//指定したグループ名のタスクをまとめて渡す
+	//指定したタスクをまとめて渡す
 	template<class T>
 	std::shared_ptr<std::vector<std::shared_ptr<const T>>> GetTaskGroup(const std::string& groupName, const std::string& taskName)
 	{

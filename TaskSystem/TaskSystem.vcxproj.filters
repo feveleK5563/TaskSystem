@@ -11,61 +11,70 @@
     <Filter Include="システム">
       <UniqueIdentifier>{b62d9bf3-85bb-40d7-8d9e-a50722211543}</UniqueIdentifier>
     </Filter>
-    <Filter Include="システム\Image">
-      <UniqueIdentifier>{6efafe19-41e4-4454-b93c-354154564618}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="システム\Input">
-      <UniqueIdentifier>{64d89c6f-b34c-41c4-8172-dc83545166c7}</UniqueIdentifier>
-    </Filter>
     <Filter Include="システム\System">
       <UniqueIdentifier>{8bbf3bd2-baa7-4ca3-a91b-8ad0c2e46790}</UniqueIdentifier>
     </Filter>
-    <Filter Include="システム\TaskSystem">
+    <Filter Include="システム\Utility">
+      <UniqueIdentifier>{1b1dd403-1bbf-41cb-aa54-5db5c0f85585}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="システム\Utility\Image">
+      <UniqueIdentifier>{6efafe19-41e4-4454-b93c-354154564618}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="システム\Utility\Input">
+      <UniqueIdentifier>{64d89c6f-b34c-41c4-8172-dc83545166c7}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="システム\System\TaskSystem">
       <UniqueIdentifier>{269b6ff9-6fd9-4bf1-8afd-77d94eaeac39}</UniqueIdentifier>
     </Filter>
-    <Filter Include="システム\Tools">
-      <UniqueIdentifier>{1b1dd403-1bbf-41cb-aa54-5db5c0f85585}</UniqueIdentifier>
+    <Filter Include="システム\Utility\Math">
+      <UniqueIdentifier>{6e8c700e-9550-4c86-878c-795b1cb2dd3a}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="システム\Utility\TimeCounter">
+      <UniqueIdentifier>{415a0a59-ec35-4c8f-b4bd-59fb566646c5}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="システム\Utility\UtilityFunctions">
+      <UniqueIdentifier>{89f5544e-2450-4396-826c-ad849729a55c}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
   <ItemGroup>
-    <ClCompile Include="src\SystemDefine.cpp">
-      <Filter>システム\System</Filter>
-    </ClCompile>
     <ClCompile Include="src\GameSystem.cpp">
       <Filter>システム\System</Filter>
     </ClCompile>
     <ClCompile Include="src\ButtonInfo.cpp">
-      <Filter>システム\Input</Filter>
+      <Filter>システム\Utility\Input</Filter>
     </ClCompile>
     <ClCompile Include="src\InputState.cpp">
-      <Filter>システム\Input</Filter>
-    </ClCompile>
-    <ClCompile Include="src\Math.cpp">
-      <Filter>システム\Tools</Filter>
-    </ClCompile>
-    <ClCompile Include="src\TimeCounter.cpp">
-      <Filter>システム\Tools</Filter>
+      <Filter>システム\Utility\Input</Filter>
     </ClCompile>
     <ClCompile Include="src\TaskAbstract.cpp">
-      <Filter>システム\TaskSystem</Filter>
+      <Filter>システム\System\TaskSystem</Filter>
     </ClCompile>
     <ClCompile Include="src\Fps.cpp">
       <Filter>システム\System</Filter>
     </ClCompile>
     <ClCompile Include="src\TaskSystem.cpp">
-      <Filter>システム\TaskSystem</Filter>
+      <Filter>システム\System\TaskSystem</Filter>
     </ClCompile>
     <ClCompile Include="src\ImageLoader.cpp">
-      <Filter>システム\Image</Filter>
+      <Filter>システム\Utility\Image</Filter>
     </ClCompile>
     <ClCompile Include="src\ImageDrawer.cpp">
-      <Filter>システム\Image</Filter>
-    </ClCompile>
-    <ClCompile Include="src\main.cpp">
-      <Filter>システム</Filter>
+      <Filter>システム\Utility\Image</Filter>
     </ClCompile>
     <ClCompile Include="src\Task_TestScene.cpp">
       <Filter>ソース ファイル\Task_Scene%28Test%29</Filter>
+    </ClCompile>
+    <ClCompile Include="src\WinMain.cpp">
+      <Filter>システム</Filter>
+    </ClCompile>
+    <ClCompile Include="src\Math.cpp">
+      <Filter>システム\Utility\Math</Filter>
+    </ClCompile>
+    <ClCompile Include="src\TimeCounter.cpp">
+      <Filter>システム\Utility\TimeCounter</Filter>
+    </ClCompile>
+    <ClCompile Include="src\UtilityFunctions.cpp">
+      <Filter>システム\Utility\UtilityFunctions</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -76,34 +85,37 @@
       <Filter>システム\System</Filter>
     </ClInclude>
     <ClInclude Include="src\ButtonInfo.h">
-      <Filter>システム\Input</Filter>
+      <Filter>システム\Utility\Input</Filter>
     </ClInclude>
     <ClInclude Include="src\InputState.h">
-      <Filter>システム\Input</Filter>
-    </ClInclude>
-    <ClInclude Include="src\Math.h">
-      <Filter>システム\Tools</Filter>
-    </ClInclude>
-    <ClInclude Include="src\TimeCounter.h">
-      <Filter>システム\Tools</Filter>
+      <Filter>システム\Utility\Input</Filter>
     </ClInclude>
     <ClInclude Include="src\TaskAbstract.h">
-      <Filter>システム\TaskSystem</Filter>
+      <Filter>システム\System\TaskSystem</Filter>
     </ClInclude>
     <ClInclude Include="src\Fps.h">
       <Filter>システム\System</Filter>
     </ClInclude>
     <ClInclude Include="src\TaskSystem.h">
-      <Filter>システム\TaskSystem</Filter>
+      <Filter>システム\System\TaskSystem</Filter>
     </ClInclude>
     <ClInclude Include="src\ImageLoader.h">
-      <Filter>システム\Image</Filter>
+      <Filter>システム\Utility\Image</Filter>
     </ClInclude>
     <ClInclude Include="src\ImageDrawer.h">
-      <Filter>システム\Image</Filter>
+      <Filter>システム\Utility\Image</Filter>
     </ClInclude>
     <ClInclude Include="src\Task_TestScene.h">
       <Filter>ソース ファイル\Task_Scene%28Test%29</Filter>
+    </ClInclude>
+    <ClInclude Include="src\Math.h">
+      <Filter>システム\Utility\Math</Filter>
+    </ClInclude>
+    <ClInclude Include="src\TimeCounter.h">
+      <Filter>システム\Utility\TimeCounter</Filter>
+    </ClInclude>
+    <ClInclude Include="src\UtilityFunctions.h">
+      <Filter>システム\Utility\UtilityFunctions</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>
