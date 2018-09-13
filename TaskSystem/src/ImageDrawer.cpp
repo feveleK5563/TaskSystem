@@ -7,19 +7,26 @@ Color::Color(int r, int g, int b, int alpha): r(r), g(g), b(b), alpha(alpha){}
 
 Color::Color(const Color& color): r(color.r), g(color.g), b(color.b), alpha(color.alpha){}
 
+
 //-----------------------------------------------------------------------------
-//コンストラクタ(描画したい画像データを指定、第二引数trueで描画基準位置が中心)
-ImageDrawer::ImageDrawer(const ImageData& imageData, bool isCriterrionPosCenter) :
-	imageData(imageData),
-	criterionPos(isCriterrionPosCenter ? MATH::Vec2(imageData.rect.w / 2.f, imageData.rect.h / 2.f) : MATH::Vec2(0, 0)),
+//コンストラクタ
+ImageDrawer::ImageDrawer():
 	nowAnimPattern(0),
-	nowAnimImage(0) {}
-//コンストラクタ(描画したい画像データと描画基準位置を指定)
-ImageDrawer::ImageDrawer(const ImageData& imageData, const MATH::Vec2& criterionPos):
-	imageData(imageData),
-	criterionPos(criterionPos),
-	nowAnimPattern(0),
-	nowAnimImage(0) {}
+	nowAnimImage(0){}
+
+
+//初期化(描画したい画像データを指定、第二引数trueで描画基準位置が中心)
+void ImageDrawer::Initialize(const ImageData& setImageData, bool isCriterrionPosCenter)
+{
+	imageData = setImageData;
+	criterionPos = isCriterrionPosCenter ? MATH::Vec2(imageData.rect.w / 2.f, imageData.rect.h / 2.f) : MATH::Vec2(0, 0);
+}
+//初期化(描画したい画像データと描画基準位置を指定)
+void ImageDrawer::Initialize(const ImageData& setImageData, const MATH::Vec2& setCriterionPos)
+{
+	imageData = setImageData;
+	criterionPos = setCriterionPos;
+}
 
 //アニメーションさせる
 bool ImageDrawer::AnimUpdate()

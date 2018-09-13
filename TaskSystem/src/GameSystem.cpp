@@ -28,14 +28,17 @@ void GameSystem::Initialize()
 		//ウインドウのサイズを手動で変更できず、且つウインドウのサイズに合わせて拡大もしないようにする
 		SetWindowSizeChangeEnableFlag(FALSE, FALSE);
 		//ウィンドウサイズ(解像度以下に設定)
-		SetWindowSize(DEF::SizeX, DEF::SizeY);
+		SetWindowSize(SYSDEF::SizeX, SYSDEF::SizeY);
 	}
 
 	//画面解像度とカラービット数
-	SetGraphMode(DEF::SizeX, DEF::SizeY, 32);
+	SetGraphMode(SYSDEF::SizeX, SYSDEF::SizeY, 32);
 	//ウィンドウタイトルを付ける
 	SetWindowText("DXlib");
 
+	//背景色設定
+	SetBackgroundColor(0, 0, 0);
+	
 	//初期化と裏画面化
 	if (DxLib_Init() == -1 || SetDrawScreen(DX_SCREEN_BACK) != 0)
 	{
@@ -64,6 +67,7 @@ void GameSystem::MainLoop()
 		TS::taskSystem.Draw();
 		fps.Draw();
 	}
+	TS::taskSystem.AllDeleteTask();
 }
 
 //-----------------------------------------------------------------------------

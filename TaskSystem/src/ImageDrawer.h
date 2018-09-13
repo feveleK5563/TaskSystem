@@ -23,13 +23,18 @@ private:
 	float		nowAnimImage;	//現在のアニメーション画像
 
 public:
-	//コンストラクタ(描画したい画像データを指定、第二引数trueで描画基準位置が中心)
-	ImageDrawer(const ImageData& imageData, bool isCriterrionPosCenter);
-	//コンストラクタ(描画したい画像データと描画基準位置を指定)
-	ImageDrawer(const ImageData& imageData, const MATH::Vec2& criterionPos);
+	//コンストラクタ
+	ImageDrawer();
 
-	bool AnimUpdate();	//アニメーションさせる(アニメーションが一周したらtrueが返る)
-	void ChangeAnimPattern(int pattern, bool isResetTime);	//アニメーションパターン番号の変更
+	//初期化(描画したい画像データを指定、第二引数trueで描画基準位置が中心)
+	void Initialize(const ImageData& setImageData, bool isCriterrionPosCenter);
+	//初期化(描画したい画像データと描画基準位置を指定)
+	void Initialize(const ImageData& setImageData, const MATH::Vec2& setCriterionPos);
+
+	//アニメーションの更新処理(アニメーションが一周したらtrueが返る)
+	bool AnimUpdate();
+	//アニメーションパターン番号の変更
+	void ChangeAnimPattern(int pattern, bool isResetTime);
 
 	//描画する
 	void Draw(const MATH::Vec2& pos, float scale, float angle, bool isTurn, const Color& color);

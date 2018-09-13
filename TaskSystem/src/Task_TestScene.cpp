@@ -40,9 +40,9 @@ namespace TestScene
 	//タスクのコンストラクタ
 	Task::Task():
 		TaskAbstract(defGroupName, defTaskName, defPriority),
-		res(Resource::Create()),
-		imgDrawer(res->imgData, true)
+		res(Resource::Create())
 	{
+		imgDrawer.Initialize(res->imgData, true);
 	}
 	//----------------------------------------------
 	//タスクのデストラクタ
