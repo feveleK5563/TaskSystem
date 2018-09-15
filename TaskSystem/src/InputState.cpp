@@ -4,16 +4,59 @@
 #include "InputState.h"
 
 //-----------------------------------------------------------------------------
+//コンストラクタ
+MouseInput::MouseInput():
+	pos(0.f, 0.f){}
+
+//-----------------------------------------------------------------------------
+//マウス入力情報を受け取る
+bool MouseInput::GetInputStateAll()
+{
+	int state = GetMouseInput();
+	for (int i = 0; i < keyNum; ++i)
+	{
+		keyInfo[i].AutoSetState(state & (1 << i));
+	}
+
+	int x, y;
+	GetMousePoint(&x, &y);
+	pos.x = (float)x;
+	pos.y = (float)y;
+
+	return true;
+}
+//-----------------------------------------------------------------------------
+//指定ボタンの持つ入力情報を取得する
+const ButtonInfo& MouseInput::operator [](const Type INPUT_TYPE)
+{
+	return keyInfo[(int)INPUT_TYPE];
+}
+//-----------------------------------------------------------------------------
+//マウスの座標を取得する
+const MATH::Vec2& MouseInput::GetPos()
+{
+	return pos;
+}
+//-----------------------------------------------------------------------------
+//マウス入力情報のインスタンスを得る
+MouseInput& MouseInput::GetInstance()
+{
+	static MouseInput mouse;
+	return mouse;
+}
+
+
+//-----------------------------------------------------------------------------
 //キー入力情報を受け取る
-int KeyInput::GetInputStateAll()
+bool KeyInput::GetInputStateAll()
 {
 	char getHitKeyStateAll_Key[keyNum];
 	GetHitKeyStateAll(getHitKeyStateAll_Key);
-	for (int i = 0; i < keyNum; i++)
+	for (int i = 0; i < keyNum; ++i)
 	{
 		keyInfo[i].AutoSetState(getHitKeyStateAll_Key[i]);
 	}
-	return 0;
+	return true;
 }
 //-----------------------------------------------------------------------------
 //指定キーの持つ入力情報を取得する
@@ -32,17 +75,17 @@ KeyInput& KeyInput::GetInstance()
 
 //-----------------------------------------------------------------------------
 //コンストラクタ(ジョイパッドの番号を設定する)
-JoypadInput::JoypadInput(int type):
+PadInput::PadInput(int type):
 	inputType(type){}
 
 //-----------------------------------------------------------------------------
 //ジョイパッドの入力情報を受け取る
-int JoypadInput::GetInputStateAll()
+bool PadInput::GetInputStateAll()
 {
 	int state = GetJoypadInputState(inputType);
-	for (int i = 0; i < padNum; ++i)
+	for (int i = 0; i < keyNum; ++i)
 	{
-		padInfo[i].AutoSetState(state & (1 << i));
+		keyInfo[i].AutoSetState(state & (1 << i));
 	}
 
 	int lx, ly, rx, ry;
@@ -53,44 +96,43 @@ int JoypadInput::GetInputStateAll()
 	analogInputRX = (float)rx;
 	analogInputRY = (float)ry;
 
-	return 0;
+	return true;
 }
 //-----------------------------------------------------------------------------
 //左スティックの角度を取得する
-float JoypadInput::GetAngleStickL()
+float PadInput::GetAngleStickL()
 {
 	return atan2f(analogInputLY, analogInputLX);
 }
 //-----------------------------------------------------------------------------
 //右スティックの角度を取得する
-float JoypadInput::GetAngleStickR()
+float PadInput::GetAngleStickR()
 {
 	return atan2f(analogInputRY, analogInputRX);
 }
 //-----------------------------------------------------------------------------
 //左スティックの傾きを取得する(0.0f~1.0f)
-float JoypadInput::GetVolumeStickL()
+float PadInput::GetVolumeStickL()
 {
 	return (analogInputLX * analogInputLX + analogInputLY * analogInputLY) / (1000.f * 1000.f);
 }
 //-----------------------------------------------------------------------------
 //右スティックの傾きを取得する(0.0f~1.0f)
-float JoypadInput::GetVolumeStickR()
+float PadInput::GetVolumeStickR()
 {
 	return (analogInputRX * analogInputRX + analogInputRY * analogInputRY) / (1000.f * 1000.f);
 }
 //-----------------------------------------------------------------------------
 //指定ボタンの入力情報を取得する
-const ButtonInfo& JoypadInput::operator [](const PadInput PAD_INPUT)
+const ButtonInfo& PadInput::operator [](const Type INPUT_TYPE)
 {
-	int padInput = int(log2f((float)PAD_INPUT));
-	return padInfo[padInput];
+	return keyInfo[(int)INPUT_TYPE];
 }
 //-----------------------------------------------------------------------------
 //ゲームパッド入力情報のインスタンスを得る
-JoypadInput& JoypadInput::GetInstance(int type)
+PadInput& PadInput::GetInstance(int type)
 {
-	static JoypadInput joypad(type);
+	static PadInput joypad(type);
 	return joypad;
 }
 
@@ -101,8 +143,9 @@ JoypadInput& JoypadInput::GetInstance(int type)
 
 //-----------------------------------------------------------------------------
 //入力情報を取得
-bool INP::GetInputStateAll()
+bool INPUT_DXL::GetInputStateAll()
 {
-	return	key.GetInputStateAll()		== 0 &&
-			joypad1.GetInputStateAll()	== 0;
+	return	mouse.GetInputStateAll()	&&
+			key.GetInputStateAll()		&&
+			joypad1.GetInputStateAll();
 }

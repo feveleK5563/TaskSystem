@@ -100,11 +100,11 @@ bool GameSystem::IsFullScreenMode()
 //ループを回す際の判定処理
 bool GameSystem::Run()
 {
-	return	ScreenFlip() == 0 &&					//裏画面を表画面に反映
-		ProcessMessage() == 0 &&					//メッセージ処理
-		ClearDrawScreen() == 0 &&					//画面をクリア
-		INP::GetInputStateAll() &&				//入力情報を取得
-		INP::key[KEY_INPUT_ESCAPE] == OFF;		//ESCが押されていない
+	return	ScreenFlip() == 0 &&				//裏画面を表画面に反映
+		ProcessMessage() == 0 &&				//メッセージ処理
+		ClearDrawScreen() == 0 &&				//画面をクリア
+		INPUT_DXL::GetInputStateAll() &&				//入力情報を取得
+		INPUT_DXL::key[KEY_INPUT_ESCAPE] == OFF;		//ESCが押されていない
 }
 
 //-----------------------------------------------------------------------------

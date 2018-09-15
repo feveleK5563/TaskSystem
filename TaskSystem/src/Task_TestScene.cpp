@@ -88,7 +88,7 @@ namespace TestScene
 	{
 		imgDrawer.AnimUpdate();
 
-		if (INP::key[KEY_INPUT_SPACE] == DOWN)
+		if (INPUT_DXL::mouse[MouseInput::Type::LEFT] == DOWN)
 		{
 			TS::taskSystem.AllKillTask();
 		}
