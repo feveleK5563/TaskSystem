@@ -40,9 +40,6 @@
     <ClCompile Include="src\GameSystem.cpp">
       <Filter>システム\System</Filter>
     </ClCompile>
-    <ClCompile Include="src\ButtonInfo.cpp">
-      <Filter>システム\Utility\Input</Filter>
-    </ClCompile>
     <ClCompile Include="src\InputState.cpp">
       <Filter>システム\Utility\Input</Filter>
     </ClCompile>
@@ -83,9 +80,6 @@
     </ClInclude>
     <ClInclude Include="src\GameSystem.h">
       <Filter>システム\System</Filter>
-    </ClInclude>
-    <ClInclude Include="src\ButtonInfo.h">
-      <Filter>システム\Utility\Input</Filter>
     </ClInclude>
     <ClInclude Include="src\InputState.h">
       <Filter>システム\Utility\Input</Filter>

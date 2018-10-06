@@ -46,6 +46,10 @@ void GameSystem::Initialize()
 	}
 
 	FirstCreateTask();
+
+	InputDXL::CreateMouseInstance();
+	InputDXL::CreateKeyInstance();
+	InputDXL::CreatePadInstance(1);
 }
 
 //-----------------------------------------------------------------------------
@@ -74,6 +78,7 @@ void GameSystem::MainLoop()
 //終了処理
 void GameSystem::Finalize()
 {
+	InputDXL::DeleteAllInstance();
 	DxLib_End();
 }
 
@@ -100,11 +105,11 @@ bool GameSystem::IsFullScreenMode()
 //ループを回す際の判定処理
 bool GameSystem::Run()
 {
-	return	ScreenFlip() == 0 &&				//裏画面を表画面に反映
-		ProcessMessage() == 0 &&				//メッセージ処理
-		ClearDrawScreen() == 0 &&				//画面をクリア
-		INPUT_DXL::GetInputStateAll() &&				//入力情報を取得
-		INPUT_DXL::key[KEY_INPUT_ESCAPE] == OFF;		//ESCが押されていない
+	return	ScreenFlip() == 0 &&						//裏画面を表画面に反映
+		ProcessMessage() == 0 &&						//メッセージ処理
+		ClearDrawScreen() == 0 &&						//画面をクリア
+		InputDXL::GetAllInputState() &&					//入力情報を取得
+		InputDXL::GetKey()[KEY_INPUT_ESCAPE] == OFF;	//ESCが押されていない
 }
 
 //-----------------------------------------------------------------------------

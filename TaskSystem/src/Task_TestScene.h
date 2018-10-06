@@ -29,6 +29,7 @@ namespace TestScene
 		std::shared_ptr<Resource> res;	//確保したリソース
 
 		ImageDrawer imgDrawer;
+		MATH::Vec2 plus;
 
 	public:
 		//コンストラクタ

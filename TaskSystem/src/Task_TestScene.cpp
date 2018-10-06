@@ -40,7 +40,8 @@ namespace TestScene
 	//タスクのコンストラクタ
 	Task::Task():
 		TaskAbstract(defGroupName, defTaskName, defPriority),
-		res(Resource::Create())
+		res(Resource::Create()),
+		plus(0, 0)
 	{
 		imgDrawer.Initialize(res->imgData, true);
 	}
@@ -86,12 +87,17 @@ namespace TestScene
 	//----------------------------------------------
 	void Task::Update()
 	{
-		imgDrawer.AnimUpdate();
+		//imgDrawer.AnimUpdate();
 
-		if (INPUT_DXL::mouse[MouseInput::Type::LEFT] == DOWN)
+		auto& pad = InputDXL::GetPad(0);
+		if (pad[PadButton::A] == DOWN)
 		{
 			TS::taskSystem.AllKillTask();
 		}
+
+		float vol = pad.GetVolumeStickL() * 100.f;
+		float ang = pad.GetAngleStickL();
+		plus = MATH::Vec2(cos(ang) * vol, sin(ang) * vol);
 	}
 
 	//----------------------------------------------
@@ -99,11 +105,11 @@ namespace TestScene
 	//----------------------------------------------
 	void Task::Draw()
 	{
-		imgDrawer.Draw(MATH::Vec2(100, 100),
+		imgDrawer.DrawOne(MATH::Vec2(300, 300) + plus,
 			1.f,
 			1.f,
-			0.f,
 			false,
+			5,
 			Color(255, 255, 255, 255));
 	}
 }
