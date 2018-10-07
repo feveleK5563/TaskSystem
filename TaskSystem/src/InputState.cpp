@@ -84,7 +84,8 @@ bool InputDXL::ButtonInfo::operator!=(const InputState& instate) const
 //-----------------------------------------------------------------------------
 //コンストラクタ
 InputDXL::MouseInput::MouseInput():
-	pos(0.f, 0.f){}
+	pos(0.f, 0.f),
+	isInput(false){}
 
 //-----------------------------------------------------------------------------
 //マウス入力情報を受け取る
@@ -95,6 +96,7 @@ bool InputDXL::MouseInput::GetInputState()
 	{
 		keyInfo[i].AutoSetState(state & (1 << i));
 	}
+	isInput = state > 0;
 
 	int x, y;
 	GetMousePoint(&x, &y);
@@ -104,16 +106,22 @@ bool InputDXL::MouseInput::GetInputState()
 	return true;
 }
 //-----------------------------------------------------------------------------
-//指定ボタンの持つ入力情報を取得する
-const InputDXL::ButtonInfo& InputDXL::MouseInput::operator [](const MouseButton INPUT_TYPE) const
-{
-	return keyInfo[(int)INPUT_TYPE];
-}
-//-----------------------------------------------------------------------------
 //マウスの座標を取得する
 const MATH::Vec2& InputDXL::MouseInput::GetPos() const
 {
 	return pos;
+}
+//-----------------------------------------------------------------------------
+//何らかの入力があったか否か
+bool InputDXL::MouseInput::IsInput() const
+{
+	return isInput;
+}
+//-----------------------------------------------------------------------------
+//指定ボタンの持つ入力情報を取得する
+const InputDXL::ButtonInfo& InputDXL::MouseInput::operator [](const MouseButton INPUT_TYPE) const
+{
+	return keyInfo[(int)INPUT_TYPE];
 }
 
 
@@ -130,6 +138,12 @@ bool InputDXL::KeyInput::GetInputState()
 	return true;
 }
 //-----------------------------------------------------------------------------
+//何らかの入力があったか否か
+bool InputDXL::KeyInput::IsInput() const
+{
+	return CheckHitKeyAll() == 0;
+}
+//-----------------------------------------------------------------------------
 //指定キーの持つ入力情報を取得する
 const InputDXL::ButtonInfo& InputDXL::KeyInput::operator [](const int KEY_INPUT) const
 {
@@ -140,7 +154,8 @@ const InputDXL::ButtonInfo& InputDXL::KeyInput::operator [](const int KEY_INPUT)
 //-----------------------------------------------------------------------------
 //コンストラクタ(ジョイパッドの番号を設定する)
 InputDXL::PadInput::PadInput(unsigned int id):
-	inputId(id){}
+	inputId(id),
+	isInput(false){}
 
 //-----------------------------------------------------------------------------
 //ジョイパッドの入力情報を受け取る
@@ -151,6 +166,7 @@ bool InputDXL::PadInput::GetInputState()
 	{
 		keyInfo[i].AutoSetState(state & (1 << i));
 	}
+	isInput = state > 0;
 
 	int lx, ly, rx, ry;
 	GetJoypadAnalogInput(&lx, &ly, inputId);
@@ -185,6 +201,12 @@ float InputDXL::PadInput::GetVolumeStickL() const
 float InputDXL::PadInput::GetVolumeStickR() const
 {
 	return min(std::sqrtf(analogInputRX * analogInputRX + analogInputRY * analogInputRY), 1.f);
+}
+//-----------------------------------------------------------------------------
+//何らかの入力があったか否か
+bool InputDXL::PadInput::IsInput() const
+{
+	return isInput;
 }
 //-----------------------------------------------------------------------------
 //指定ボタンの入力情報を取得する

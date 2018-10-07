@@ -91,7 +91,8 @@ namespace TestScene
 		imgDrawer.AnimUpdate();
 
 		auto& pad = InputDXL::GetPad(0);
-		if (pad[PadButton::A] == DOWN)
+		auto& mouse = InputDXL::GetMouse();
+		if (mouse.IsInput())
 		{
 			TaskSystem::GetInstance().AllKillTask();
 		}

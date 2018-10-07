@@ -65,13 +65,17 @@ private:
 		static const int keyNum = 3;
 		ButtonInfo keyInfo[keyNum];
 		MATH::Vec2 pos;
+		bool isInput;
 
 	public:
 		MouseInput();
 
 		bool GetInputState();
-		const ButtonInfo& operator [](const MouseButton INPUT_TYPE) const;
+
 		const MATH::Vec2& GetPos() const;	//マウスポインタの座標を取得
+		bool IsInput() const;				//何らかの入力があったか否か
+
+		const ButtonInfo& operator [](const MouseButton INPUT_TYPE) const;
 	};
 
 	//-----------------------------------------------------------------------------
@@ -86,6 +90,9 @@ private:
 		KeyInput() = default;
 
 		bool GetInputState();
+
+		bool IsInput() const;	//何らかの入力があったか否か
+
 		const ButtonInfo& operator [](const int KEY_INPUT) const;
 	};
 
@@ -100,6 +107,7 @@ private:
 		ButtonInfo keyInfo[keyNum];
 		float	analogInputLX, analogInputLY,
 				analogInputRX, analogInputRY;
+		bool isInput;
 
 	public:
 		PadInput(unsigned int id);
@@ -110,6 +118,7 @@ private:
 		float GetAngleStickR() const;	//右スティックの角度を取得
 		float GetVolumeStickL() const;	//左スティックの傾きの大きさを取得
 		float GetVolumeStickR() const;	//右スティックの傾きの大きさを取得
+		bool IsInput() const;			//何らかの入力があったか否か
 
 		const ButtonInfo& operator [](const PadButton INPUT_TYPE) const;
 	};
