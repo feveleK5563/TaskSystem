@@ -12,8 +12,10 @@ private:
 	std::vector<std::shared_ptr<TaskAbstract>> addTask;
 	std::unordered_map<std::string, std::unordered_map<std::string, std::vector<std::shared_ptr<TaskAbstract>>>> taskData;
 
-public:
 	TaskSystem();
+	static TaskSystem* ts;
+
+public:
 	~TaskSystem();
 
 	bool Update();											//更新(タスクが存在しなかった場合falseを返す)
@@ -67,6 +69,10 @@ public:
 
 	//インスタンスを得る
 	static TaskSystem& GetInstance();
+	//インスタンスを生成する
+	static void CreateInstance();
+	//インスタンスを解放する
+	static void DeleteInstance();
 
 private:
 	bool AllUpdate();		//全てのタスクのUpdateを呼ぶ(タスクが存在しなかった場合falseを返す)
@@ -74,8 +80,3 @@ private:
 	void StateDeleteTask();	//状態がDeleteのタスクを削除する
 	void SortTask();		//priorityを基に昇順にソートする
 };
-
-namespace TS
-{
-	static TaskSystem& taskSystem = TaskSystem::GetInstance();
-}

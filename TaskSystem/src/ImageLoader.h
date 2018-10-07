@@ -32,6 +32,7 @@ private:
 	std::unordered_map<std::string, ImageData> imageData;	//画像データ
 
 	ImageLoader() = default;
+	static ImageLoader* loader;
 
 public:
 	~ImageLoader();
@@ -56,10 +57,8 @@ public:
 
 	//インスタンスを得る
 	static ImageLoader& GetInstance();
+	//インスタンスを生成する
+	static void CreateInstance();
+	//インスタンスを解放する
+	static void DeleteInstance();
 };
-
-//-----------------------------------------------------------------------------
-namespace IMG
-{
-	static ImageLoader& imageLoader = ImageLoader::GetInstance();
-}

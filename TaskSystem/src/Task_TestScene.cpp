@@ -10,9 +10,10 @@ namespace TestScene
 	//リソースのコンストラクタ
 	Resource::Resource()
 	{
-		IMG::imageLoader.LoadDivImage("Bomb", "data/image/bomb.png", 12, 12, 1, 64, 64);
-		IMG::imageLoader.AddAnimationData("Bomb", 0, 11, 5.f, true);
-		imgData = IMG::imageLoader.GetImageData("Bomb");
+		auto& imageLoader = ImageLoader::GetInstance();
+		imageLoader.LoadDivImage("Bomb", "data/image/bomb.png", 12, 12, 1, 64, 64);
+		imageLoader.AddAnimationData("Bomb", 0, 11, 5.f, true);
+		imgData = imageLoader.GetImageData("Bomb");
 	}
 	//----------------------------------------------
 	//リソースのデストラクタ
@@ -57,7 +58,7 @@ namespace TestScene
 	{
 		std::shared_ptr<Task> task = 
 			std::make_shared<Task>();
-		TS::taskSystem.AddTask(task);
+		TaskSystem::GetInstance().AddTask(task);
 
 		task->Initialize();
 		return task;
@@ -87,15 +88,15 @@ namespace TestScene
 	//----------------------------------------------
 	void Task::Update()
 	{
-		//imgDrawer.AnimUpdate();
+		imgDrawer.AnimUpdate();
 
 		auto& pad = InputDXL::GetPad(0);
 		if (pad[PadButton::A] == DOWN)
 		{
-			TS::taskSystem.AllKillTask();
+			TaskSystem::GetInstance().AllKillTask();
 		}
 
-		float vol = pad.GetVolumeStickL() * 100.f;
+		float vol = pad.GetVolumeStickL() * 200.f;
 		float ang = pad.GetAngleStickL();
 		plus = MATH::Vec2(cos(ang) * vol, sin(ang) * vol);
 	}
@@ -105,11 +106,11 @@ namespace TestScene
 	//----------------------------------------------
 	void Task::Draw()
 	{
-		imgDrawer.DrawOne(MATH::Vec2(300, 300) + plus,
+		imgDrawer.Draw(MATH::Vec2(300, 300) + plus,
 			1.f,
 			1.f,
+			0.f,
 			false,
-			5,
 			Color(255, 255, 255, 255));
 	}
 }

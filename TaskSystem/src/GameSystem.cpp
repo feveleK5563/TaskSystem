@@ -5,6 +5,7 @@
 #include "InputState.h"
 #include "TaskSystem.h"
 #include "Task_TestScene.h"
+#include "ImageLoader.h"
 
 GameSystem::GameSystem(){}
 
@@ -45,11 +46,13 @@ void GameSystem::Initialize()
 		return;
 	}
 
-	FirstCreateTask();
+	ImageLoader::CreateInstance();
 
 	InputDXL::CreateMouseInstance();
 	InputDXL::CreateKeyInstance();
 	InputDXL::CreatePadInstance(1);
+
+	FirstCreateTask();
 }
 
 //-----------------------------------------------------------------------------
@@ -57,27 +60,30 @@ void GameSystem::Initialize()
 void GameSystem::MainLoop()
 {
 	Fps fps;
+	auto& ts = TaskSystem::GetInstance();
 
 	while (Run())
 	{
 		fps.Wait();
 		fps.Update();
+
 		//タスクが存在しなかった場合終了する
-		if (!TS::taskSystem.Update())
+		if (!ts.Update())
 		{
 			break;
 		}
 
-		TS::taskSystem.Draw();
+		ts.Draw();
 		fps.Draw();
 	}
-	TS::taskSystem.AllDeleteTask();
 }
 
 //-----------------------------------------------------------------------------
 //終了処理
 void GameSystem::Finalize()
 {
+	TaskSystem::DeleteInstance();
+	ImageLoader::DeleteInstance();
 	InputDXL::DeleteAllInstance();
 	DxLib_End();
 }
@@ -116,6 +122,9 @@ bool GameSystem::Run()
 //最初に作成するタスク
 void GameSystem::FirstCreateTask()
 {
+	//タスクシステムを生成
+	TaskSystem::CreateInstance();
+
 	//最初に作成するタスクをここに入力
 	TestScene::Task::Create();
 }

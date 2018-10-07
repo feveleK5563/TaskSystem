@@ -71,7 +71,7 @@ private:
 
 		bool GetInputState();
 		const ButtonInfo& operator [](const MouseButton INPUT_TYPE) const;
-		const MATH::Vec2& GetPos() const;
+		const MATH::Vec2& GetPos() const;	//マウスポインタの座標を取得
 	};
 
 	//-----------------------------------------------------------------------------
@@ -106,10 +106,10 @@ private:
 
 		bool GetInputState();
 
-		float GetAngleStickL() const;
-		float GetAngleStickR() const;
-		float GetVolumeStickL() const;
-		float GetVolumeStickR() const;
+		float GetAngleStickL() const;	//左スティックの角度を取得
+		float GetAngleStickR() const;	//右スティックの角度を取得
+		float GetVolumeStickL() const;	//左スティックの傾きの大きさを取得
+		float GetVolumeStickR() const;	//右スティックの傾きの大きさを取得
 
 		const ButtonInfo& operator [](const PadButton INPUT_TYPE) const;
 	};
@@ -135,7 +135,7 @@ public:
 	static void CreateKeyInstance();
 	//キーボードのインスタンスを解放
 	static void DeleteKeyInstance();
-	//キーボードの入力情報を全て取得
+	//キーボードの入力情報を取得
 	private:static bool GetKeyInputState();
 
 public:

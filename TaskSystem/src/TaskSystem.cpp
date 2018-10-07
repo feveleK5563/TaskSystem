@@ -1,5 +1,7 @@
-#include "TaskSystem.h"
 #include <algorithm>
+#include <assert.h>
+#include "TaskSystem.h"
+#include "UtilityFunctions.h"
 
 TaskSystem::TaskSystem() {}
 
@@ -43,11 +45,27 @@ void TaskSystem::AddTask(std::shared_ptr<TaskAbstract> createObj)
 	}
 }
 
+TaskSystem* TaskSystem::ts = nullptr;
 //インスタンスを得る
 TaskSystem& TaskSystem::GetInstance()
 {
-	static TaskSystem ts;
-	return ts;
+	assert(ts != nullptr && "TaskSystem hasn't been created!");
+	return *ts;
+}
+
+//インスタンスを生成する
+void TaskSystem::CreateInstance()
+{
+	if (ts == nullptr)
+	{
+		ts = new TaskSystem();
+	}
+}
+
+//インスタンスを解放する
+void TaskSystem::DeleteInstance()
+{
+	UTIL::SafeDelete(ts);
 }
 
 //指定したグループ名のタスクが存在しているか調べる

@@ -155,10 +155,10 @@ bool InputDXL::PadInput::GetInputState()
 	int lx, ly, rx, ry;
 	GetJoypadAnalogInput(&lx, &ly, inputId);
 	GetJoypadAnalogInputRight(&rx, &ry, inputId);
-	analogInputLX = (float)lx;
-	analogInputLY = (float)ly;
-	analogInputRX = (float)rx;
-	analogInputRY = (float)ry;
+	analogInputLX = float(lx) / 1000.f;
+	analogInputLY = float(ly) / 1000.f;
+	analogInputRX = float(rx) / 1000.f;
+	analogInputRY = float(ry) / 1000.f;
 
 	return true;
 }
@@ -178,13 +178,13 @@ float InputDXL::PadInput::GetAngleStickR() const
 //左スティックの傾きを取得する(0.0f~1.0f)
 float InputDXL::PadInput::GetVolumeStickL() const
 {
-	return (analogInputLX * analogInputLX + analogInputLY * analogInputLY) / (1000.f * 1000.f);
+	return min(std::sqrtf(analogInputLX * analogInputLX + analogInputLY * analogInputLY), 1.f);
 }
 //-----------------------------------------------------------------------------
 //右スティックの傾きを取得する(0.0f~1.0f)
 float InputDXL::PadInput::GetVolumeStickR() const
 {
-	return (analogInputRX * analogInputRX + analogInputRY * analogInputRY) / (1000.f * 1000.f);
+	return min(std::sqrtf(analogInputRX * analogInputRX + analogInputRY * analogInputRY), 1.f);
 }
 //-----------------------------------------------------------------------------
 //指定ボタンの入力情報を取得する
@@ -200,7 +200,7 @@ InputDXL::MouseInput* InputDXL::mouse = nullptr;
 //マウスのインスタンスを取得
 const InputDXL::MouseInput& InputDXL::GetMouse()
 {
-	assert(mouse != nullptr);
+	assert(mouse != nullptr && "MouseInput hasn't been created!");
 	return *mouse;
 }
 //-----------------------------------------------------------------------------
@@ -231,7 +231,7 @@ InputDXL::KeyInput* InputDXL::key = nullptr;
 //キーボードのインスタンスを取得
 const InputDXL::KeyInput& InputDXL::GetKey()
 {
-	assert(key != nullptr);
+	assert(key != nullptr && "KeyInput hasn't been created!");
 	return *key;
 }
 //-----------------------------------------------------------------------------
@@ -262,7 +262,7 @@ std::vector<InputDXL::PadInput*> InputDXL::pad;
 //ジョイパッドのインスタンスを取得
 const InputDXL::PadInput& InputDXL::GetPad(unsigned int id)
 {
-	assert(pad.size() > id);
+	assert(pad.size() > id && "PadInput hasn't been created!");
 	return *pad[id];
 }
 //-----------------------------------------------------------------------------

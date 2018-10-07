@@ -1,5 +1,4 @@
-#define NOMINMAX
-#include <algorithm>
+#include <assert.h>
 #include "ImageLoader.h"
 #include "DxLib.h"
 #include "UtilityFunctions.h"
@@ -66,7 +65,7 @@ bool ImageLoader::LoadDivImage(const std::string& imageName, const std::string& 
 void ImageLoader::AddAnimationData(const std::string& imageName, int startSheet, int endSheet, float waitTime, bool isLoop)
 {
 	imageData[imageName].anim.emplace_back(
-		new AnimData(startSheet, endSheet - startSheet, std::max(waitTime, 1.f), isLoop)
+		new AnimData(startSheet, endSheet - startSheet, max(waitTime, 1.f), isLoop)
 	);
 }
 
@@ -122,9 +121,23 @@ void ImageLoader::AllDeleteImageData()
 	imageData.clear();
 }
 
+ImageLoader* ImageLoader::loader = nullptr;
 //インスタンスを得る
 ImageLoader& ImageLoader::GetInstance()
 {
-	static ImageLoader imageLoader;
-	return imageLoader;
+	assert(loader != nullptr && "ImageLoader hasn't been created!");
+	return *loader;
+}
+//インスタンスを生成する
+void ImageLoader::CreateInstance()
+{
+	if (loader == nullptr)
+	{
+		loader = new ImageLoader();
+	}
+}
+//インスタンスを解放する
+void ImageLoader::DeleteInstance()
+{
+	UTIL::SafeDelete(loader);
 }
