@@ -72,8 +72,7 @@ void ImageLoader::AddAnimationData(const std::string& imageName, int startSheet,
 //画像データの取得
 const ImageData& ImageLoader::GetImageData(const std::string& imageName)
 {
-	//アニメーション設定が行われていなかった場合は
-	//便宜的にアニメーションを設定しておく
+	//アニメーション設定が行われていなかった場合は、便宜的にアニメーションを設定しておく
 	if (imageData[imageName].anim.empty())
 	{
 		AddAnimationData(imageName, 0, 0, 1, false);

@@ -15,7 +15,7 @@ namespace TestScene
 		static std::weak_ptr<Resource> instance;
 
 	public:
-		ImageData imgData;
+		std::string imageName;
 
 		Resource();		//コンストラクタ
 		~Resource();	//デストラクタ

@@ -51,7 +51,7 @@ namespace ƒ^ƒXƒN–¼
 	{
 		std::shared_ptr<Task> task = 
 			std::make_shared<Task>();
-		TS::taskSystem.RegistrationTask(task);
+		TaskSystem::GetInstance().AddTask(task);
 
 		task->Initialize();
 		return task;
