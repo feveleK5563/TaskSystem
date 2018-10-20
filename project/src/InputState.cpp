@@ -284,7 +284,7 @@ std::vector<InputDXL::PadInput*> InputDXL::pad;
 //ジョイパッドのインスタンスを取得
 const InputDXL::PadInput& InputDXL::GetPad(unsigned int id)
 {
-	assert(pad.size() > id && "PadInput hasn't been created!");
+	assert(pad.size() >= id && "PadInput hasn't been created!");
 	return *pad[id];
 }
 //-----------------------------------------------------------------------------

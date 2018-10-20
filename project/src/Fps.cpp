@@ -23,7 +23,7 @@ bool Fps::Update()
 		mCount = 0;
 		mStartTime = t;
 	}
-	mCount++;
+	++mCount;
 	return true;
 }
 

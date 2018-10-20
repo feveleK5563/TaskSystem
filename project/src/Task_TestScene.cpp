@@ -90,17 +90,18 @@ namespace TestScene
 	void Task::Update()
 	{
 		imgDrawer.AnimUpdate();
-
+		
 		auto& pad = InputDXL::GetPad(0);
 		auto& mouse = InputDXL::GetMouse();
-		if (mouse.IsInput())
+		if (mouse[MouseButton::RIGHT] == DOWN)
 		{
 			TaskSystem::GetInstance().AllKillTask();
 		}
 
-		float vol = pad.GetVolumeStickL() * 200.f;
-		float ang = pad.GetAngleStickL();
+		float vol = pad.GetVolumeStickR() * 200.f;
+		float ang = pad.GetAngleStickR();
 		plus = MATH::Vec2(cos(ang) * vol, sin(ang) * vol);
+		DrawFormatString(0, 20, GetColor(255, 255, 255), "%.1f", MATH::ToDegree(ang));
 	}
 
 	//----------------------------------------------

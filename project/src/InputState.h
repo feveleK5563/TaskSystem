@@ -5,10 +5,10 @@
 
 enum InputState
 {
-	ON,
-	OFF,
-	DOWN,
-	UP,
+	ON,		//押されている
+	OFF,	//押されていない
+	DOWN,	//押した瞬間
+	UP,		//離した瞬間
 };
 
 enum struct MouseButton
@@ -135,7 +135,7 @@ public:
 	//マウスのインスタンスを解放
 	static void DeleteMouseInstance();
 	//マウスの入力情報を取得
-	private:static bool GetMouseInputState();
+	private: static bool GetMouseInputState();
 
 public:
 	//キーボードのインスタンスを取得
@@ -145,7 +145,7 @@ public:
 	//キーボードのインスタンスを解放
 	static void DeleteKeyInstance();
 	//キーボードの入力情報を取得
-	private:static bool GetKeyInputState();
+	private: static bool GetKeyInputState();
 
 public:
 	//指定番号のジョイパッドのインスタンスを取得
@@ -155,7 +155,7 @@ public:
 	//ジョイパッドのインスタンスを解放
 	static void DeletePadInstance();
 	//ジョイパッドの入力情報を全て取得
-	private:static bool GetPadAllInputState();
+	private: static bool GetPadAllInputState();
 
 public:
 	//全ての入力情報を取得

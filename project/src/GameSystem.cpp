@@ -111,11 +111,11 @@ bool GameSystem::IsFullScreenMode()
 //ループを回す際の判定処理
 bool GameSystem::Run()
 {
-	return	ScreenFlip() == 0 &&						//裏画面を表画面に反映
-		ProcessMessage() == 0 &&						//メッセージ処理
-		ClearDrawScreen() == 0 &&						//画面をクリア
-		InputDXL::GetAllInputState() &&					//入力情報を取得
-		InputDXL::GetKey()[KEY_INPUT_ESCAPE] == OFF;	//ESCが押されていない
+	return	ScreenFlip() == 0								//裏画面を表画面に反映
+		&&	ProcessMessage() == 0							//メッセージ処理
+		&&	ClearDrawScreen() == 0							//画面をクリア
+		&&	InputDXL::GetAllInputState()					//入力情報を取得
+		&&	InputDXL::GetKey()[KEY_INPUT_ESCAPE] == OFF;	//ESCが押されていない
 }
 
 //-----------------------------------------------------------------------------
@@ -125,6 +125,7 @@ void GameSystem::FirstCreateTask()
 	//タスクシステムを生成
 	TaskSystem::CreateInstance();
 
-	//最初に作成するタスクをここに入力
+	//☆★☆★☆★☆★☆★☆★☆★☆★☆★☆★☆★☆★☆★☆★☆★
+	//ゲーム開始時に作成するタスクを以下に記述
 	TestScene::Task::Create();
 }
