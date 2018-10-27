@@ -1,4 +1,5 @@
 #include "Math.h"
+#include "DxLib.h"
 
 namespace MATH
 {
@@ -21,6 +22,9 @@ namespace MATH
 
 	Vec2::Vec2(const Vec2& setVec):
 		x(setVec.x), y(setVec.y){}
+
+	Vec2::Vec2(int setX, int setY):
+		x((float)setX), y((float)setY){}
 
 	Vec2::Vec2(float setX, float setY):
 		x(setX), y(setY){}
@@ -133,21 +137,28 @@ namespace MATH
 		--*this;
 		return tmp;
 	}
+	Vec2 Vec2::operator -() const
+	{
+		Vec2 tmp = *this;
+		tmp.x *= -1.f;
+		tmp.y *= -1.f;
+		return tmp;
+	}
 
 
 	//--------------------------------------------------------
-	//矩形クラス
+	//当たり判定と描画機能つき矩形クラス
 	Box2D::Box2D():
-		x(0), y(0), w(0), h(0),
-		baseX(0), baseY(0){}
+		x(0), y(0), w(0), h(0){}
 
 	Box2D::Box2D(const Box2D& setBox):
-		x(setBox.x), y(setBox.y), w(setBox.w), h(setBox.h),
-		baseX(setBox.x), baseY(setBox.y){}
+		x(setBox.x), y(setBox.y), w(setBox.w), h(setBox.h){}
 
 	Box2D::Box2D(int setX, int setY, int setW, int setH):
-		x(setX), y(setY), w(setW), h(setH),
-		baseX(setX), baseY(setY) {}
+		x(setX), y(setY), w(setW), h(setH){}
+
+	Box2D::Box2D(int setW, int setH):
+		x(0), y(0), w(setW), h(setH){}
 
 	bool Box2D::IsHit(const Box2D& box) const
 	{
@@ -164,25 +175,29 @@ namespace MATH
 		return	x <= box.x && box.x + box.w < x + w &&
 				y <= box.y && box.y + box.h < y + h;
 	}
+	void Box2D::DrawRect(bool isFill, int color) const
+	{
+		DrawBox(x, y, x + w, y + h, color, isFill);
+	}
 
 	void Box2D::Offset(int setX, int setY)
 	{
-		x = baseX + setX;
-		y = baseY + setY;
+		x = setX;
+		y = setY;
 	}
 	void Box2D::Offset(const Vec2& vec)
 	{
-		x = baseX + (int)vec.x;
-		y = baseY + (int)vec.y;
+		x = (int)vec.x;
+		y = (int)vec.y;
 	}
 	Box2D Box2D::OffsetCpy(int setX, int setY) const
 	{
-		Box2D cpy(baseX + setX, baseY + setY, w, h);
+		Box2D cpy(setX, setY, w, h);
 		return cpy;
 	}
 	Box2D Box2D::OffsetCpy(const Vec2& vec) const
 	{
-		Box2D cpy(baseX + (int)vec.x, baseY + (int)vec.y, w, h);
+		Box2D cpy((int)vec.x, (int)vec.y, w, h);
 		return cpy;
 	}
 
@@ -192,8 +207,6 @@ namespace MATH
 		y = box.y;
 		w = box.w;
 		h = box.h;
-		baseX = x;
-		baseY = y;
 		return *this;
 	}
 	Box2D Box2D::operator +(const Box2D& box) const
@@ -218,8 +231,6 @@ namespace MATH
 		y += box.y;
 		w += box.w;
 		h += box.h;
-		baseX = x;
-		baseY = y;
 		return *this;
 	}
 	Box2D& Box2D::operator -=(const Box2D& box)
@@ -228,8 +239,6 @@ namespace MATH
 		y -= box.y;
 		w -= box.w;
 		h -= box.h;
-		baseX = x;
-		baseY = y;
 		return *this;
 	}
 	Box2D& Box2D::operator *=(int mul)

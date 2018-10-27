@@ -45,7 +45,8 @@ namespace TestScene
 		res(Resource::Create()),
 		plus(0, 0)
 	{
-		imgDrawer.Initialize(ImageLoader::GetInstance().GetImageData(res->imageName), true);
+		imgDrawer.Initialize(
+			ImageLoader::GetInstance().GetImageData(res->imageName), true);
 	}
 	//----------------------------------------------
 	//タスクのデストラクタ
@@ -109,11 +110,20 @@ namespace TestScene
 	//----------------------------------------------
 	void Task::Draw()
 	{
-		imgDrawer.Draw(MATH::Vec2(300, 300) + plus,
+		/*imgDrawer.Draw(MATH::Vec2(0, 0) + plus,
 			1.f,
 			1.f,
 			0.f,
 			false,
-			Color(255, 255, 255, 255));
+			Color(255, 255, 255, 255));*/
+
+		//imgDrawer.Draw(MATH::Vec2(0, 0) + plus);
+
+		imgDrawer.DrawOne(
+			7,
+			plus + MATH::Vec2(300.f, 300.f),
+			MATH::Vec2(16, 16),
+			MATH::Box2D(16, 16, 32, 32),
+			false);
 	}
 }

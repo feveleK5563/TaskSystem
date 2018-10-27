@@ -19,13 +19,13 @@ ImageDrawer::ImageDrawer():
 void ImageDrawer::Initialize(const ImageData& setImageData, bool isCriterrionPosCenter)
 {
 	imageData = setImageData;
-	criterionPos = isCriterrionPosCenter ? MATH::Vec2(imageData.rect.w / 2.f, imageData.rect.h / 2.f) : MATH::Vec2(0, 0);
+	cPos = isCriterrionPosCenter ? MATH::Vec2(imageData.rect.w / 2.f, imageData.rect.h / 2.f) : MATH::Vec2(0, 0);
 }
 //初期化(描画したい画像データと描画基準位置を指定)
 void ImageDrawer::Initialize(const ImageData& setImageData, const MATH::Vec2& setCriterionPos)
 {
 	imageData = setImageData;
-	criterionPos = setCriterionPos;
+	cPos = setCriterionPos;
 }
 
 //アニメーションさせる
@@ -54,10 +54,32 @@ void ImageDrawer::ChangeAnimPattern(int pattern, bool isResetTime)
 {
 	nowAnimPattern = pattern;
 
+
 	if (isResetTime == true)
 	{
 		nowAnimImage = 0;
 	}
+}
+
+//簡易描画
+void ImageDrawer::Draw(const MATH::Vec2& pos, const Color& color)
+{
+	SetDrawBright(color.r, color.g, color.b);
+	SetDrawBlendMode(DX_BLENDMODE_ALPHA, color.alpha);
+
+	int nai = (int)nowAnimImage;
+	if (imageData.anim[nowAnimPattern]->relativeSheet < 0)
+	{
+		nai *= -1;
+	}
+
+	DrawGraphF(
+		pos.x - cPos.x, pos.y - cPos.y,
+		imageData.handle[imageData.anim[nowAnimPattern]->startSheet + nai],
+		true);
+
+	SetDrawBright(255, 255, 255);
+	SetDrawBlendMode(DX_BLENDMODE_NOBLEND, 0);
 }
 
 //描画する
@@ -74,7 +96,7 @@ void ImageDrawer::Draw(const MATH::Vec2& pos, float scale, float angle, bool isT
 
 	DrawRotaGraph2F(
 		pos.x, pos.y,
-		criterionPos.x, criterionPos.y,
+		cPos.x, cPos.y,
 		(double)scale,
 		(double)angle,
 		imageData.handle[imageData.anim[nowAnimPattern]->startSheet + nai],
@@ -100,7 +122,7 @@ void ImageDrawer::Draw(const MATH::Vec2& pos, float scaleX, float scaleY, float 
 
 	DrawRotaGraph3F(
 		pos.x, pos.y,
-		criterionPos.x, criterionPos.y,
+		cPos.x, cPos.y,
 		(double)scaleX, (double)scaleY,
 		(double)angle,
 		imageData.handle[imageData.anim[nowAnimPattern]->startSheet + nai],
@@ -112,15 +134,55 @@ void ImageDrawer::Draw(const MATH::Vec2& pos, float scaleX, float scaleY, float 
 	SetDrawBlendMode(DX_BLENDMODE_NOBLEND, 0);
 }
 
+//描画範囲矩形を指定して描画する(描画の基準位置は無視する)
+void ImageDrawer::Draw(const MATH::Vec2& pos, const MATH::Vec2& criterionPos, const MATH::Box2D& rect, bool isTurn, const Color& color)
+{
+	SetDrawBright(color.r, color.g, color.b);
+	SetDrawBlendMode(DX_BLENDMODE_ALPHA, color.alpha);
+
+	int nai = (int)nowAnimImage;
+	if (imageData.anim[nowAnimPattern]->relativeSheet < 0)
+	{
+		nai *= -1;
+	}
+
+	MATH::Vec2 tmppos = -pos;
+
+	DrawRectGraphF(
+		pos.x - criterionPos.x, pos.y - criterionPos.y,
+		rect.x, rect.y,
+		rect.w, rect.h,
+		imageData.handle[imageData.anim[nowAnimPattern]->startSheet + nai],
+		true,
+		isTurn,
+		false);
+
+	SetDrawBright(255, 255, 255);
+	SetDrawBlendMode(DX_BLENDMODE_NOBLEND, 0);
+}
+
+
+//指定番号の画像を簡易描画
+void ImageDrawer::DrawOne(int imageSheet, const MATH::Vec2& pos, const Color& color)
+{
+	SetDrawBright(color.r, color.g, color.b);
+	SetDrawBlendMode(DX_BLENDMODE_ALPHA, color.alpha);
+
+	DrawGraphF(pos.x, pos.y, imageData.handle[imageSheet], true);
+
+	SetDrawBright(255, 255, 255);
+	SetDrawBlendMode(DX_BLENDMODE_NOBLEND, 0);
+}
+
 //指定番号の画像を描画する(アニメーションしない)
-void ImageDrawer::DrawOne(const MATH::Vec2& pos, float scale, float angle, bool isTurn, int imageSheet, const Color& color)
+void ImageDrawer::DrawOne(int imageSheet, const MATH::Vec2& pos, float scale, float angle, bool isTurn, const Color& color)
 {
 	SetDrawBright(color.r, color.g, color.b);
 	SetDrawBlendMode(DX_BLENDMODE_ALPHA, color.alpha);
 
 	DrawRotaGraph2F(
 		pos.x, pos.y,
-		criterionPos.x, criterionPos.y,
+		cPos.x, cPos.y,
 		(double)scale,
 		(double)angle,
 		imageData.handle[imageSheet],
@@ -133,16 +195,34 @@ void ImageDrawer::DrawOne(const MATH::Vec2& pos, float scale, float angle, bool 
 }
 
 //指定番号の画像を描画する(拡大率縦横別)
-void ImageDrawer::DrawOne(const MATH::Vec2& pos, float scaleX, float scaleY, float angle, bool isTurn, int imageSheet, const Color& color)
+void ImageDrawer::DrawOne(int imageSheet, const MATH::Vec2& pos, float scaleX, float scaleY, float angle, bool isTurn, const Color& color)
 {
 	SetDrawBright(color.r, color.g, color.b);
 	SetDrawBlendMode(DX_BLENDMODE_ALPHA, color.alpha);
 
 	DrawRotaGraph3F(
 		pos.x, pos.y,
-		criterionPos.x, criterionPos.y,
+		cPos.x, cPos.y,
 		(double)scaleX, (double)scaleY,
 		(double)angle,
+		imageData.handle[imageSheet],
+		true,
+		isTurn,
+		false);
+
+	SetDrawBright(255, 255, 255);
+	SetDrawBlendMode(DX_BLENDMODE_NOBLEND, 0);
+}
+
+void ImageDrawer::DrawOne(int imageSheet, const MATH::Vec2& pos, const MATH::Vec2& criterionPos, const MATH::Box2D& rect, bool isTurn, const Color& color)
+{
+	SetDrawBright(color.r, color.g, color.b);
+	SetDrawBlendMode(DX_BLENDMODE_ALPHA, color.alpha);
+
+	DrawRectGraphF(
+		pos.x - criterionPos.x, pos.y - criterionPos.y,
+		rect.x, rect.y,
+		rect.w, rect.h,
 		imageData.handle[imageSheet],
 		true,
 		isTurn,

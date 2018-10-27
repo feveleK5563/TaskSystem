@@ -18,6 +18,7 @@ namespace MATH
 
 		Vec2();
 		Vec2(const Vec2& setVec);
+		Vec2(int setX, int setY);
 		Vec2(float setX, float setY);
 
 		Vec2&	operator =(const Vec2& vec);
@@ -41,21 +42,23 @@ namespace MATH
 		Vec2	operator ++(int);
 		Vec2&	operator --();
 		Vec2	operator --(int);
+		Vec2	operator -() const;
 	};
 
-	//当たり判定機能つき矩形クラス
+	//当たり判定と描画機能つき矩形クラス
 	struct Box2D
 	{
 		int x, y, w, h;
-		int baseX, baseY;
 
 		Box2D();
 		Box2D(const Box2D& setBox);
 		Box2D(int setX, int setY, int setW, int setH);
+		Box2D(int setW, int setH);
 
 		bool IsHit(const Box2D& box) const;
 		bool IsHit(const Vec2& pos) const;
 		bool IsIn(const Box2D& box) const;
+		void DrawRect(bool isFill, int color = 0xffffff) const;
 
 		void Offset(int setX, int setY);
 		void Offset(const Vec2& vec);
