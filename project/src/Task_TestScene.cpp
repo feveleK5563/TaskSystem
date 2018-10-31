@@ -43,7 +43,8 @@ namespace TestScene
 	Task::Task():
 		TaskAbstract(defGroupName, defTaskName, defPriority),
 		res(Resource::Create()),
-		plus(0, 0)
+		plus(0, 0),
+		hoge(1, 0, 100)
 	{
 		imgDrawer.Initialize(
 			ImageLoader::GetInstance().GetImageData(res->imageName), true);
@@ -103,6 +104,8 @@ namespace TestScene
 		float ang = pad.GetAngleStickR();
 		plus = MATH::Vec2(cos(ang) * vol, sin(ang) * vol);
 		DrawFormatString(0, 20, GetColor(255, 255, 255), "%.1f", MATH::ToDegree(ang));
+
+		hoge.RunLoop();
 	}
 
 	//----------------------------------------------
@@ -117,13 +120,14 @@ namespace TestScene
 			false,
 			Color(255, 255, 255, 255));*/
 
-		//imgDrawer.Draw(MATH::Vec2(0, 0) + plus);
+		imgDrawer.Draw(MATH::Vec2(300, 300) + plus);
+		DrawFormatString(0, 40, GetColor(255, 255, 255), "%d", hoge.GetNow());
 
-		imgDrawer.DrawOne(
+		/*imgDrawer.DrawOne(
 			7,
 			plus + MATH::Vec2(300.f, 300.f),
 			MATH::Vec2(16, 16),
 			MATH::Box2D(16, 16, 32, 32),
-			false);
+			false);*/
 	}
 }

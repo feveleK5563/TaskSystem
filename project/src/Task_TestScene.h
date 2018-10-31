@@ -1,6 +1,7 @@
 #pragma once
 #include "TaskSystem.h"
 #include "ImageDrawer.h"
+#include "Counter.hpp"
 
 namespace TestScene
 {
@@ -30,6 +31,7 @@ namespace TestScene
 
 		ImageDrawer imgDrawer;
 		MATH::Vec2 plus;
+		Counter<int> hoge;
 
 	public:
 		//コンストラクタ

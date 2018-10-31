@@ -30,7 +30,6 @@
     <ClCompile Include="src\TaskAbstract.cpp" />
     <ClCompile Include="src\TaskSystem.cpp" />
     <ClCompile Include="src\Task_TestScene.cpp" />
-    <ClCompile Include="src\TimeCounter.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="src\Fps.h" />
@@ -43,7 +42,7 @@
     <ClInclude Include="src\SystemDefine.h" />
     <ClInclude Include="src\TaskSystem.h" />
     <ClInclude Include="src\Task_TestScene.h" />
-    <ClInclude Include="src\TimeCounter.h" />
+    <ClInclude Include="src\Counter.hpp" />
     <ClInclude Include="src\UtilityFunctions.h" />
   </ItemGroup>
   <ItemGroup>

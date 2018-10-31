@@ -70,9 +70,6 @@
     <ClCompile Include="src\Math.cpp">
       <Filter>システム\Utility\Math</Filter>
     </ClCompile>
-    <ClCompile Include="src\TimeCounter.cpp">
-      <Filter>システム\Utility\TimeCounter</Filter>
-    </ClCompile>
     <ClCompile Include="src\UtilityFunctions.cpp">
       <Filter>システム\Utility\UtilityFunctions</Filter>
     </ClCompile>
@@ -108,11 +105,11 @@
     <ClInclude Include="src\Math.h">
       <Filter>システム\Utility\Math</Filter>
     </ClInclude>
-    <ClInclude Include="src\TimeCounter.h">
-      <Filter>システム\Utility\TimeCounter</Filter>
-    </ClInclude>
     <ClInclude Include="src\UtilityFunctions.h">
       <Filter>システム\Utility\UtilityFunctions</Filter>
+    </ClInclude>
+    <ClInclude Include="src\Counter.hpp">
+      <Filter>システム\Utility\TimeCounter</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
