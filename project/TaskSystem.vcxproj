@@ -19,6 +19,7 @@
     </ProjectConfiguration>
   </ItemGroup>
   <ItemGroup>
+    <ClCompile Include="src\Easing.cpp" />
     <ClCompile Include="src\Fps.cpp" />
     <ClCompile Include="src\GameSystem.cpp" />
     <ClCompile Include="src\ImageDrawer.cpp" />
@@ -32,6 +33,7 @@
     <ClCompile Include="src\Task_TestScene.cpp" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="src\Easing.h" />
     <ClInclude Include="src\Fps.h" />
     <ClInclude Include="src\GameSystem.h" />
     <ClInclude Include="src\ImageDrawer.h" />

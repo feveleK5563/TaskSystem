@@ -39,12 +39,12 @@ public:
 		max(max) {}
 
 	//Še”’l‚ğİ’è‚·‚é
-	void SetCounter(T setNow, T setAdd, T setMax, T setMin)
+	void SetCounter(T setNow, T setAdd, T setMin, T setMax)
 	{
 		now = setNow;
 		add = setAdd;
-		max = setMax;
 		min = setMin;
+		max = setMax;
 	}
 
 	//Œ»İ‚Ì’l‚ğ0‚É‚·‚é

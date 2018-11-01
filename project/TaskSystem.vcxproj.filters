@@ -29,14 +29,17 @@
     <Filter Include="システム\Utility\Math">
       <UniqueIdentifier>{6e8c700e-9550-4c86-878c-795b1cb2dd3a}</UniqueIdentifier>
     </Filter>
-    <Filter Include="システム\Utility\TimeCounter">
-      <UniqueIdentifier>{415a0a59-ec35-4c8f-b4bd-59fb566646c5}</UniqueIdentifier>
-    </Filter>
     <Filter Include="システム\Utility\UtilityFunctions">
       <UniqueIdentifier>{89f5544e-2450-4396-826c-ad849729a55c}</UniqueIdentifier>
     </Filter>
     <Filter Include="リソースファイル">
       <UniqueIdentifier>{b06ba40b-9643-418a-8eea-03cd1f428db5}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="システム\Utility\Easing">
+      <UniqueIdentifier>{f55b1e2c-1184-45d6-a40a-e501e52d2921}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="システム\Utility\Counter">
+      <UniqueIdentifier>{415a0a59-ec35-4c8f-b4bd-59fb566646c5}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
   <ItemGroup>
@@ -72,6 +75,9 @@
     </ClCompile>
     <ClCompile Include="src\UtilityFunctions.cpp">
       <Filter>システム\Utility\UtilityFunctions</Filter>
+    </ClCompile>
+    <ClCompile Include="src\Easing.cpp">
+      <Filter>システム\Utility\Easing</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -109,7 +115,10 @@
       <Filter>システム\Utility\UtilityFunctions</Filter>
     </ClInclude>
     <ClInclude Include="src\Counter.hpp">
-      <Filter>システム\Utility\TimeCounter</Filter>
+      <Filter>システム\Utility\Counter</Filter>
+    </ClInclude>
+    <ClInclude Include="src\Easing.h">
+      <Filter>システム\Utility\Easing</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
