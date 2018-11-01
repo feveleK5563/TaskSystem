@@ -91,21 +91,20 @@ namespace TestScene
 	//----------------------------------------------
 	void Task::Update()
 	{
+		hoge.RunLoop();
 		imgDrawer.AnimUpdate();
 		
-		auto& pad = InputDXL::GetPad(0);
 		auto& mouse = InputDXL::GetMouse();
 		if (mouse[MouseButton::RIGHT] == DOWN)
 		{
 			TaskSystem::GetInstance().AllKillTask();
 		}
 
-		float vol = pad.GetVolumeStickR() * 200.f;
-		float ang = pad.GetAngleStickR();
-		plus = MATH::Vec2(cos(ang) * vol, sin(ang) * vol);
-		DrawFormatString(0, 20, GetColor(255, 255, 255), "%.1f", MATH::ToDegree(ang));
-
-		hoge.RunLoop();
+		auto& task = TaskSystem::GetInstance();
+		if (task.GetTaskGroup<TestScene::Task>(defGroupName, defTaskName))
+		{
+			DrawFormatString(0, 25, GetColor(255, 255, 255), "(^^) < You are an idiot.");
+		}
 	}
 
 	//----------------------------------------------
@@ -121,7 +120,7 @@ namespace TestScene
 			Color(255, 255, 255, 255));*/
 
 		imgDrawer.Draw(MATH::Vec2(300, 300) + plus);
-		DrawFormatString(0, 40, GetColor(255, 255, 255), "%d", hoge.GetNow());
+		DrawFormatString(0, 50, GetColor(255, 255, 255), "%d", hoge.GetNow());
 
 		/*imgDrawer.DrawOne(
 			7,

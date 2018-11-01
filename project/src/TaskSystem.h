@@ -22,11 +22,11 @@ public:
 	void Draw();											//描画
 	void AddTask(std::shared_ptr<TaskAbstract> createObj);	//タスクを追加する
 
-	bool IsExistGroup(const std::string& groupName);	//指定したグループが存在しているか調べる
+	bool IsHaveGroup(const std::string& groupName);	//指定したグループが存在しているか調べる
 	void KillGroup(const std::string& groupName);		//指定したグループ名のタスクを全て殺す
 	void SleepGroup(const std::string& groupName);		//指定したグループ名のタスクの停止、再生を切り替える
 
-	bool IsExistTask(const std::string& groupName, const std::string& taskName);	//指定したタスクが存在しているか調べる
+	bool IsHaveTask(const std::string& groupName, const std::string& taskName);	//指定したタスクが存在しているか調べる
 	void KillTask(const std::string& groupName, const std::string& taskName);		//指定したタスクを全て殺す
 	void SleepTask(const std::string& groupName, const std::string& taskName);		//指定したタスクの停止、再生を切り替える
 
@@ -35,36 +35,34 @@ public:
 	
 	//指定したタスクの内、先頭のみを渡す
 	template<class T>
-	std::shared_ptr<const T> GetTaskOne(const std::string& groupName, const std::string& taskName)
+	std::shared_ptr<T> GetTaskOne(const std::string& groupName, const std::string& taskName)
 	{
-		std::shared_ptr<const T> cpyTask;
-
-		if (IsExistTask(groupName, taskName))
+		if (IsHaveTask(groupName, taskName))
 		{
-			cpyTask = std::static_pointer_cast<const T>(taskData[groupName][taskName].front());
+			return std::static_pointer_cast<T>(taskData[groupName][taskName].front());
 		}
 
-		return cpyTask;
+		return std::shared_ptr<T>();
 	}
 	//指定したタスクをまとめて渡す
 	template<class T>
-	std::shared_ptr<std::vector<std::shared_ptr<const T>>> GetTaskGroup(const std::string& groupName, const std::string& taskName)
+	std::shared_ptr<std::vector<std::shared_ptr<T>>> GetTaskGroup(const std::string& groupName, const std::string& taskName)
 	{
-		std::shared_ptr<std::vector<std::shared_ptr<const T>>> gd;
+		std::shared_ptr<std::vector<std::shared_ptr<T>>> gt;
 
-		if (IsExistTask(groupName, taskName))
+		if (IsHaveTask(groupName, taskName))
 		{
-			gd = std::make_shared<std::vector<std::shared_ptr<const T>>>();
+			gt = std::make_shared<std::vector<std::shared_ptr<T>>>();
 
-			gd->reserve(taskData[groupName][taskName].size() * sizeof(gd));
+			gt->reserve(taskData[groupName][taskName].size());
 
 			for (auto it : taskData[groupName][taskName])
 			{
-				gd->emplace_back(std::static_pointer_cast<const T>(it));
+				gt->emplace_back(std::static_pointer_cast<T>(it));
 			}
 		}
 
-		return gd;
+		return gt;
 	}
 
 	//インスタンスを得る
