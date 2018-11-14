@@ -20,7 +20,7 @@ public:
 		min(std::numeric_limits<T>::min()),
 		max(std::numeric_limits<T>::max()) {}
 	//コンストラクタ(加算量を設定)
-	Counter(T addVol):
+	Counter(T add):
 		now(0),
 		add(add),
 		min(std::numeric_limits<T>::min()),

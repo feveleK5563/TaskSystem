@@ -13,7 +13,8 @@ GameSystem::GameSystem(){}
 //初期化処理
 void GameSystem::Initialize()
 {
-	SetOutApplicationLogValidFlag(false);//Log.txtが作られないようにする
+	SetAlwaysRunFlag(TRUE);	//ウィンドウがノンアクティブでも実行する
+	SetOutApplicationLogValidFlag(FALSE);//Log.txtを作らない
 
 	if (IsFullScreenMode())
 	{
