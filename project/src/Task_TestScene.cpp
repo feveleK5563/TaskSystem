@@ -1,7 +1,7 @@
 #include "Task_TestScene.h"
-#include "DxLib.h"
 #include "ImageLoader.h"
 #include "InputState.h"
+#include "SystemDefine.h"
 
 namespace TestScene
 {
@@ -43,8 +43,9 @@ namespace TestScene
 	Task::Task():
 		TaskAbstract(defGroupName, defTaskName, defPriority),
 		res(Resource::Create()),
-		plus(0, 0),
-		hoge(1, 0, 100)
+		timer(40.f),
+		mousePos(0, 0),
+		onClick(false)
 	{
 		imgDrawer.Initialize(
 			ImageLoader::GetInstance().GetImageData(res->imageName), true);
@@ -75,7 +76,26 @@ namespace TestScene
 	//----------------------------------------------
 	void Task::Initialize()
 	{
+		//constantBufferのサイズは24だが、なんか2の累乗じゃないと正常に確保してくれないっぽいので32だけ確保
+		pscbhandle = CreateShaderConstantBuffer(32);
+		pshandle = LoadPixelShader("data/shader/circle.pso");
 
+		float x = (float)SYSDEF::SizeX, y = (float)SYSDEF::SizeY;
+		vertex[0].pos = VGet(-1.f, -1.f, 0.f);
+		vertex[1].pos = VGet(x, -1.f, 0.f);
+		vertex[2].pos = VGet(-1.f, y, 0.f);
+		vertex[3].pos = VGet(x, y, 0.f);
+
+		for (int i = 0; i < 4; ++i)
+		{
+			vertex[i].rhw = 1.f;
+			vertex[i].dif = GetColorU8(255, 255, 255, 255);
+			vertex[i].spc = GetColorU8(0, 0, 0, 0);
+			vertex[i].u = float(i % 2);
+			vertex[i].su = float(i % 2);
+			vertex[i].v = float(i / 2);
+			vertex[i].sv = float(i / 2);
+		}
 	}
 
 	//----------------------------------------------
@@ -83,7 +103,8 @@ namespace TestScene
 	//----------------------------------------------
 	void Task::Finalize()
 	{
-
+		DeleteShader(pshandle);
+		DeleteShaderConstantBuffer(pscbhandle);
 	}
 
 	//----------------------------------------------
@@ -91,19 +112,14 @@ namespace TestScene
 	//----------------------------------------------
 	void Task::Update()
 	{
-		hoge.RunLoop();
-		imgDrawer.AnimUpdate();
-		
-		auto& mouse = InputDXL::GetMouse();
-		if (mouse[MouseButton::RIGHT] == DOWN)
-		{
-			TaskSystem::GetInstance().AllKillTask();
-		}
+		timer.Run();
 
-		auto& task = TaskSystem::GetInstance();
-		if (task.GetTaskGroup<TestScene::Task>(defGroupName, defTaskName))
+		auto& mouse = InputDXL::GetMouse();
+		if (mouse[MouseButton::LEFT] == DOWN)
 		{
-			DrawFormatString(0, 25, GetColor(255, 255, 255), "(^^) < You are an idiot.");
+			mousePos = mouse.GetPos();
+			onClick = !onClick;
+			timer.Reset();
 		}
 	}
 
@@ -112,21 +128,24 @@ namespace TestScene
 	//----------------------------------------------
 	void Task::Draw()
 	{
-		/*imgDrawer.Draw(MATH::Vec2(0, 0) + plus,
-			1.f,
-			1.f,
-			0.f,
-			false,
-			Color(255, 255, 255, 255));*/
+		//ピクセルシェーダー用の定数バッファのアドレスを取得
+		constantBuffer* cb = (constantBuffer*)GetBufferShaderConstantBuffer(pscbhandle);
 
-		imgDrawer.Draw(MATH::Vec2(300, 300) + plus);
-		DrawFormatString(0, 50, GetColor(255, 255, 255), "%d", hoge.GetNow());
+		//各値を取得したアドレスに書き込み
+		cb->windowSize.u = (float)SYSDEF::SizeX;
+		cb->windowSize.v = (float)SYSDEF::SizeY;
+		cb->mousePos.u = mousePos.x;
+		cb->mousePos.v = mousePos.y;
+		cb->radius = timer.GetNow();
+		cb->onClick = onClick;
+		//ピクセルシェーダー用の定数バッファを更新して書き込んだ内容を反映する
+		UpdateShaderConstantBuffer(pscbhandle);
+		//ピクセルシェーダー用の定数バッファを定数バッファレジスタ0にセット
+		SetShaderConstantBuffer(pscbhandle, DX_SHADERTYPE_PIXEL, 0);
 
-		/*imgDrawer.DrawOne(
-			7,
-			plus + MATH::Vec2(300.f, 300.f),
-			MATH::Vec2(16, 16),
-			MATH::Box2D(16, 16, 32, 32),
-			false);*/
+		//ピクセルシェーダのセット
+		SetUsePixelShader(pshandle);
+		//描画
+		DrawPrimitive2DToShader(vertex, 4, DX_PRIMTYPE_TRIANGLESTRIP);
 	}
 }

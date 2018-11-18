@@ -1,4 +1,5 @@
 #pragma once
+#include "DxLib.h"
 #include "TaskSystem.h"
 #include "ImageDrawer.h"
 #include "Counter.hpp"
@@ -28,10 +29,24 @@ namespace TestScene
 	{
 	private:
 		std::shared_ptr<Resource> res;	//確保したリソース
-
 		ImageDrawer imgDrawer;
-		MATH::Vec2 plus;
-		Counter<int> hoge;
+
+		int pshandle;				//ピクセルシェーダーのハンドル
+		int pscbhandle;				//ピクセルシェーダー用の定数バッファハンドル
+		VERTEX2DSHADER vertex[4];	//頂点データ
+
+		Counter<float> timer;	//時間計測
+		MATH::Vec2 mousePos;	//マウスの座標
+		bool onClick;			//クリックしたか否か
+
+		//シェーダーに送る値
+		struct constantBuffer
+		{
+			FLOAT2 windowSize;
+			FLOAT2 mousePos;
+			float radius;
+			bool onClick;
+		};
 
 	public:
 		//コンストラクタ
