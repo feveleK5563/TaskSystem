@@ -5,6 +5,7 @@
 #include "DxLib.h"
 #include "ImageDrawer.h"
 
+//シェーダー管理君(とりあえずピクセルシェーダーにだけ対応してるつもり)
 class ShaderManager
 {
 private:
@@ -13,11 +14,11 @@ private:
 	//シェーダーの情報
 	struct ShaderData
 	{
-		int handle;								//シェーダーハンドル
-		int type;								//タイプ(ピクセルとか頂点とか)
+		int handle;									//シェーダーハンドル
+		int type;									//タイプ(ピクセルとか頂点とか)
 		std::unique_ptr<VERTEX2DSHADER[]> vertex;	//頂点データ
-		int vertexNum;							//頂点データの要素数
-		int primitiveType;						//描画方法
+		int vertexNum;								//頂点データの要素数
+		int primitiveType;							//描画方法
 	};
 	std::unordered_map<std::string, ShaderData> shaderData;
 
@@ -29,11 +30,16 @@ public:
 
 	//指定クラスサイズの定数バッファを作成(バッファIDが返る)
 	template <typename T>
-	void CreateConstantBuffer(std::string bufferName)
+	bool CreateConstantBuffer(std::string bufferName)
 	{
-		int num = 0, size = sizeof(T);
-		for (; num < size; num += 2);	//クラスサイズ以上の2の累乗分だけメモリを確保
+		int num = 1, size = sizeof(T);
+		for (; num < size; num *= 2);	//クラスサイズ以上の2の累乗分だけメモリを確保
 		bufferHandle[bufferName] = CreateShaderConstantBuffer(num);
+
+		if (bufferHandle[bufferName] == -1)
+			return false;
+
+		return true;
 	}
 	//定数バッファを取得
 	template <typename T>

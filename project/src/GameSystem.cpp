@@ -6,6 +6,7 @@
 #include "TaskSystem.h"
 #include "Task_TestScene.h"
 #include "ImageLoader.h"
+#include "ShaderManager.h"
 
 GameSystem::GameSystem(){}
 
@@ -48,6 +49,7 @@ void GameSystem::Initialize()
 	}
 
 	ImageLoader::CreateInstance();
+	ShaderManager::CreateInstance();
 
 	InputDXL::CreateMouseInstance();
 	InputDXL::CreateKeyInstance();
@@ -85,6 +87,7 @@ void GameSystem::Finalize()
 {
 	TaskSystem::DeleteInstance();
 	ImageLoader::DeleteInstance();
+	ShaderManager::DeleteInstance();
 	InputDXL::DeleteAllInstance();
 	DxLib_End();
 }

@@ -14,6 +14,9 @@ ShaderManager::~ShaderManager()
 bool ShaderManager::LoadShader(std::string shaderName, std::string filePath, int shaderType, bool isVertexSetWindowSize)
 {
 	shaderData[shaderName].handle = LoadPixelShader(filePath.c_str());
+	if (shaderData[shaderName].handle == -1)
+		return false;
+
 	shaderData[shaderName].type = shaderType;
 
 	if (!isVertexSetWindowSize)

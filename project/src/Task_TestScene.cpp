@@ -2,6 +2,7 @@
 #include "ImageLoader.h"
 #include "InputState.h"
 #include "SystemDefine.h"
+#include "ShaderManager.h"
 
 namespace TestScene
 {
@@ -14,6 +15,12 @@ namespace TestScene
 		imageName = "Bomb";
 		imageLoader.LoadDivImage(imageName, "data/image/bomb.png", 12, 12, 1, 64, 64);
 		imageLoader.AddAnimationData(imageName, 0, 11, 5.f, true);
+
+		auto& shaderManager = ShaderManager::GetInstance();
+		sName = "shader";
+		bool hoge = shaderManager.LoadShader(sName, "data/shader/circle.pso");
+		cbName = "constantBuffer";
+		hoge = shaderManager.CreateConstantBuffer<constantBuffer>(cbName);
 	}
 	//----------------------------------------------
 	//リソースのデストラクタ
@@ -21,6 +28,10 @@ namespace TestScene
 	{
 		auto& imageLoader = ImageLoader::GetInstance();
 		imageLoader.DeleteImageData(imageName);
+
+		auto& shaderManager = ShaderManager::GetInstance();
+		shaderManager.DeleteShaderData(sName);
+		shaderManager.DeleteConstantBuffer(cbName);
 	}
 	//----------------------------------------------
 	//リソースの生成
@@ -77,27 +88,6 @@ namespace TestScene
 	{
 		//画像受け取り
 		imgDrawer.Initialize(ImageLoader::GetInstance().GetImageData(res->imageName), true);
-
-		//constantBufferのサイズは24だが、なんか2の累乗じゃないと正常に確保してくれないっぽいので32だけ確保
-		pscbhandle = CreateShaderConstantBuffer(32);
-		pshandle = LoadPixelShader("data/shader/circle.pso");
-
-		float x = (float)SYSDEF::SizeX, y = (float)SYSDEF::SizeY;
-		vertex[0].pos = VGet(-1.f, -1.f, 0.f);
-		vertex[1].pos = VGet(x, -1.f, 0.f);
-		vertex[2].pos = VGet(-1.f, y, 0.f);
-		vertex[3].pos = VGet(x, y, 0.f);
-
-		for (int i = 0; i < 4; ++i)
-		{
-			vertex[i].rhw = 1.f;
-			vertex[i].dif = GetColorU8(255, 255, 255, 255);
-			vertex[i].spc = GetColorU8(0, 0, 0, 0);
-			vertex[i].u = float(i % 2);
-			vertex[i].su = float(i % 2); 
-			vertex[i].v = float(i / 2);
-			vertex[i].sv = float(i / 2);
-		}
 	}
 
 	//----------------------------------------------
@@ -132,25 +122,19 @@ namespace TestScene
 	void Task::Draw()
 	{
 		//ピクセルシェーダー用の定数バッファのアドレスを取得
-		constantBuffer* cb = (constantBuffer*)GetBufferShaderConstantBuffer(pscbhandle);
+		auto& shaderManager = ShaderManager::GetInstance();
+		constantBuffer& cb = shaderManager.GetConstantBuffer<constantBuffer>(res->cbName);
 
-		//各値を取得したアドレスに書き込み
-		cb->windowSize.u = (float)SYSDEF::SizeX;
-		cb->windowSize.v = (float)SYSDEF::SizeY;
-		cb->mousePos.u = mousePos.x;
-		cb->mousePos.v = mousePos.y;
-		cb->radius = timer.GetNow();
-		cb->onClick = onClick;
-		//ピクセルシェーダー用の定数バッファを更新して書き込んだ内容を反映する
-		UpdateShaderConstantBuffer(pscbhandle);
-		//ピクセルシェーダー用の定数バッファを定数バッファレジスタ0にセット
-		SetShaderConstantBuffer(pscbhandle, DX_SHADERTYPE_PIXEL, 0);
+		//各値を書き込み
+		cb.windowSize.u = (float)SYSDEF::SizeX;
+		cb.windowSize.v = (float)SYSDEF::SizeY;
+		cb.mousePos.u = mousePos.x;
+		cb.mousePos.v = mousePos.y;
+		cb.radius = timer.GetNow();
+		cb.onClick = onClick;
 
-		//ピクセルシェーダのセット
-		SetUsePixelShader(pshandle);
-		SetDrawBlendMode(DX_BLENDMODE_ALPHA, 255);
 		//描画
-		DrawPrimitive2DToShader(vertex, 4, DX_PRIMTYPE_TRIANGLESTRIP);
+		shaderManager.DrawShader(res->sName, res->cbName);
 
 		imgDrawer.Draw(MATH::Vec2(100, 100));
 	}

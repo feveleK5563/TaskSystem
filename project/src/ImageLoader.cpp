@@ -84,7 +84,7 @@ const ImageData& ImageLoader::GetImageData(const std::string& imageName)
 //‰æ‘œƒf[ƒ^‚Ì‰ğ•ú
 bool ImageLoader::DeleteImageData(const std::string& imageName)
 {
-	if (SafeImageDelete(imageName))
+	if (!SafeImageDelete(imageName))
 		return false;
 
 	imageData.erase(imageData.lower_bound(imageName));
