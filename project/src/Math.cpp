@@ -29,28 +29,28 @@ namespace MATH
 	Vec2::Vec2(float setX, float setY):
 		x(setX), y(setY){}
 
-	float Vec2::Hypotenuse() const
+	float Vec2::GetDistance() const
 	{
 		return std::hypotf(x, y);
 	}
-	float Vec2::FormedAngle(const Vec2& vec) const
+	float Vec2::GetFormedAngle(const Vec2& vec) const
 	{
-		return std::acosf(this->InnerProduct(vec) / (this->Hypotenuse() * vec.Hypotenuse()));
+		return std::acosf(this->GetDotProduct(vec) / (this->GetDistance() * vec.GetDistance()));
 	}
-	float Vec2::InnerProduct(const Vec2& vec) const
+	float Vec2::GetDotProduct(const Vec2& vec) const
 	{
 		return (x * vec.x) + (y * vec.y);
 	}
-	float Vec2::OuterProduct(const Vec2& vec) const
+	float Vec2::GetCrossProduct(const Vec2& vec) const
 	{
 		return (x * vec.x) - (y * vec.y);
 	}
 	Vec2& Vec2::Normalize()
 	{
-		*this /= this->Hypotenuse();
+		*this /= this->GetDistance();
 		return *this;
 	}
-	Vec2 Vec2::NormalizeCpy() const
+	Vec2 Vec2::GetNormalize() const
 	{
 		Vec2 tmp(*this);
 		return tmp.Normalize();
@@ -217,19 +217,19 @@ namespace MATH
 	}
 	bool Vec2::operator <(const Vec2& vec) const
 	{
-		return this->Hypotenuse() < vec.Hypotenuse();
+		return this->GetDistance() < vec.GetDistance();
 	}
 	bool Vec2::operator >(const Vec2& vec) const
 	{
-		return this->Hypotenuse() > vec.Hypotenuse();
+		return this->GetDistance() > vec.GetDistance();
 	}
 	bool Vec2::operator <=(const Vec2& vec) const
 	{
-		return this->Hypotenuse() <= vec.Hypotenuse();
+		return this->GetDistance() <= vec.GetDistance();
 	}
 	bool Vec2::operator >=(const Vec2& vec) const
 	{
-		return this->Hypotenuse() >= vec.Hypotenuse();
+		return this->GetDistance() >= vec.GetDistance();
 	}
 	float Vec2::operator[](int val) const
 	{
@@ -297,12 +297,12 @@ namespace MATH
 		y = (int)vec.y;
 		return *this;
 	}
-	Box2D Box2D::SetCpy(int setX, int setY)
+	Box2D Box2D::GetSet(int setX, int setY)
 	{
 		Box2D cpy(*this);
 		return cpy.Set(setX, setY);
 	}
-	Box2D Box2D::SetCpy(const Vec2& vec)
+	Box2D Box2D::GetSet(const Vec2& vec)
 	{
 		Box2D cpy(*this);
 		return cpy.Set(vec);
@@ -320,12 +320,12 @@ namespace MATH
 		y += (int)vec.y;
 		return *this;
 	}
-	Box2D Box2D::OffsetCpy(int setX, int setY) const
+	Box2D Box2D::GetOffset(int setX, int setY) const
 	{
 		Box2D cpy(*this);
 		return cpy.Offset(setX, setY);
 	}
-	Box2D Box2D::OffsetCpy(const Vec2& vec) const
+	Box2D Box2D::GetOffset(const Vec2& vec) const
 	{
 		Box2D cpy(*this);
 		return cpy.Offset(vec);

@@ -22,12 +22,12 @@ namespace MATH
 		Vec2(int setX, int setY);
 		Vec2(float setX, float setY);
 
-		float	Hypotenuse() const;						//斜辺を取得
-		float	FormedAngle(const Vec2& vec) const;		//なす角を取得(ラジアン)
-		float	InnerProduct(const Vec2& vec) const;	//内積を取得
-		float	OuterProduct(const Vec2& vec) const;	//外積を取得
+		float	GetDistance() const;					//斜辺を取得
+		float	GetFormedAngle(const Vec2& vec) const;	//なす角を取得(ラジアン)
+		float	GetDotProduct(const Vec2& vec) const;	//内積を取得
+		float	GetCrossProduct(const Vec2& vec) const;	//外積を取得
 		Vec2&	Normalize();							//単位ベクトルにする(正規化)
-		Vec2	NormalizeCpy() const;					//単位ベクトルを取得
+		Vec2	GetNormalize() const;					//単位ベクトルを取得
 
 		Vec2&	operator =(const Vec2& vec);
 		Vec2	operator +(int val) const;
@@ -87,13 +87,13 @@ namespace MATH
 
 		Box2D& Set(int setX, int setY);		//指定座標に設定
 		Box2D& Set(const Vec2& vec);		//指定座標に設定
-		Box2D SetCpy(int setX, int setY);	//指定座標に設定した値を取得
-		Box2D SetCpy(const Vec2& vec);		//指定座標に設定した値を取得
+		Box2D GetSet(int setX, int setY);	//指定座標に設定した値を取得
+		Box2D GetSet(const Vec2& vec);		//指定座標に設定した値を取得
 
 		Box2D& Offset(int setX, int setY);			//指定座標分オフセット
 		Box2D& Offset(const Vec2& vec);				//指定座標分オフセット
-		Box2D OffsetCpy(int setX, int setY) const;	//オフセットした値を取得
-		Box2D OffsetCpy(const Vec2& vec) const;		//オフセットした値を取得
+		Box2D GetOffset(int setX, int setY) const;	//オフセットした値を取得
+		Box2D GetOffset(const Vec2& vec) const;		//オフセットした値を取得
 
 		Box2D&	operator =(const Box2D& box);
 		Box2D	operator +(const Box2D& box) const;

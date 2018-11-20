@@ -47,8 +47,7 @@ namespace TestScene
 		mousePos(0, 0),
 		onClick(false)
 	{
-		imgDrawer.Initialize(
-			ImageLoader::GetInstance().GetImageData(res->imageName), true);
+
 	}
 	//----------------------------------------------
 	//タスクのデストラクタ
@@ -76,6 +75,9 @@ namespace TestScene
 	//----------------------------------------------
 	void Task::Initialize()
 	{
+		//画像受け取り
+		imgDrawer.Initialize(ImageLoader::GetInstance().GetImageData(res->imageName), true);
+
 		//constantBufferのサイズは24だが、なんか2の累乗じゃないと正常に確保してくれないっぽいので32だけ確保
 		pscbhandle = CreateShaderConstantBuffer(32);
 		pshandle = LoadPixelShader("data/shader/circle.pso");
@@ -92,7 +94,7 @@ namespace TestScene
 			vertex[i].dif = GetColorU8(255, 255, 255, 255);
 			vertex[i].spc = GetColorU8(0, 0, 0, 0);
 			vertex[i].u = float(i % 2);
-			vertex[i].su = float(i % 2);
+			vertex[i].su = float(i % 2); 
 			vertex[i].v = float(i / 2);
 			vertex[i].sv = float(i / 2);
 		}
@@ -112,6 +114,7 @@ namespace TestScene
 	//----------------------------------------------
 	void Task::Update()
 	{
+		imgDrawer.AnimUpdate();
 		timer.Run();
 
 		auto& mouse = InputDXL::GetMouse();
@@ -145,7 +148,10 @@ namespace TestScene
 
 		//ピクセルシェーダのセット
 		SetUsePixelShader(pshandle);
+		SetDrawBlendMode(DX_BLENDMODE_ALPHA, 255);
 		//描画
 		DrawPrimitive2DToShader(vertex, 4, DX_PRIMTYPE_TRIANGLESTRIP);
+
+		imgDrawer.Draw(MATH::Vec2(100, 100));
 	}
 }

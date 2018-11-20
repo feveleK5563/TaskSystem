@@ -18,7 +18,7 @@ class ImageDrawer
 {
 private:
 	ImageData	imageData;		//画像データ
-	MATH::Vec2	cPos;	//描画の基準位置
+	MATH::Vec2	cPos;			//描画の基準位置
 	int			nowAnimPattern;	//現在のアニメーションパターン番号
 	float		nowAnimImage;	//現在のアニメーション画像
 
@@ -54,5 +54,6 @@ public:
 	//指定番号の画像を描画範囲矩形を指定して描画する
 	void DrawOne(int imageSheet, const MATH::Vec2& pos, const MATH::Vec2& criterionPos, const MATH::Box2D& rect, bool isTurn, const Color& color = Color(255, 255, 255, 255));
 
-	const ImageData& GetImageData() const;	//画像データを取得
+	//現在の画像ハンドルを返す
+	const int GetImageHandle() const;
 };

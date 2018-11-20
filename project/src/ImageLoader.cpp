@@ -82,42 +82,26 @@ const ImageData& ImageLoader::GetImageData(const std::string& imageName)
 }
 
 //画像データの解放
-std::list<std::pair<const std::string, ImageData>, std::allocator<std::pair<const std::string, ImageData>>>::iterator ImageLoader::DeleteImageData(const std::string& imageName)
+bool ImageLoader::DeleteImageData(const std::string& imageName)
 {
-	if (!imageData.count(imageName))
-		return imageData.end();
+	if (SafeImageDelete(imageName))
+		return false;
 
-	for (int i = 0; i < imageData[imageName].sheetNum; ++i)
-	{
-		DeleteGraph(imageData[imageName].handle[i]);
-	}
-
-	if (imageData[imageName].sheetNum == 1)
-	{
-		UTIL::SafeDelete(imageData[imageName].handle);
-	}
-	else
-	{
-		UTIL::SafeDeleteArr(imageData[imageName].handle);
-	}
-
-	for (auto animit : imageData[imageName].anim)
-	{
-		UTIL::SafeDelete(animit);
-	}
-
-	return imageData.erase(imageData.lower_bound(imageName));
+	imageData.erase(imageData.lower_bound(imageName));
+	return true;
 }
 
 //全ての画像データの解放
-void ImageLoader::AllDeleteImageData()
+bool ImageLoader::AllDeleteImageData()
 {
 	for (	auto it = imageData.begin();
 			it != imageData.end();)
 	{
-		it = DeleteImageData(it->first);
+		SafeImageDelete(it->first);
+		it = imageData.erase(imageData.lower_bound(it->first));
 	}
 	imageData.clear();
+	return true;
 }
 
 ImageLoader* ImageLoader::loader = nullptr;
@@ -139,4 +123,33 @@ void ImageLoader::CreateInstance()
 void ImageLoader::DeleteInstance()
 {
 	UTIL::SafeDelete(loader);
+}
+
+
+//安全に画像データを削除する
+bool ImageLoader::SafeImageDelete(const std::string& imageName)
+{
+	if (!imageData.count(imageName))
+		return false;
+
+	for (int i = 0; i < imageData[imageName].sheetNum; ++i)
+	{
+		DeleteGraph(imageData[imageName].handle[i]);
+	}
+
+	if (imageData[imageName].sheetNum == 1)
+	{
+		UTIL::SafeDelete(imageData[imageName].handle);
+	}
+	else
+	{
+		UTIL::SafeDeleteArr(imageData[imageName].handle);
+	}
+
+	for (auto animit : imageData[imageName].anim)
+	{
+		UTIL::SafeDelete(animit);
+	}
+
+	return true;
 }

@@ -41,6 +41,9 @@
     <Filter Include="システム\Utility\Counter">
       <UniqueIdentifier>{415a0a59-ec35-4c8f-b4bd-59fb566646c5}</UniqueIdentifier>
     </Filter>
+    <Filter Include="システム\Utility\Shader">
+      <UniqueIdentifier>{6b6bb59c-7666-4806-a556-f1e63f42dec1}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="src\GameSystem.cpp">
@@ -78,6 +81,9 @@
     </ClCompile>
     <ClCompile Include="src\Easing.cpp">
       <Filter>システム\Utility\Easing</Filter>
+    </ClCompile>
+    <ClCompile Include="src\ShaderManager.cpp">
+      <Filter>システム\Utility\Shader</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -119,6 +125,9 @@
     </ClInclude>
     <ClInclude Include="src\Easing.h">
       <Filter>システム\Utility\Easing</Filter>
+    </ClInclude>
+    <ClInclude Include="src\ShaderManager.h">
+      <Filter>システム\Utility\Shader</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
