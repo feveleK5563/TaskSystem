@@ -28,6 +28,7 @@ bool ImageLoader::LoadOneImage(const std::string& imageName, const std::string& 
 {
 	if (imageData.find(imageName) != imageData.end())
 	{
+		//‚·‚Å‚É“Ç‚İ‚Ü‚ê‚Ä‚¢‚½‚ç‰½‚à‚µ‚È‚¢
 		return false;
 	}
 

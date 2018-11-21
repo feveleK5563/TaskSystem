@@ -42,10 +42,6 @@ namespace TestScene
 		std::shared_ptr<Resource> res;	//確保したリソース
 		ImageDrawer imgDrawer;
 
-		int pshandle;				//ピクセルシェーダーのハンドル
-		int pscbhandle;				//ピクセルシェーダー用の定数バッファハンドル
-		VERTEX2DSHADER vertex[4];	//頂点データ
-
 		Counter<float> timer;	//時間計測
 		MATH::Vec2 mousePos;	//マウスの座標
 		bool onClick;			//クリックしたか否か

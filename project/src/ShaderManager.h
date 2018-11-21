@@ -50,7 +50,7 @@ public:
 	}
 
 
-	//シェーダーを読み込む(第三引数がtrueで頂点データが画面サイズぴったりに設定される)
+	//シェーダーを読み込む(第四引数がtrueで頂点データが画面サイズぴったりに設定される)
 	bool LoadShader(std::string shaderName, std::string filePath,
 					int shaderType = DX_SHADERTYPE_PIXEL, bool isVertexSetWindowSize = true);
 	//頂点データと描画方法を設定

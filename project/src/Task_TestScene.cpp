@@ -95,8 +95,7 @@ namespace TestScene
 	//----------------------------------------------
 	void Task::Finalize()
 	{
-		DeleteShader(pshandle);
-		DeleteShaderConstantBuffer(pscbhandle);
+
 	}
 
 	//----------------------------------------------
@@ -123,7 +122,7 @@ namespace TestScene
 	{
 		//ピクセルシェーダー用の定数バッファのアドレスを取得
 		auto& shaderManager = ShaderManager::GetInstance();
-		constantBuffer& cb = shaderManager.GetConstantBuffer<constantBuffer>(res->cbName);
+		auto& cb = shaderManager.GetConstantBuffer<constantBuffer>(res->cbName);
 
 		//各値を書き込み
 		cb.windowSize.u = (float)SYSDEF::SizeX;
