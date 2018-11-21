@@ -4,15 +4,15 @@
 namespace MATH
 {
 	//弧度法変換
-	float ToRadian(float val)
+	float ToRadian(float deg)
 	{
-		return val * PI / 180.0f;
+		return deg * PI / 180.0f;
 	}
 
 	//度数法変換
-	float ToDegree(float val)
+	float ToDegree(float rad)
 	{
-		return 180.0f * val / PI;
+		return 180.0f * rad / PI;
 	}
 
 	//--------------------------------------------------------
@@ -29,6 +29,33 @@ namespace MATH
 	Vec2::Vec2(float setX, float setY):
 		x(setX), y(setY){}
 
+	float Vec2::GetDistance() const
+	{
+		return std::hypotf(x, y);
+	}
+	float Vec2::GetFormedAngle(const Vec2& vec) const
+	{
+		return std::acosf(this->GetDotProduct(vec) / (this->GetDistance() * vec.GetDistance()));
+	}
+	float Vec2::GetDotProduct(const Vec2& vec) const
+	{
+		return (x * vec.x) + (y * vec.y);
+	}
+	float Vec2::GetCrossProduct(const Vec2& vec) const
+	{
+		return (x * vec.x) - (y * vec.y);
+	}
+	Vec2& Vec2::Normalize()
+	{
+		*this /= this->GetDistance();
+		return *this;
+	}
+	Vec2 Vec2::GetNormalize() const
+	{
+		Vec2 tmp(*this);
+		return tmp.Normalize();
+	}
+
 	Vec2& Vec2::operator =(const Vec2& vec)
 	{
 		x = vec.x;
@@ -36,6 +63,10 @@ namespace MATH
 		return *this;
 	}
 	Vec2 Vec2::operator +(int val) const
+	{
+		return Vec2(x + (float)val, y + (float)val);
+	}
+	Vec2 Vec2::operator +(float val) const
 	{
 		return Vec2(x + val, y + val);
 	}
@@ -45,11 +76,19 @@ namespace MATH
 	}
 	Vec2 Vec2::operator -(int val) const
 	{
+		return Vec2(x - (float)val, y - (float)val);
+	}
+	Vec2 Vec2::operator -(float val) const
+	{
 		return Vec2(x - val, y - val);
 	}
 	Vec2 Vec2::operator -(const Vec2& vec) const
 	{
 		return Vec2(x - vec.x, y - vec.y);
+	}
+	Vec2 Vec2::operator *(int mul) const
+	{
+		return Vec2(x * (float)mul, y * (float)mul);
 	}
 	Vec2 Vec2::operator *(float mul) const
 	{
@@ -59,6 +98,10 @@ namespace MATH
 	{
 		return Vec2(x * vec.x, y * vec.y);
 	}
+	Vec2 Vec2::operator /(int div) const
+	{
+		return Vec2(x * (float)div, y * (float)div);
+	}
 	Vec2 Vec2::operator /(float div) const
 	{
 		return Vec2(x * div, y * div);
@@ -66,6 +109,12 @@ namespace MATH
 	Vec2 Vec2::operator /(const Vec2& vec) const
 	{
 		return Vec2(x / vec.x, y / vec.y);
+	}
+	Vec2& Vec2::operator +=(int val)
+	{
+		x += (float)val;
+		y += (float)val;
+		return *this;
 	}
 	Vec2& Vec2::operator +=(float val)
 	{
@@ -77,6 +126,12 @@ namespace MATH
 	{
 		x += vec.x;
 		y += vec.y;
+		return *this;
+	}
+	Vec2& Vec2::operator -=(int val)
+	{
+		x -= (float)val;
+		y -= (float)val;
 		return *this;
 	}
 	Vec2& Vec2::operator -=(float val)
@@ -91,6 +146,12 @@ namespace MATH
 		y -= vec.y;
 		return *this;
 	}
+	Vec2& Vec2::operator *=(int mul)
+	{
+		x *= (float)mul;
+		y *= (float)mul;
+		return *this;
+	}
 	Vec2& Vec2::operator *=(float mul)
 	{
 		x *= mul;
@@ -101,6 +162,12 @@ namespace MATH
 	{
 		x *= vec.x;
 		y *= vec.y;
+		return *this;
+	}
+	Vec2& Vec2::operator /=(int div)
+	{
+		x /= (float)div;
+		y /= (float)div;
 		return *this;
 	}
 	Vec2& Vec2::operator /=(float div)
@@ -144,6 +211,35 @@ namespace MATH
 		tmp.y *= -1.f;
 		return tmp;
 	}
+	bool Vec2::operator ==(const Vec2& vec) const
+	{
+		return (x == vec.x) && (y == vec.y);
+	}
+	bool Vec2::operator <(const Vec2& vec) const
+	{
+		return this->GetDistance() < vec.GetDistance();
+	}
+	bool Vec2::operator >(const Vec2& vec) const
+	{
+		return this->GetDistance() > vec.GetDistance();
+	}
+	bool Vec2::operator <=(const Vec2& vec) const
+	{
+		return this->GetDistance() <= vec.GetDistance();
+	}
+	bool Vec2::operator >=(const Vec2& vec) const
+	{
+		return this->GetDistance() >= vec.GetDistance();
+	}
+	float Vec2::operator[](int val) const
+	{
+		switch (val % 2)
+		{
+		case 0: return x;
+		case 1: return y;
+		}
+		return 0.f;
+	}
 
 
 	//--------------------------------------------------------
@@ -159,6 +255,15 @@ namespace MATH
 
 	Box2D::Box2D(int setW, int setH):
 		x(0), y(0), w(setW), h(setH){}
+
+	int Box2D::Area() const
+	{
+		return w * y;
+	}
+	Vec2 Box2D::GetPos() const
+	{
+		return Vec2(x, y);
+	}
 
 	bool Box2D::IsHit(const Box2D& box) const
 	{
@@ -180,25 +285,50 @@ namespace MATH
 		DrawBox(x, y, x + w, y + h, color, isFill);
 	}
 
-	void Box2D::Offset(int setX, int setY)
+	Box2D& Box2D::Set(int setX, int setY)
 	{
 		x = setX;
 		y = setY;
+		return *this;
 	}
-	void Box2D::Offset(const Vec2& vec)
+	Box2D& Box2D::Set(const Vec2& vec)
 	{
 		x = (int)vec.x;
 		y = (int)vec.y;
+		return *this;
 	}
-	Box2D Box2D::OffsetCpy(int setX, int setY) const
+	Box2D Box2D::GetSet(int setX, int setY)
 	{
-		Box2D cpy(setX, setY, w, h);
-		return cpy;
+		Box2D cpy(*this);
+		return cpy.Set(setX, setY);
 	}
-	Box2D Box2D::OffsetCpy(const Vec2& vec) const
+	Box2D Box2D::GetSet(const Vec2& vec)
 	{
-		Box2D cpy((int)vec.x, (int)vec.y, w, h);
-		return cpy;
+		Box2D cpy(*this);
+		return cpy.Set(vec);
+	}
+
+	Box2D& Box2D::Offset(int setX, int setY)
+	{
+		x += setX;
+		y += setY;
+		return *this;
+	}
+	Box2D& Box2D::Offset(const Vec2& vec)
+	{
+		x += (int)vec.x;
+		y += (int)vec.y;
+		return *this;
+	}
+	Box2D Box2D::GetOffset(int setX, int setY) const
+	{
+		Box2D cpy(*this);
+		return cpy.Offset(setX, setY);
+	}
+	Box2D Box2D::GetOffset(const Vec2& vec) const
+	{
+		Box2D cpy(*this);
+		return cpy.Offset(vec);
 	}
 
 	Box2D& Box2D::operator =(const Box2D& box)
@@ -252,5 +382,21 @@ namespace MATH
 		w /= div;
 		h /= div;
 		return *this;
+	}
+	bool Box2D::operator ==(const Box2D& box)
+	{
+		return	(x == box.x) && (y == box.y) &&
+				(w == box.w) && (h == box.h);
+	}
+	int	Box2D::operator [](int val)
+	{
+		switch (val % 4)
+		{
+		case 0: return x;
+		case 1: return y;
+		case 2: return w;
+		case 3: return h;
+		}
+		return 0;
 	}
 }

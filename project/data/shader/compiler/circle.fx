@@ -12,7 +12,7 @@ struct PS_OUTPUT
 };
 
 //描画位置の計算に使用する値
-cbuffer CBUFFER : register( b0 )
+cbuffer CBUFFER
 {
 	float2	size;		//画面サイズ
 	float2	pos;		//円の中心座標
@@ -38,7 +38,7 @@ PS_OUTPUT main( PS_INPUT psin )
 	psout.Output.r = 0.f;
 	psout.Output.g = 0.f;
 	psout.Output.b = 0.f;
-	psout.Output.a = 1.f;
+	psout.Output.a = 0.f;
 	
 	float2 p;
 	p.x = size.x * psin.TexCoord0.x;
@@ -49,6 +49,7 @@ PS_OUTPUT main( PS_INPUT psin )
 		if(CirclePixel(p))
 		{
 			psout.Output.r = 1.f;
+			psout.Output.a = 0.5f;
 		}
 		else
 		{
@@ -64,6 +65,7 @@ PS_OUTPUT main( PS_INPUT psin )
 		else
 		{
 			psout.Output.r = 1.f;
+			psout.Output.a = 0.5f;
 		}
 	}
 	

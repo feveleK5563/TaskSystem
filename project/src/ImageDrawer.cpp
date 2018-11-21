@@ -114,18 +114,14 @@ void ImageDrawer::Draw(const MATH::Vec2& pos, float scaleX, float scaleY, float 
 	SetDrawBright(color.r, color.g, color.b);
 	SetDrawBlendMode(DX_BLENDMODE_ALPHA, color.alpha);
 
-	int nai = (int)nowAnimImage;
-	if (imageData.anim[nowAnimPattern]->relativeSheet < 0)
-	{
-		nai *= -1;
-	}
+	int handle = GetImageHandle();
 
 	DrawRotaGraph3F(
 		pos.x, pos.y,
 		cPos.x, cPos.y,
 		(double)scaleX, (double)scaleY,
 		(double)angle,
-		imageData.handle[imageData.anim[nowAnimPattern]->startSheet + nai],
+		handle,
 		true,
 		isTurn,
 		false);
@@ -140,11 +136,7 @@ void ImageDrawer::Draw(const MATH::Vec2& pos, const MATH::Vec2& criterionPos, co
 	SetDrawBright(color.r, color.g, color.b);
 	SetDrawBlendMode(DX_BLENDMODE_ALPHA, color.alpha);
 
-	int nai = (int)nowAnimImage;
-	if (imageData.anim[nowAnimPattern]->relativeSheet < 0)
-	{
-		nai *= -1;
-	}
+	int handle = GetImageHandle();
 
 	MATH::Vec2 tmppos = -pos;
 
@@ -152,7 +144,7 @@ void ImageDrawer::Draw(const MATH::Vec2& pos, const MATH::Vec2& criterionPos, co
 		pos.x - criterionPos.x, pos.y - criterionPos.y,
 		rect.x, rect.y,
 		rect.w, rect.h,
-		imageData.handle[imageData.anim[nowAnimPattern]->startSheet + nai],
+		handle,
 		true,
 		isTurn,
 		false);
@@ -233,7 +225,13 @@ void ImageDrawer::DrawOne(int imageSheet, const MATH::Vec2& pos, const MATH::Vec
 }
 
 //‰æ‘œƒf[ƒ^‚ðŽæ“¾
-const ImageData& ImageDrawer::GetImageData() const
+const int ImageDrawer::GetImageHandle() const
 {
-	return imageData;
+	int nai = (int)nowAnimImage;
+	if (imageData.anim[nowAnimPattern]->relativeSheet < 0)
+	{
+		nai *= -1;
+	}
+
+	return imageData.handle[imageData.anim[nowAnimPattern]->startSheet + nai];
 }

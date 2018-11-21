@@ -1,4 +1,5 @@
 #pragma once
+#include "DxLib.h"
 #include "TaskSystem.h"
 #include "ImageDrawer.h"
 #include "Counter.hpp"
@@ -9,6 +10,15 @@ namespace TestScene
 	const std::string	defTaskName		("テスト用タスク");	//タスク名
 	const float			defPriority(0.f);	//デフォルトの処理優先度
 
+	//シェーダーに送る構造体
+	struct constantBuffer
+	{
+		FLOAT2 windowSize;
+		FLOAT2 mousePos;
+		float radius;
+		bool onClick;
+	};
+
 	//----------------------------------------------
 	class Resource
 	{
@@ -17,6 +27,8 @@ namespace TestScene
 
 	public:
 		std::string imageName;
+		std::string sName;
+		std::string cbName;
 
 		Resource();		//コンストラクタ
 		~Resource();	//デストラクタ
@@ -28,10 +40,11 @@ namespace TestScene
 	{
 	private:
 		std::shared_ptr<Resource> res;	//確保したリソース
-
 		ImageDrawer imgDrawer;
-		MATH::Vec2 plus;
-		Counter<int> hoge;
+
+		Counter<float> timer;	//時間計測
+		MATH::Vec2 mousePos;	//マウスの座標
+		bool onClick;			//クリックしたか否か
 
 	public:
 		//コンストラクタ

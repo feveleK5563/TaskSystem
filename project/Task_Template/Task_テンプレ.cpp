@@ -1,5 +1,4 @@
 #include "Task_タスク名.h"
-#include "DxLib.h"
 
 namespace タスク名
 {

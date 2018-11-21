@@ -50,10 +50,10 @@ public:
 	const ImageData& GetImageData(const std::string& imgName);
 	
 	//画像データの解放
-	std::list<std::pair<const std::string, ImageData>, std::allocator<std::pair<const std::string, ImageData>>>::iterator DeleteImageData(const std::string& imgName);
+	bool DeleteImageData(const std::string& imgName);
 
 	//全ての画像データの解放
-	void AllDeleteImageData();
+	bool AllDeleteImageData();
 
 	//インスタンスを得る
 	static ImageLoader& GetInstance();
@@ -61,4 +61,8 @@ public:
 	static void CreateInstance();
 	//インスタンスを解放する
 	static void DeleteInstance();
+
+private:
+	//安全に画像データを削除する
+	bool SafeImageDelete(const std::string& imageName);
 };

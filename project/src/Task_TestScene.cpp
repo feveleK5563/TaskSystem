@@ -1,7 +1,8 @@
 #include "Task_TestScene.h"
-#include "DxLib.h"
 #include "ImageLoader.h"
 #include "InputState.h"
+#include "SystemDefine.h"
+#include "ShaderManager.h"
 
 namespace TestScene
 {
@@ -14,6 +15,12 @@ namespace TestScene
 		imageName = "Bomb";
 		imageLoader.LoadDivImage(imageName, "data/image/bomb.png", 12, 12, 1, 64, 64);
 		imageLoader.AddAnimationData(imageName, 0, 11, 5.f, true);
+
+		auto& shaderManager = ShaderManager::GetInstance();
+		sName = "shader";
+		bool hoge = shaderManager.LoadShader(sName, "data/shader/circle.pso");
+		cbName = "constantBuffer";
+		hoge = shaderManager.CreateConstantBuffer<constantBuffer>(cbName);
 	}
 	//----------------------------------------------
 	//リソースのデストラクタ
@@ -21,6 +28,10 @@ namespace TestScene
 	{
 		auto& imageLoader = ImageLoader::GetInstance();
 		imageLoader.DeleteImageData(imageName);
+
+		auto& shaderManager = ShaderManager::GetInstance();
+		shaderManager.DeleteShaderData(sName);
+		shaderManager.DeleteConstantBuffer(cbName);
 	}
 	//----------------------------------------------
 	//リソースの生成
@@ -43,11 +54,11 @@ namespace TestScene
 	Task::Task():
 		TaskAbstract(defGroupName, defTaskName, defPriority),
 		res(Resource::Create()),
-		plus(0, 0),
-		hoge(1, 0, 100)
+		timer(40.f),
+		mousePos(0, 0),
+		onClick(false)
 	{
-		imgDrawer.Initialize(
-			ImageLoader::GetInstance().GetImageData(res->imageName), true);
+
 	}
 	//----------------------------------------------
 	//タスクのデストラクタ
@@ -75,7 +86,8 @@ namespace TestScene
 	//----------------------------------------------
 	void Task::Initialize()
 	{
-
+		//画像受け取り
+		imgDrawer.Initialize(ImageLoader::GetInstance().GetImageData(res->imageName), true);
 	}
 
 	//----------------------------------------------
@@ -91,19 +103,15 @@ namespace TestScene
 	//----------------------------------------------
 	void Task::Update()
 	{
-		hoge.RunLoop();
 		imgDrawer.AnimUpdate();
-		
-		auto& mouse = InputDXL::GetMouse();
-		if (mouse[MouseButton::RIGHT] == DOWN)
-		{
-			TaskSystem::GetInstance().AllKillTask();
-		}
+		timer.Run();
 
-		auto& task = TaskSystem::GetInstance();
-		if (task.GetTaskGroup<TestScene::Task>(defGroupName, defTaskName))
+		auto& mouse = InputDXL::GetMouse();
+		if (mouse[MouseButton::LEFT] == DOWN)
 		{
-			DrawFormatString(0, 25, GetColor(255, 255, 255), "(^^) < You are an idiot.");
+			mousePos = mouse.GetPos();
+			onClick = !onClick;
+			timer.Reset();
 		}
 	}
 
@@ -112,21 +120,21 @@ namespace TestScene
 	//----------------------------------------------
 	void Task::Draw()
 	{
-		/*imgDrawer.Draw(MATH::Vec2(0, 0) + plus,
-			1.f,
-			1.f,
-			0.f,
-			false,
-			Color(255, 255, 255, 255));*/
+		//ピクセルシェーダー用の定数バッファのアドレスを取得
+		auto& shaderManager = ShaderManager::GetInstance();
+		auto& cb = shaderManager.GetConstantBuffer<constantBuffer>(res->cbName);
 
-		imgDrawer.Draw(MATH::Vec2(300, 300) + plus);
-		DrawFormatString(0, 50, GetColor(255, 255, 255), "%d", hoge.GetNow());
+		//各値を書き込み
+		cb.windowSize.u = (float)SYSDEF::SizeX;
+		cb.windowSize.v = (float)SYSDEF::SizeY;
+		cb.mousePos.u = mousePos.x;
+		cb.mousePos.v = mousePos.y;
+		cb.radius = timer.GetNow();
+		cb.onClick = onClick;
 
-		/*imgDrawer.DrawOne(
-			7,
-			plus + MATH::Vec2(300.f, 300.f),
-			MATH::Vec2(16, 16),
-			MATH::Box2D(16, 16, 32, 32),
-			false);*/
+		//描画
+		shaderManager.DrawShader(res->sName, res->cbName);
+
+		imgDrawer.Draw(MATH::Vec2(100, 100));
 	}
 }

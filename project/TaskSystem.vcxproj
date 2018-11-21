@@ -25,6 +25,7 @@
     <ClCompile Include="src\ImageDrawer.cpp" />
     <ClCompile Include="src\ImageLoader.cpp" />
     <ClCompile Include="src\InputState.cpp" />
+    <ClCompile Include="src\ShaderManager.cpp" />
     <ClCompile Include="src\UtilityFunctions.cpp" />
     <ClCompile Include="src\WinMain.cpp" />
     <ClCompile Include="src\Math.cpp" />
@@ -40,6 +41,7 @@
     <ClInclude Include="src\ImageLoader.h" />
     <ClInclude Include="src\InputState.h" />
     <ClInclude Include="src\Math.h" />
+    <ClInclude Include="src\ShaderManager.h" />
     <ClInclude Include="src\TaskAbstract.h" />
     <ClInclude Include="src\SystemDefine.h" />
     <ClInclude Include="src\TaskSystem.h" />
