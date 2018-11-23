@@ -1,6 +1,5 @@
 #include "ShaderManager.h"
-#include <assert.h>
-#include "UtilityFunctions.h"
+#include "Utility.h"
 #include "SystemDefine.h"
 
 ShaderManager::~ShaderManager()
@@ -23,7 +22,7 @@ bool ShaderManager::LoadShader(std::string shaderName, std::string filePath, int
 		return true;
 
 	//頂点データを画面サイズぴったりに設定する
-	float x = (float)SYSDEF::SizeX, y = (float)SYSDEF::SizeY;
+	float x = (float)SysDef::SizeX, y = (float)SysDef::SizeY;
 	shaderData[shaderName].vertexNum = 4;
 	shaderData[shaderName].vertex = std::make_unique<VERTEX2DSHADER[]>(4);
 	shaderData[shaderName].vertex[0].pos = VGet(-1.f, -1.f, 0.f);
@@ -143,5 +142,5 @@ void ShaderManager::CreateInstance()
 //インスタンスを解放する
 void ShaderManager::DeleteInstance()
 {
-	UTIL::SafeDelete(shaderManager);
+	Utility::SafeDelete(shaderManager);
 }

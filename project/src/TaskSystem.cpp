@@ -1,7 +1,6 @@
 #include <algorithm>
-#include <assert.h>
 #include "TaskSystem.h"
-#include "UtilityFunctions.h"
+#include "Utility.h"
 
 TaskSystem::TaskSystem() {}
 
@@ -65,7 +64,7 @@ void TaskSystem::CreateInstance()
 //インスタンスを解放する
 void TaskSystem::DeleteInstance()
 {
-	UTIL::SafeDelete(ts);
+	Utility::SafeDelete(ts);
 }
 
 //指定したグループ名のタスクが存在しているか調べる

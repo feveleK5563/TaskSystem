@@ -18,7 +18,7 @@ void Easing::Run(Ease em, float durationTime)
 //引数：始点(float), 終点(float)
 float Easing::GetVolume(float startPoint, float endPoint)
 {
-	return startPoint + (volume * endPoint);
+	return startPoint + (volume * (startPoint - endPoint));
 }
 
 //イージングが終了したらtrueが返る

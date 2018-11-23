@@ -125,16 +125,15 @@ namespace TestScene
 		auto& cb = shaderManager.GetConstantBuffer<constantBuffer>(res->cbName);
 
 		//Še’l‚ð‘‚«ž‚Ý
-		cb.windowSize.u = (float)SYSDEF::SizeX;
-		cb.windowSize.v = (float)SYSDEF::SizeY;
+		cb.windowSize.u = (float)SysDef::SizeX;
+		cb.windowSize.v = (float)SysDef::SizeY;
 		cb.mousePos.u = mousePos.x;
 		cb.mousePos.v = mousePos.y;
 		cb.radius = timer.GetNow();
 		cb.onClick = onClick;
 
 		//•`‰æ
+		imgDrawer.Draw(Math::Vec2(100, 100));
 		shaderManager.DrawShader(res->sName, res->cbName);
-
-		imgDrawer.Draw(MATH::Vec2(100, 100));
 	}
 }

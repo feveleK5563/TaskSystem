@@ -1,7 +1,6 @@
-#include <assert.h>
 #include "ImageLoader.h"
 #include "DxLib.h"
-#include "UtilityFunctions.h"
+#include "Utility.h"
 
 AnimData::AnimData():
 	startSheet(0),
@@ -123,7 +122,7 @@ void ImageLoader::CreateInstance()
 //インスタンスを解放する
 void ImageLoader::DeleteInstance()
 {
-	UTIL::SafeDelete(loader);
+	Utility::SafeDelete(loader);
 }
 
 
@@ -140,16 +139,16 @@ bool ImageLoader::SafeImageDelete(const std::string& imageName)
 
 	if (imageData[imageName].sheetNum == 1)
 	{
-		UTIL::SafeDelete(imageData[imageName].handle);
+		Utility::SafeDelete(imageData[imageName].handle);
 	}
 	else
 	{
-		UTIL::SafeDeleteArr(imageData[imageName].handle);
+		Utility::SafeDeleteArr(imageData[imageName].handle);
 	}
 
 	for (auto animit : imageData[imageName].anim)
 	{
-		UTIL::SafeDelete(animit);
+		Utility::SafeDelete(animit);
 	}
 
 	return true;

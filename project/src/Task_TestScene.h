@@ -43,7 +43,7 @@ namespace TestScene
 		ImageDrawer imgDrawer;
 
 		Counter<float> timer;	//時間計測
-		MATH::Vec2 mousePos;	//マウスの座標
+		Math::Vec2 mousePos;	//マウスの座標
 		bool onClick;			//クリックしたか否か
 
 	public:

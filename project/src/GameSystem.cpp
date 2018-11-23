@@ -31,11 +31,11 @@ void GameSystem::Initialize()
 		//ウインドウのサイズを手動で変更できず、且つウインドウのサイズに合わせて拡大もしないようにする
 		SetWindowSizeChangeEnableFlag(FALSE, FALSE);
 		//ウィンドウサイズ(解像度以下に設定)
-		SetWindowSize(SYSDEF::SizeX, SYSDEF::SizeY);
+		SetWindowSize(SysDef::SizeX, SysDef::SizeY);
 	}
 
 	//画面解像度とカラービット数
-	SetGraphMode(SYSDEF::SizeX, SYSDEF::SizeY, 32);
+	SetGraphMode(SysDef::SizeX, SysDef::SizeY, 32);
 	//ウィンドウタイトルを付ける
 	SetWindowText("DXlib");
 
@@ -51,9 +51,9 @@ void GameSystem::Initialize()
 	ImageLoader::CreateInstance();
 	ShaderManager::CreateInstance();
 
-	InputDXL::CreateMouseInstance();
-	InputDXL::CreateKeyInstance();
-	InputDXL::CreatePadInstance(1);
+	InputDXL::CreateMouseInstance();	//マウスを生成
+	InputDXL::CreateKeyInstance();		//キーボードを生成
+	InputDXL::CreatePadInstance(1);		//ゲームパッドを指定個数生成
 
 	FirstCreateTask();
 }

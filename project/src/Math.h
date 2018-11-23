@@ -2,7 +2,7 @@
 #include <math.h>
 #include <cmath>
 
-namespace MATH
+namespace Math
 {
 	static const float	PI	= 3.1415926535897932384626433832795028841971f;
 	static const double	dPI = 3.1415926535897932384626433832795028841971;

@@ -64,7 +64,7 @@ private:
 	private:
 		static const int keyNum = 3;
 		ButtonInfo keyInfo[keyNum];
-		MATH::Vec2 pos;
+		Math::Vec2 pos;
 		bool isInput;
 
 	public:
@@ -72,7 +72,7 @@ private:
 
 		bool GetInputState();
 
-		const MATH::Vec2& GetPos() const;	//マウスポインタの座標を取得
+		const Math::Vec2& GetPos() const;	//マウスポインタの座標を取得
 		bool IsInput() const;				//何らかの入力があったか否か
 
 		const ButtonInfo& operator [](const MouseButton INPUT_TYPE) const;

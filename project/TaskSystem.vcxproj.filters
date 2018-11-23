@@ -29,9 +29,6 @@
     <Filter Include="システム\Utility\Math">
       <UniqueIdentifier>{6e8c700e-9550-4c86-878c-795b1cb2dd3a}</UniqueIdentifier>
     </Filter>
-    <Filter Include="システム\Utility\UtilityFunctions">
-      <UniqueIdentifier>{89f5544e-2450-4396-826c-ad849729a55c}</UniqueIdentifier>
-    </Filter>
     <Filter Include="リソースファイル">
       <UniqueIdentifier>{b06ba40b-9643-418a-8eea-03cd1f428db5}</UniqueIdentifier>
     </Filter>
@@ -43,6 +40,9 @@
     </Filter>
     <Filter Include="システム\Utility\Shader">
       <UniqueIdentifier>{6b6bb59c-7666-4806-a556-f1e63f42dec1}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="システム\Utility\Etc">
+      <UniqueIdentifier>{89f5544e-2450-4396-826c-ad849729a55c}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
   <ItemGroup>
@@ -76,14 +76,14 @@
     <ClCompile Include="src\Math.cpp">
       <Filter>システム\Utility\Math</Filter>
     </ClCompile>
-    <ClCompile Include="src\UtilityFunctions.cpp">
-      <Filter>システム\Utility\UtilityFunctions</Filter>
-    </ClCompile>
     <ClCompile Include="src\Easing.cpp">
       <Filter>システム\Utility\Easing</Filter>
     </ClCompile>
     <ClCompile Include="src\ShaderManager.cpp">
       <Filter>システム\Utility\Shader</Filter>
+    </ClCompile>
+    <ClCompile Include="src\Utility.cpp">
+      <Filter>システム\Utility\Etc</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -117,9 +117,6 @@
     <ClInclude Include="src\Math.h">
       <Filter>システム\Utility\Math</Filter>
     </ClInclude>
-    <ClInclude Include="src\UtilityFunctions.h">
-      <Filter>システム\Utility\UtilityFunctions</Filter>
-    </ClInclude>
     <ClInclude Include="src\Counter.hpp">
       <Filter>システム\Utility\Counter</Filter>
     </ClInclude>
@@ -128,6 +125,9 @@
     </ClInclude>
     <ClInclude Include="src\ShaderManager.h">
       <Filter>システム\Utility\Shader</Filter>
+    </ClInclude>
+    <ClInclude Include="src\Utility.h">
+      <Filter>システム\Utility\Etc</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

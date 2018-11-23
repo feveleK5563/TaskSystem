@@ -19,10 +19,10 @@ ImageDrawer::ImageDrawer():
 void ImageDrawer::Initialize(const ImageData& setImageData, bool isCriterrionPosCenter)
 {
 	imageData = setImageData;
-	cPos = isCriterrionPosCenter ? MATH::Vec2(imageData.rect.w / 2.f, imageData.rect.h / 2.f) : MATH::Vec2(0, 0);
+	cPos = isCriterrionPosCenter ? Math::Vec2(imageData.rect.w / 2.f, imageData.rect.h / 2.f) : Math::Vec2(0, 0);
 }
 //‰Šú‰»(•`‰æ‚µ‚½‚¢‰æ‘œƒf[ƒ^‚Æ•`‰æŠî€ˆÊ’u‚ğw’è)
-void ImageDrawer::Initialize(const ImageData& setImageData, const MATH::Vec2& setCriterionPos)
+void ImageDrawer::Initialize(const ImageData& setImageData, const Math::Vec2& setCriterionPos)
 {
 	imageData = setImageData;
 	cPos = setCriterionPos;
@@ -62,7 +62,7 @@ void ImageDrawer::ChangeAnimPattern(int pattern, bool isResetTime)
 }
 
 //ŠÈˆÕ•`‰æ
-void ImageDrawer::Draw(const MATH::Vec2& pos, const Color& color)
+void ImageDrawer::Draw(const Math::Vec2& pos, const Color& color)
 {
 	SetDrawBright(color.r, color.g, color.b);
 	SetDrawBlendMode(DX_BLENDMODE_ALPHA, color.alpha);
@@ -83,7 +83,7 @@ void ImageDrawer::Draw(const MATH::Vec2& pos, const Color& color)
 }
 
 //•`‰æ‚·‚é
-void ImageDrawer::Draw(const MATH::Vec2& pos, float scale, float angle, bool isTurn, const Color& color)
+void ImageDrawer::Draw(const Math::Vec2& pos, float scale, float angle, bool isTurn, const Color& color)
 {
 	SetDrawBright(color.r, color.g, color.b);
 	SetDrawBlendMode(DX_BLENDMODE_ALPHA, color.alpha);
@@ -109,7 +109,7 @@ void ImageDrawer::Draw(const MATH::Vec2& pos, float scale, float angle, bool isT
 }
 
 //•`‰æ‚·‚é(Šg‘å—¦c‰¡•Ê)
-void ImageDrawer::Draw(const MATH::Vec2& pos, float scaleX, float scaleY, float angle, bool isTurn, const Color& color)
+void ImageDrawer::Draw(const Math::Vec2& pos, float scaleX, float scaleY, float angle, bool isTurn, const Color& color)
 {
 	SetDrawBright(color.r, color.g, color.b);
 	SetDrawBlendMode(DX_BLENDMODE_ALPHA, color.alpha);
@@ -131,14 +131,14 @@ void ImageDrawer::Draw(const MATH::Vec2& pos, float scaleX, float scaleY, float 
 }
 
 //•`‰æ”ÍˆÍ‹éŒ`‚ğw’è‚µ‚Ä•`‰æ‚·‚é(•`‰æ‚ÌŠî€ˆÊ’u‚Í–³‹‚·‚é)
-void ImageDrawer::Draw(const MATH::Vec2& pos, const MATH::Vec2& criterionPos, const MATH::Box2D& rect, bool isTurn, const Color& color)
+void ImageDrawer::Draw(const Math::Vec2& pos, const Math::Vec2& criterionPos, const Math::Box2D& rect, bool isTurn, const Color& color)
 {
 	SetDrawBright(color.r, color.g, color.b);
 	SetDrawBlendMode(DX_BLENDMODE_ALPHA, color.alpha);
 
 	int handle = GetImageHandle();
 
-	MATH::Vec2 tmppos = -pos;
+	Math::Vec2 tmppos = -pos;
 
 	DrawRectGraphF(
 		pos.x - criterionPos.x, pos.y - criterionPos.y,
@@ -155,7 +155,7 @@ void ImageDrawer::Draw(const MATH::Vec2& pos, const MATH::Vec2& criterionPos, co
 
 
 //w’è”Ô†‚Ì‰æ‘œ‚ğŠÈˆÕ•`‰æ
-void ImageDrawer::DrawOne(int imageSheet, const MATH::Vec2& pos, const Color& color)
+void ImageDrawer::DrawOne(int imageSheet, const Math::Vec2& pos, const Color& color)
 {
 	SetDrawBright(color.r, color.g, color.b);
 	SetDrawBlendMode(DX_BLENDMODE_ALPHA, color.alpha);
@@ -167,7 +167,7 @@ void ImageDrawer::DrawOne(int imageSheet, const MATH::Vec2& pos, const Color& co
 }
 
 //w’è”Ô†‚Ì‰æ‘œ‚ğ•`‰æ‚·‚é(ƒAƒjƒ[ƒVƒ‡ƒ“‚µ‚È‚¢)
-void ImageDrawer::DrawOne(int imageSheet, const MATH::Vec2& pos, float scale, float angle, bool isTurn, const Color& color)
+void ImageDrawer::DrawOne(int imageSheet, const Math::Vec2& pos, float scale, float angle, bool isTurn, const Color& color)
 {
 	SetDrawBright(color.r, color.g, color.b);
 	SetDrawBlendMode(DX_BLENDMODE_ALPHA, color.alpha);
@@ -187,7 +187,7 @@ void ImageDrawer::DrawOne(int imageSheet, const MATH::Vec2& pos, float scale, fl
 }
 
 //w’è”Ô†‚Ì‰æ‘œ‚ğ•`‰æ‚·‚é(Šg‘å—¦c‰¡•Ê)
-void ImageDrawer::DrawOne(int imageSheet, const MATH::Vec2& pos, float scaleX, float scaleY, float angle, bool isTurn, const Color& color)
+void ImageDrawer::DrawOne(int imageSheet, const Math::Vec2& pos, float scaleX, float scaleY, float angle, bool isTurn, const Color& color)
 {
 	SetDrawBright(color.r, color.g, color.b);
 	SetDrawBlendMode(DX_BLENDMODE_ALPHA, color.alpha);
@@ -206,7 +206,7 @@ void ImageDrawer::DrawOne(int imageSheet, const MATH::Vec2& pos, float scaleX, f
 	SetDrawBlendMode(DX_BLENDMODE_NOBLEND, 0);
 }
 
-void ImageDrawer::DrawOne(int imageSheet, const MATH::Vec2& pos, const MATH::Vec2& criterionPos, const MATH::Box2D& rect, bool isTurn, const Color& color)
+void ImageDrawer::DrawOne(int imageSheet, const Math::Vec2& pos, const Math::Vec2& criterionPos, const Math::Box2D& rect, bool isTurn, const Color& color)
 {
 	SetDrawBright(color.r, color.g, color.b);
 	SetDrawBlendMode(DX_BLENDMODE_ALPHA, color.alpha);

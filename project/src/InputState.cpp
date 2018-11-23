@@ -1,9 +1,8 @@
 #include <iostream>
 #include <math.h>
-#include <assert.h>
 #include "DxLib.h"
 #include "InputState.h"
-#include "UtilityFunctions.h"
+#include "Utility.h"
 
 //-----------------------------------------------------------------------------
 //コンストラクタ
@@ -107,7 +106,7 @@ bool InputDXL::MouseInput::GetInputState()
 }
 //-----------------------------------------------------------------------------
 //マウスの座標を取得する
-const MATH::Vec2& InputDXL::MouseInput::GetPos() const
+const Math::Vec2& InputDXL::MouseInput::GetPos() const
 {
 	return pos;
 }
@@ -238,7 +237,7 @@ void InputDXL::CreateMouseInstance()
 //マウスのインスタンスを解放する
 void InputDXL::DeleteMouseInstance()
 {
-	UTIL::SafeDelete(mouse);
+	Utility::SafeDelete(mouse);
 }
 //-----------------------------------------------------------------------------
 //マウスの入力情報を取得する
@@ -269,7 +268,7 @@ void InputDXL::CreateKeyInstance()
 //キーボードのインスタンスを解放する
 void InputDXL::DeleteKeyInstance()
 {
-	UTIL::SafeDelete(key);
+	Utility::SafeDelete(key);
 }
 //-----------------------------------------------------------------------------
 //キーボードの入力情報を取得する
@@ -305,7 +304,7 @@ void InputDXL::DeletePadInstance()
 {
 	for (auto& it : pad)
 	{
-		UTIL::SafeDelete(it);
+		Utility::SafeDelete(it);
 	}
 }
 //-----------------------------------------------------------------------------

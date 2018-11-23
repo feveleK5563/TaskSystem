@@ -1,7 +1,7 @@
 #include "Math.h"
 #include "DxLib.h"
 
-namespace MATH
+namespace Math
 {
 	//ŒÊ“x–@•ÏŠ·
 	float ToRadian(float deg)

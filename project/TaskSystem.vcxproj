@@ -26,7 +26,7 @@
     <ClCompile Include="src\ImageLoader.cpp" />
     <ClCompile Include="src\InputState.cpp" />
     <ClCompile Include="src\ShaderManager.cpp" />
-    <ClCompile Include="src\UtilityFunctions.cpp" />
+    <ClCompile Include="src\Utility.cpp" />
     <ClCompile Include="src\WinMain.cpp" />
     <ClCompile Include="src\Math.cpp" />
     <ClCompile Include="src\TaskAbstract.cpp" />
@@ -47,7 +47,7 @@
     <ClInclude Include="src\TaskSystem.h" />
     <ClInclude Include="src\Task_TestScene.h" />
     <ClInclude Include="src\Counter.hpp" />
-    <ClInclude Include="src\UtilityFunctions.h" />
+    <ClInclude Include="src\Utility.h" />
   </ItemGroup>
   <ItemGroup>
     <ResourceCompile Include="data\icon\icon.rc" />
