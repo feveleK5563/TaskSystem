@@ -10,7 +10,7 @@ ShaderManager::~ShaderManager()
 
 
 //シェーダーを読み込む(第三引数がtrueで頂点データが画面サイズぴったりに設定される)
-bool ShaderManager::LoadShader(std::string shaderName, std::string filePath, int shaderType, bool isVertexSetWindowSize)
+bool ShaderManager::LoadShader(const std::string& shaderName, const std::string& filePath, int shaderType, bool isVertexSetWindowSize)
 {
 	shaderData[shaderName].handle = LoadPixelShader(filePath.c_str());
 	if (shaderData[shaderName].handle == -1)
@@ -62,14 +62,20 @@ void ShaderManager::SetShaderImage(const ImageDrawer& imgDrawer, int slot)
 	SetUseTextureToShader(slot, imgDrawer.GetImageHandle());
 }
 
-//定数バッファをシェーダーにセットして描画(レジスタはデフォルトで0)
-void ShaderManager::DrawShader(std::string shaderName, std::string bufferName, int slot)
+//定数バッファを更新(レジスタはデフォルトで0)
+void ShaderManager::UpdateAndSetCB(const std::string& shaderName, const std::string& bufferName, int slot)
 {
-	//ピクセルシェーダー用の定数バッファを更新して書き込んだ内容を反映する
+	//シェーダー用の定数バッファを更新して書き込んだ内容を反映する
 	UpdateShaderConstantBuffer(bufferHandle[bufferName]);
-	//ピクセルシェーダー用の定数バッファを定数バッファレジスタにセット
+	//シェーダー用の定数バッファを定数バッファレジスタにセット
 	SetShaderConstantBuffer(bufferHandle[bufferName], shaderData[shaderName].type, slot);
-	//ピクセルシェーダのセット
+}
+
+
+//シェーダーを使って描画
+void ShaderManager::DrawShader(const std::string& shaderName)
+{
+	//シェーダのセット
 	SetUsePixelShader(shaderData[shaderName].handle);
 	SetDrawBlendMode(DX_BLENDMODE_ALPHA, 255);
 	//描画
@@ -79,9 +85,16 @@ void ShaderManager::DrawShader(std::string shaderName, std::string bufferName, i
 		shaderData[shaderName].primitiveType);
 }
 
+//定数バッファを一つだけシェーダーにセットして描画(レジスタはデフォルトで0)
+void ShaderManager::DrawShader(const std::string& shaderName, const std::string& bufferName, int slot)
+{
+	UpdateAndSetCB(shaderName, bufferName, slot);
+	DrawShader(shaderName);
+}
+
 
 //定数バッファを解放する
-bool ShaderManager::DeleteConstantBuffer(std::string bufferName)
+bool ShaderManager::DeleteConstantBuffer(const std::string& bufferName)
 {
 	if (bufferHandle.count(bufferName))
 		return false;
@@ -101,7 +114,7 @@ bool ShaderManager::AllDeleteConstantBuffer()
 	return true;
 }
 //シェーダーを解放する
-bool ShaderManager::DeleteShaderData(std::string shaderName)
+bool ShaderManager::DeleteShaderData(const std::string& shaderName)
 {
 	if (shaderData.count(shaderName))
 		return false;

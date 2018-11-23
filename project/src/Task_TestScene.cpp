@@ -134,6 +134,7 @@ namespace TestScene
 
 		//•`‰æ
 		imgDrawer.Draw(Math::Vec2(100, 100));
+
 		shaderManager.DrawShader(res->sName, res->cbName);
 	}
 }

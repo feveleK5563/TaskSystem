@@ -30,7 +30,7 @@ public:
 
 	//指定クラスサイズの定数バッファを作成(バッファIDが返る)
 	template <typename T>
-	bool CreateConstantBuffer(std::string bufferName)
+	bool CreateConstantBuffer(const std::string& bufferName)
 	{
 		int num = 1, size = sizeof(T);
 		for (; num < size; num *= 2);	//クラスサイズ以上の2の累乗分だけメモリを確保
@@ -43,7 +43,7 @@ public:
 	}
 	//定数バッファを取得
 	template <typename T>
-	T& GetConstantBuffer(std::string bufferName)
+	T& GetConstantBuffer(const std::string& bufferName)
 	{
 		T* tmp = (T*)GetBufferShaderConstantBuffer(bufferHandle[bufferName]);
 		return *tmp;
@@ -51,21 +51,26 @@ public:
 
 
 	//シェーダーを読み込む(第四引数がtrueで頂点データが画面サイズぴったりに設定される)
-	bool LoadShader(std::string shaderName, std::string filePath,
+	bool LoadShader(const std::string& shaderName, const std::string& filePath,
 					int shaderType = DX_SHADERTYPE_PIXEL, bool isVertexSetWindowSize = true);
 	//頂点データと描画方法を設定
 	void SetVertex(std::string shaderName, VERTEX2DSHADER* vertex, int vertexNum, int primitiveType);
 	//画像(テクスチャ)をセット(レジスタはデフォルトで0)
 	void SetShaderImage(const ImageDrawer& imgDrawer, int slot = 0);
-	//定数バッファをシェーダーにセットして描画(レジスタはデフォルトで0)
-	void DrawShader(std::string shaderName, std::string bufferName, int slot = 0);
+	//定数バッファを更新とシェーダーのセット(レジスタはデフォルトで0)
+	void UpdateAndSetCB(const std::string& shaderName, const std::string& bufferName, int slot = 0);
+
+	//シェーダーを使って描画
+	void DrawShader(const std::string& shaderName);
+	//定数バッファを一つだけシェーダーにセットして描画(レジスタはデフォルトで0)
+	void DrawShader(const std::string& shaderName, const std::string& bufferName, int slot = 0);
 
 	//定数バッファを解放する
-	bool DeleteConstantBuffer(std::string bufferName);
+	bool DeleteConstantBuffer(const std::string& bufferName);
 	//作成した定数バッファを全て解放する
 	bool AllDeleteConstantBuffer();
 	//シェーダーを解放する
-	bool DeleteShaderData(std::string shaderName);
+	bool DeleteShaderData(const std::string& shaderName);
 	//読み込んだシェーダーを全て解放する
 	bool AllDeleteShader();
 
@@ -76,4 +81,7 @@ public:
 	static void CreateInstance();
 	//インスタンスを解放する
 	static void DeleteInstance();
+
+private:
+	void SetShaderAndDraw(const std::string& shaderName);
 };
