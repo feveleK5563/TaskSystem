@@ -55,7 +55,9 @@ public:
 					int shaderType = DX_SHADERTYPE_PIXEL, bool isVertexSetWindowSize = true);
 	//頂点データと描画方法を設定
 	void SetVertex(std::string shaderName, VERTEX2DSHADER* vertex, int vertexNum, int primitiveType);
-	//画像(テクスチャ)をセット(レジスタはデフォルトで0)
+	//画像(テクスチャ)をハンドルで指定してセット(レジスタはデフォルトで0)
+	void SetShaderImage(int imgHandle, int slot = 0);
+	//画像(テクスチャ)をDrawerで指定してセット(レジスタはデフォルトで0)
 	void SetShaderImage(const ImageDrawer& imgDrawer, int slot = 0);
 	//定数バッファを更新とシェーダーのセット(レジスタはデフォルトで0)
 	void UpdateAndSetCB(const std::string& shaderName, const std::string& bufferName, int slot = 0);
@@ -81,7 +83,4 @@ public:
 	static void CreateInstance();
 	//インスタンスを解放する
 	static void DeleteInstance();
-
-private:
-	void SetShaderAndDraw(const std::string& shaderName);
 };

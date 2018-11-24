@@ -49,23 +49,19 @@ PS_OUTPUT main( PS_INPUT psin )
 		if(CirclePixel(p))
 		{
 			psout.Output.r = 1.f;
-			psout.Output.a = 0.5f;
-		}
-		else
-		{
-			psout.Output.r = 0.f;
+			psout.Output.g = 0.f;
+			psout.Output.b = 0.f;
+			psout.Output.a = 0.8f;
 		}
 	}
 	else
 	{
-		if(CirclePixel(p))
-		{
-			psout.Output.r = 0.f;
-		}
-		else
+		if(!CirclePixel(p))
 		{
 			psout.Output.r = 1.f;
-			psout.Output.a = 0.5f;
+			psout.Output.g = 0.f;
+			psout.Output.b = 0.f;
+			psout.Output.a = 0.8f;
 		}
 	}
 	

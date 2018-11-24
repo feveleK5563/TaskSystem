@@ -53,6 +53,12 @@ public:
 		now = 0;
 	}
 
+	//Œ»İ‚Ì’l‚ğİ’è‚·‚é
+	void SetNowCnt(T setNow)
+	{
+		now = setNow;
+	}
+
 	//Œ»İ‚Ì’l‚ğÅ¬’l‚É‚·‚é
 	void SetNowMin()
 	{

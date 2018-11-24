@@ -56,7 +56,12 @@ void ShaderManager::SetVertex(std::string shaderName, VERTEX2DSHADER* vertex, in
 	shaderData[shaderName].primitiveType = primitiveType;
 }
 
-//画像(テクスチャ)をセット(レジスタはデフォルトで0)
+//画像(テクスチャ)をハンドルで指定してセット(レジスタはデフォルトで0)
+void ShaderManager::SetShaderImage(int imgHandle, int slot)
+{
+	SetUseTextureToShader(slot, imgHandle);
+}
+//画像(テクスチャ)をDrawerで指定してセット(レジスタはデフォルトで0)
 void ShaderManager::SetShaderImage(const ImageDrawer& imgDrawer, int slot)
 {
 	SetUseTextureToShader(slot, imgDrawer.GetImageHandle());
