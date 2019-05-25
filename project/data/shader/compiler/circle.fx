@@ -27,7 +27,7 @@ bool CirclePixel( float2 p )
 {
 	return ((p.x - pos.x) * (p.x - pos.x) +
 			(p.y - pos.y) * (p.y - pos.y) -
-			(radius * radius) < 0.000001f);
+			(radius * radius) < 0.0001f);
 }
 
 
@@ -41,8 +41,8 @@ PS_OUTPUT main( PS_INPUT psin )
 	psout.Output.a = 0.f;
 	
 	float2 p;
-	p.x = size.x * psin.TexCoord0.x;
-	p.y = size.y * psin.TexCoord0.y;
+	p.x = ((int)(size.x * psin.TexCoord0.x / 16.f)) * 16.f;
+	p.y = ((int)(size.y * psin.TexCoord0.y / 16.f)) * 16.f;
 	
 	if(onClick)
 	{
