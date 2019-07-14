@@ -69,7 +69,7 @@ namespace BackCircle
     {
         std::shared_ptr<Task> task =
             std::make_shared<Task>(color);
-        TaskSystem::Get().AddTask(task);
+        TaskSystem::AddTask(task);
 
         task->Initialize();
         return task;

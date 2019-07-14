@@ -59,7 +59,7 @@ namespace TestEnemy
     {
         std::shared_ptr<Task> task = 
             std::make_shared<Task>(pos);
-        TaskSystem::Get().AddTask(task);
+        TaskSystem::AddTask(task);
 
         task->Initialize();
         return task;
@@ -110,7 +110,7 @@ namespace TestEnemy
     //----------------------------------------------
     void Task::Draw()
     {
-        auto mudra = TaskSystem::Get().GetTaskOne<Mudra::Task>(Mudra::def_task);
+        auto mudra = TaskSystem::GetTaskOne<Mudra::Task>(Mudra::def_task);
         if (mudra && mudra->IsActive())
         {
             enemy_image_.DrawSilhouette(enemy_.GetPosForCam(), Color(144, 96, 230));

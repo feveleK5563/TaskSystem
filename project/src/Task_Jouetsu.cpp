@@ -65,7 +65,7 @@ namespace Jouetsu
     {
         std::shared_ptr<Task> task = 
             std::make_shared<Task>();
-        TaskSystem::Get().AddTask(task);
+        TaskSystem::AddTask(task);
 
         task->Initialize();
         return task;
@@ -190,7 +190,7 @@ namespace Jouetsu
     Math::Vec2 Task::Move()
     {
         Math::Vec2 velocity;
-        auto player = TaskSystem::Get().GetTaskOne<Player::Task>(Player::def_task);
+        auto player = TaskSystem::GetTaskOne<Player::Task>(Player::def_task);
         Math::Vec2 ppos = player->GetCenterPos();
         pivot_pos_ = pivot_pos_ + ((ppos - pivot_pos_) / 3.f);
 

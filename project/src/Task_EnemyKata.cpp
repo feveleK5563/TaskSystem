@@ -25,7 +25,7 @@ namespace EnemyKata
     {
         std::shared_ptr<Task> task =
             std::make_shared<Task>(dist, thick, max_line, min_line);
-        TaskSystem::Get().AddTask(task);
+        TaskSystem::AddTask(task);
 
         task->Initialize();
         return task;
@@ -53,7 +53,7 @@ namespace EnemyKata
     //----------------------------------------------
     void Task::Draw()
     {
-        auto mudra = TaskSystem::Get().GetTaskOne<Mudra::Task>(Mudra::def_task);
+        auto mudra = TaskSystem::GetTaskOne<Mudra::Task>(Mudra::def_task);
         if (mudra && mudra->IsActive())
         {
             mline_.Draw(pos_, Color(255, 0, 0));
@@ -70,7 +70,7 @@ namespace EnemyKata
     //Mudra‚Æ‚Ì”»’èŒ‹‰Ê‚ðŽæ“¾‚·‚é
     MLine::MHit Task::GetHitState()
     {
-        auto mudra = TaskSystem::Get().GetTaskOne<Mudra::Task>(Mudra::def_task);
+        auto mudra = TaskSystem::GetTaskOne<Mudra::Task>(Mudra::def_task);
         if (mudra)
         {
             return mline_.CheckHitLine(mudra->GetMLine());

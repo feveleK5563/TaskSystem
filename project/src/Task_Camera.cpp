@@ -24,7 +24,7 @@ namespace Camera
     {
         std::shared_ptr<Task> task = 
             std::make_shared<Task>();
-        TaskSystem::Get().AddTask(task);
+        TaskSystem::AddTask(task);
 
         task->Initialize();
         return task;

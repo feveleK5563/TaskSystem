@@ -65,7 +65,7 @@ namespace Mudra
     {
         std::shared_ptr<Task> task = 
             std::make_shared<Task>();
-        TaskSystem::Get().AddTask(task);
+        TaskSystem::AddTask(task);
 
         task->Initialize();
         return task;
@@ -101,7 +101,7 @@ namespace Mudra
     //----------------------------------------------
     void Task::Update()
     {
-        auto jouetsu = TaskSystem::Get().GetTaskOne<Jouetsu::Task>(Jouetsu::def_task);
+        auto jouetsu = TaskSystem::GetTaskOne<Jouetsu::Task>(Jouetsu::def_task);
         if (!is_active_)
         {
             if (!release_)
@@ -146,7 +146,7 @@ namespace Mudra
     //----------------------------------------------
     void Task::Draw()
     {
-        auto cam = TaskSystem::Get().GetTaskOne<Camera::Task>(Camera::def_task);
+        auto cam = TaskSystem::GetTaskOne<Camera::Task>(Camera::def_task);
         Math::Vec2 camPos(cam->GetScreenPos(pos_));
         mudra_image_.Draw(camPos);
 

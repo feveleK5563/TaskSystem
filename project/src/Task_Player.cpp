@@ -72,7 +72,7 @@ namespace Player
     {
         std::shared_ptr<Task> task =
             std::make_shared<Task>();
-        TaskSystem::Get().AddTask(task);
+        TaskSystem::AddTask(task);
 
         task->Initialize();
         return task;
@@ -118,7 +118,7 @@ namespace Player
         player_image_.AnimUpdate();
         player_.AutoRevitionMove(velocity);
 
-        auto cam = TaskSystem::Get().GetTaskOne<Camera::Task>(Camera::def_task);
+        auto cam = TaskSystem::GetTaskOne<Camera::Task>(Camera::def_task);
         cam->SetTargetPos(player_.GetCenterPos() - 
             Math::Vec2(SysDef::SizeX / 2.f, SysDef::SizeY * 2.f / 3.f));
     }
@@ -128,7 +128,7 @@ namespace Player
     //----------------------------------------------
     void Task::Draw()
     {
-        auto mudra = TaskSystem::Get().GetTaskOne<Mudra::Task>(Mudra::def_task);
+        auto mudra = TaskSystem::GetTaskOne<Mudra::Task>(Mudra::def_task);
         if (mudra && mudra->IsActive())
         {
             player_image_.DrawSilhouette(player_.GetPosForCam(false), Color(255, 100, 100));

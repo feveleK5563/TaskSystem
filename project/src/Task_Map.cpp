@@ -64,7 +64,7 @@ namespace Map
     {
         std::shared_ptr<Task> task = 
             std::make_shared<Task>();
-        TaskSystem::Get().AddTask(task);
+        TaskSystem::AddTask(task);
 
         task->Initialize();
         return task;
@@ -98,7 +98,7 @@ namespace Map
     //----------------------------------------------
     void Task::Draw()
     {
-        auto cam = TaskSystem::Get().GetTaskOne<Camera::Task>(Camera::def_task);
+        auto cam = TaskSystem::GetTaskOne<Camera::Task>(Camera::def_task);
         for (int y = 0; y < height_; ++y)
         {
             for (int x = 0; x < width_; ++x)

@@ -71,7 +71,6 @@ void GameSystem::Initialize()
 void GameSystem::MainLoop()
 {
     Fps fps;
-    auto& ts = TaskSystem::Get();
 
     while (Run())
     {
@@ -79,13 +78,13 @@ void GameSystem::MainLoop()
         fps.Update();
 
         //タスクが存在しなかった場合終了する
-        if (ts.GetAllTaskNum() == 0)
+        if (TaskSystem::GetAllTaskNum() == 0)
         {
             break;
         }
-        ts.Update();
+        TaskSystem::Update();
 
-        ts.Draw();
+        TaskSystem::Draw();
         //fps.Draw();
     }
 }

@@ -39,8 +39,7 @@ void Character::NoSinkMove(const Math::Vec2& direction)
     }
 
     //めり込まない移動処理
-    auto& ts = TaskSystem::Get();
-    auto map = ts.GetTaskOne<Map::Task>(Map::def_task);
+    auto map = TaskSystem::GetTaskOne<Map::Task>(Map::def_task);
     for (int xy = 0; xy < 2; ++xy)
     {
         Math::Vec2 add;
@@ -78,8 +77,7 @@ void Character::AutoRevitionMove(const Math::Vec2& direction)
 
     Math::Vec2 cder(direction);
 
-    auto& ts = TaskSystem::Get();
-    auto map = ts.GetTaskOne<Map::Task>(Map::def_task);
+    auto map = TaskSystem::GetTaskOne<Map::Task>(Map::def_task);
     //矩形周辺の接触位置を取得し、その位置によって移動方向を変換する
     switch (map->GetHitRectGirth(land_rect_.GetOffset(pos_, box_cp_), Map::BlockTrait::Nomal))
     {
@@ -175,7 +173,7 @@ Math::Vec2 Character::GetCenterPos() const
 //カメラ準拠の座標を取得
 Math::Vec2 Character::GetPosForCam(bool isCenter) const
 {
-    auto cam = TaskSystem::Get().GetTaskOne<Camera::Task>(Camera::def_task);
+    auto cam = TaskSystem::GetTaskOne<Camera::Task>(Camera::def_task);
     if (isCenter)
     {
         return cam->GetScreenPos(GetCenterPos());
@@ -208,8 +206,7 @@ bool Character::IsGravity() const
 //地面と接触しているか取得
 bool Character::IsGround() const
 {
-    auto& ts = TaskSystem::Get();
-    auto map = ts.GetTaskOne<Map::Task>(Map::def_task);
+    auto map = TaskSystem::GetTaskOne<Map::Task>(Map::def_task);
     return map->IsHitFoot(land_rect_.GetOffset(pos_, box_cp_));
 }
 
