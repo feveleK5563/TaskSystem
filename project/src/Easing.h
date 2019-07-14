@@ -5,105 +5,103 @@ typedef float(*Ease)(float, float);
 class Easing
 {
 private:
-	Counter<float>	time;
-	float			volume;
+    Counter<float>  time_;
+    float           volume_;
 
 public:
-	//コンストラクタ
-	Easing();
+    //コンストラクタ
+    Easing();
 
-	//イージングの実行
-	//引数：イージング動作の関数ポインタ(Ease_…), 継続時間(float)
-	void Run(Ease em, float durationTime);
+    //イージングの実行
+    //引数：イージング動作の関数ポインタ(Ease_…), 継続時間(float)
+    void Run(Ease em, float duration_time);
 
-	//値を取得
-	//引数：始点(float), 終点(float)
-	float GetVolume(float startPoint, float endPoint);
+    //値を取得
+    //引数：始点(float), 終点(float)
+    float GetVolume(float start_point, float end_point);
 
-	//イージングが終了したらtrueが返る
-	bool IsEaseEnd();
+    //イージングが終了したらtrueが返る
+    bool IsEaseEnd();
 
-	//イージングをリセットする
-	void Reset();
+    //イージングをリセットする
+    void Reset();
 };
-
 
 //-----------------------------------------------------------------------------
 
-
 namespace Ease_Linear
 {
-	float In(float time, float duration);
-	float Out(float time, float duration);
-	float InOut(float time, float duration);
+    float In(float time, float duration);
+    float Out(float time, float duration);
+    float InOut(float time, float duration);
 }
 
 namespace Ease_Back
 {
-	float In(float time, float duration);
-	float Out(float time, float duration);
-	float InOut(float time, float duration);
+    float In(float time, float duration);
+    float Out(float time, float duration);
+    float InOut(float time, float duration);
 }
 
 namespace Ease_Bounce
 {
-	float In(float time, float duration);
-	float Out(float time, float duration);
-	float InOut(float time, float duration);
+    float In(float time, float duration);
+    float Out(float time, float duration);
+    float InOut(float time, float duration);
 }
 
 namespace Ease_Circ
 {
-	float In(float time, float duration);
-	float Out(float time, float duration);
-	float InOut(float time, float duration);
+    float In(float time, float duration);
+    float Out(float time, float duration);
+    float InOut(float time, float duration);
 }
 
 namespace Ease_Cubic
 {
-	float In(float time, float duration);
-	float Out(float time, float duration);
-	float InOut(float time, float duration);
+    float In(float time, float duration);
+    float Out(float time, float duration);
+    float InOut(float time, float duration);
 }
 
 namespace Ease_Elastic
 {
-	float In(float time, float duration);
-	float Out(float time, float duration);
-	float InOut(float time, float duration);
+    float In(float time, float duration);
+    float Out(float time, float duration);
+    float InOut(float time, float duration);
 }
 
 namespace Ease_Expo
 {
-	float In(float time, float duration);
-	float Out(float time, float duration);
-	float InOut(float time, float duration);
+    float In(float time, float duration);
+    float Out(float time, float duration);
+    float InOut(float time, float duration);
 }
 
 namespace Ease_Quad
 {
-	float In(float time, float duration);
-	float Out(float time, float duration);
-	float InOut(float time, float duration);
+    float In(float time, float duration);
+    float Out(float time, float duration);
+    float InOut(float time, float duration);
 }
 
 namespace Ease_Quart
 {
-	float In(float time, float duration);
-	float Out(float time, float duration);
-	float InOut(float time, float duration);
+    float In(float time, float duration);
+    float Out(float time, float duration);
+    float InOut(float time, float duration);
 }
 
 namespace Ease_Quint
 {
-	float In(float time, float duration);
-	float Out(float time, float duration);
-	float InOut(float time, float duration);
+    float In(float time, float duration);
+    float Out(float time, float duration);
+    float InOut(float time, float duration);
 }
 
 namespace Ease_Sine
 {
-	float In(float time, float duration);
-	float Out(float time, float duration);
-	float InOut(float time, float duration);
+    float In(float time, float duration);
+    float Out(float time, float duration);
+    float InOut(float time, float duration);
 }

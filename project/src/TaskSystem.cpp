@@ -2,263 +2,216 @@
 #include "TaskSystem.h"
 #include "Utility.h"
 
-TaskSystem::TaskSystem() {}
+TaskSystem::TaskSystem(): sort_flag_(false) {}
 
 TaskSystem::~TaskSystem()
 {
-	AllDeleteTask();
+    AllDeleteTask();
 }
 
-//更新
-bool TaskSystem::Update()
+// 更新
+void TaskSystem::Update()
 {
-	//全てのタスクのUpdateを呼ぶ
-	bool isHaveTask = AllUpdate();
-
-	if (isHaveTask)
-	{
-		AddTask();			//追加予定のタスクを追加する
-		StateDeleteTask();	//状態がDeleteのタスクを削除する
-		SortTask();			//priorityを基に昇順にソートする
-	}
-	return isHaveTask;
+    if (GetAllTaskNum() > 0)
+    {
+        AllUpdate();        // 全てのタスクのUpdateを呼ぶ
+        AddTask();          // 追加予定のタスクを追加する
+        StateDeleteTask();  // 状態がDeleteのタスクを削除する
+        SortTask();         // priorityを基に昇順にソートするv
+    }
 }
 
-//描画
+// 描画
 void TaskSystem::Draw()
 {
-	for (auto& it : task)
-	{
-		if (it->GetTaskState() != TaskState::Kill)
-			it->Draw();
-	}
+    for (auto& it : task_)
+    {
+        if (it->GetTaskState() != TaskState::Kill ||
+            it->GetTaskState() != TaskState::DeepSleep)
+        {
+            it->Draw();
+        }
+    }
 }
 
-//タスクを追加する
-void TaskSystem::AddTask(std::shared_ptr<TaskAbstract> createObj)
+// タスクを追加する
+void TaskSystem::AddTask(std::shared_ptr<TaskAbstract> create_task)
 {
-	if (createObj != nullptr)
-	{
-		addTask.emplace_back(createObj);
-		taskData[addTask.back()->GetGroupName()][addTask.back()->GetTaskName()].emplace_back(createObj);
-	}
+    if (create_task != nullptr)
+    {
+        add_task_.emplace_back(create_task);
+        task_data_[add_task_.back()->GetTaskName()].emplace_back(create_task);
+        create_task->Initialize();
+    }
 }
 
-TaskSystem* TaskSystem::ts = nullptr;
-//インスタンスを得る
-TaskSystem& TaskSystem::GetInstance()
+TaskSystem* TaskSystem::ts_ = nullptr;
+
+// 指定したタスクが存在しているか調べる
+bool TaskSystem::IsHaveTask(const std::string& task_name)
 {
-	assert(ts != nullptr && "TaskSystem hasn't been created!");
-	return *ts;
+    return task_data_.find(task_name) != task_data_.end();
 }
 
-//インスタンスを生成する
-void TaskSystem::CreateInstance()
+// 指定したタスクの状態を変更する
+void TaskSystem::SetStateTask(const std::string& task_name, TaskState task_state)
 {
-	if (ts == nullptr)
-	{
-		ts = new TaskSystem();
-	}
+    if (!IsHaveTask(task_name))
+        return;
+
+    for (auto it : task_data_[task_name])
+    {
+        it->SetTaskState(task_state);
+    }
 }
 
-//インスタンスを解放する
-void TaskSystem::DeleteInstance()
+// 指定したタスクを削除する
+void TaskSystem::KillTask(const std::string& task_name)
 {
-	Utility::SafeDelete(ts);
+    SetStateTask(task_name, TaskState::Kill);
 }
 
-//指定したグループ名のタスクが存在しているか調べる
-bool TaskSystem::IsHaveGroup(const std::string& groupName)
+// 登録されているタスクの状態を全てKillにする
+void TaskSystem::AllSetStateTask(TaskState task_state)
 {
-	return taskData.find(groupName) != taskData.end();
+    for (auto map : task_data_)
+    {
+        for (auto it : map.second)
+        {
+            it->SetTaskState(task_state);
+        }
+    }
 }
 
-//指定したグループ名のタスクを全て殺す
-void TaskSystem::KillGroup(const std::string& groupName)
-{
-	if (!IsHaveGroup(groupName))
-		return;
-
-	for (auto itg : taskData[groupName])
-	{
-		for (auto itt : itg.second)
-		{
-			itt->KillMe();
-		}
-	}
-}
-
-//指定したグループ名のタスクの停止、再生を切り替える
-void TaskSystem::SleepGroup(const std::string& groupName)
-{
-	if (!IsHaveGroup(groupName))
-		return;
-
-	for (auto itg : taskData[groupName])
-	{
-		for (auto itt : itg.second)
-		{
-			itt->SleepMe();
-		}
-	}
-}
-
-//指定したタスクが存在しているか調べる
-bool TaskSystem::IsHaveTask(const std::string& groupName, const std::string& taskName)
-{
-	return	IsHaveGroup(groupName) &&
-			taskData[groupName].find(taskName) != taskData[groupName].end();
-}
-
-//指定したタスクの状態をKillにする
-void TaskSystem::KillTask(const std::string& groupName, const std::string& taskName)
-{
-	if (!IsHaveTask(groupName, taskName))
-		return;
-
-	for (auto it : taskData[groupName][taskName])
-	{
-		it->KillMe();
-	}
-}
-
-//指定したタスクの停止、再生を切り替える
-void TaskSystem::SleepTask(const std::string& groupName, const std::string& taskName)
-{
-	if (!IsHaveTask(groupName, taskName))
-		return;
-
-	for (auto it : taskData[groupName][taskName])
-	{
-		it->SleepMe();
-	}
-}
-
-//登録されているタスクの状態を全てKillにする
-void TaskSystem::AllKillTask()
-{
-	for (auto map : taskData)
-	{
-		for (auto itg : map.second)
-		{
-			for (auto itt : itg.second)
-			{
-				itt->KillMe();
-			}
-		}
-	}
-}
-
-//登録済、登録予定のタスクを全て強制削除する(デストラクタで呼ばれる)
+// 登録済、登録予定のタスクを全て強制削除する(デストラクタで呼ばれる)
 void TaskSystem::AllDeleteTask()
 {
-	task.clear();
-	task.emplace_back();
+    task_.clear();
+    task_.emplace_back();
 
-	addTask.clear();
-	addTask.emplace_back();
+    add_task_.clear();
+    add_task_.emplace_back();
 
-	taskData.clear();
+    task_data_.clear();
 }
 
-//-----------------------------------------------------------------------------
-//-----------------------------------------------------------------------------
-
-//全てのタスクのUpdateを呼ぶ
-bool TaskSystem::AllUpdate()
+// 全タスク数を取得する
+int TaskSystem::GetAllTaskNum()
 {
-	//タスクが存在しなかった場合falseを返す
-	if (addTask.empty() && task.empty())
-	{
-		return false;
-	}
-
-	//先に登録予定タスクのUpdateを呼ぶ
-	for (auto& it : addTask)
-	{
-		it->Update();
-	}
-
-	//登録済みタスクのUpdateを呼ぶ
-	for (auto& it : task)
-	{
-		switch (it->GetTaskState())
-		{
-		case TaskState::Active:	//状態が通常の場合は普通に更新
-			it->Update();
-			break;
-
-		case TaskState::Kill:	//状態が削除要請中の場合は終了処理を呼ぶ
-			it->Finalize();
-			it->SetTaskState(TaskState::Delete);
-			break;
-		}
-	}
-
-	return true;
+    size_t num = add_task_.size() + task_.size();
+    return (int)num;
 }
 
-//追加予定のタスクを追加する
+// インスタンスを得る
+TaskSystem& TaskSystem::Get()
+{
+    assert(ts_ != nullptr && "TaskSystem hasn't been created!");
+    return *ts_;
+}
+
+// インスタンスを生成する
+void TaskSystem::Create()
+{
+    if (ts_ == nullptr)
+    {
+        ts_ = new TaskSystem();
+    }
+}
+
+// インスタンスを解放する
+void TaskSystem::Delete()
+{
+    Util::SafeDelete(ts_);
+}
+
+//-----------------------------------------------------------------------------
+//-----------------------------------------------------------------------------
+
+// 全てのタスクのUpdateを呼ぶ
+void TaskSystem::AllUpdate()
+{
+    // 先に登録予定タスクのUpdateを呼ぶ
+    for (auto& it : add_task_)
+    {
+        if (it->GetTaskState() == TaskState::Active)
+        {
+            it->Update();
+        }
+    }
+
+    // 登録済みタスクのUpdateを呼ぶ
+    for (auto& it : task_)
+    {
+        switch (it->GetTaskState())
+        {
+        case TaskState::Active:	// 状態が通常の場合は普通に更新
+            it->Update();
+            break;
+
+        case TaskState::Kill:	// 状態が削除要請中の場合は終了処理を呼ぶ
+            it->Finalize();
+            it->SetTaskState(TaskState::Delete);
+            break;
+        }
+    }
+}
+
+// 追加予定のタスクを追加する
 void TaskSystem::AddTask()
 {
-	if (addTask.empty())
-		return;
+    if (add_task_.empty()) { return; }
 
-	task.insert(task.end(), addTask.begin(), addTask.end());
-	addTask.clear();
-	addTask.shrink_to_fit();
+    task_.insert(task_.end(), add_task_.begin(), add_task_.end());
+    add_task_.clear();
+    add_task_.shrink_to_fit();
+    sort_flag_ = true;
 }
 
-//状態がDeleteのタスクを削除する
+// 状態がDeleteのタスクを削除する
 void TaskSystem::StateDeleteTask()
 {
-	auto deleteCondition =		//削除する条件式(状態がDeleteの時に削除)
-		[](std::shared_ptr<TaskAbstract>& obj)
-	{
-		return (obj->GetTaskState() == TaskState::Delete);
-	};
+    // 削除する条件式(状態がDeleteの時に削除)
+    auto deleteCondition =
+        [](std::shared_ptr<TaskAbstract>& obj)
+    {
+        return (obj->GetTaskState() == TaskState::Delete);
+    };
 
-	{//オブジェクトの削除
-		const auto& removeIt = std::remove_if(task.begin(), task.end(), deleteCondition);
-		task.erase(removeIt, task.end());
-		task.shrink_to_fit();
-	}
+    // オブジェクトの削除
+    {
+        const auto& removeIt = std::remove_if(task_.begin(), task_.end(), deleteCondition);
+        task_.erase(removeIt, task_.end());
+        task_.shrink_to_fit();
+    }
 
-	//データの削除
-	for (auto map = taskData.begin();
-		map != taskData.end();)
-	{
-		for (auto itg = map->second.begin();
-			itg != map->second.end();)
-		{
-			const auto& removeIt = std::remove_if(itg->second.begin(), itg->second.end(), deleteCondition);
-			itg->second.erase(removeIt, itg->second.end());
-			itg->second.shrink_to_fit();
+    // データの削除
+    for (auto it = task_data_.begin(); it != task_data_.end();)
+    {
+        const auto& remove_it = std::remove_if(it->second.begin(), it->second.end(), deleteCondition);
+        it->second.erase(remove_it, it->second.end());
+        it->second.shrink_to_fit();
 
-			if (itg->second.empty())
-			{
-				itg = map->second.erase(itg);
-				continue;
-			}
-			++itg;
-		}
-
-		if (map->second.empty())
-		{
-			map = taskData.erase(map);
-			continue;
-		}
-		++map;
-	}
+        if (it->second.empty())
+        {
+            sort_flag_ = true;
+            it = task_data_.erase(it);
+            continue;
+        }
+        ++it;
+    }
 }
 
-//priorityを基に昇順にソートする
+// priorityを基に昇順にソートする
 void TaskSystem::SortTask()
 {
-	std::sort(task.begin(), task.end(), 
-		[](std::shared_ptr<TaskAbstract>& left, std::shared_ptr<TaskAbstract>& right)
-		{
-			return (left->GetPriority() < right->GetPriority());
-		}
-	);
+    if (sort_flag_)
+    {
+        sort_flag_ = false;
+        std::sort(task_.begin(), task_.end(),
+            [](std::shared_ptr<TaskAbstract>& left, std::shared_ptr<TaskAbstract>& right)
+        {
+            return (left->GetPriority() < right->GetPriority());
+        }
+        );
+    }
 }

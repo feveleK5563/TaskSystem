@@ -2,42 +2,40 @@
 #include <math.h>
 #include "DxLib.h"
 
-Fps::Fps()
-{
-	mStartTime = 0;
-	mCount = 0;
-	mFps = 0;
-}
+Fps::Fps():
+    start_time_(0),
+    count_(0),
+    fps_(0) {}
 
 bool Fps::Update()
 {
-	if (mCount == 0)	//1フレーム目なら時刻を記憶
-	{
-		mStartTime = GetNowCount();
-	}
+    if (count_ == 0)    //1フレーム目なら時刻を記憶
+    {
+        start_time_ = GetNowCount();
+    }
 
-	if (mCount == N)	//60フレーム目なら平均を計算する
-	{
-		int t = GetNowCount();
-		mFps = 1000.f / ((t - mStartTime) / (float)N);
-		mCount = 0;
-		mStartTime = t;
-	}
-	++mCount;
-	return true;
+    if (count_ == sample_)  //60フレーム目なら平均を計算する
+    {
+        int t = GetNowCount();
+        fps_ = 1000.f / ((t - start_time_) / (float)sample_);
+        count_ = 0;
+        start_time_ = t;
+    }
+    ++count_;
+    return true;
 }
 
 void Fps::Wait()
 {
-	int tookTime = GetNowCount() - mStartTime;		//かかった時間
-	int waitTime = mCount * 1000 / FPS - tookTime;	//待つべき時間
-	if (waitTime > 0)
-	{
-		Sleep(waitTime);	//待機
-	}
+    int tookTime = GetNowCount() - start_time_;     //かかった時間
+    int waitTime = count_ * 1000 / set_fps_ - tookTime; //待つべき時間
+    if (waitTime > 0)
+    {
+        Sleep(waitTime);    //待機
+    }
 }
 
 void Fps::Draw()
 {
-	DrawFormatString(0, 0, GetColor(255, 255, 255), "%.1f", mFps);
+    DrawFormatString(0, 0, GetColor(255, 255, 255), "%.1f", fps_);
 }

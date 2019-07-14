@@ -1,61 +1,43 @@
 #include "TaskAbstract.h"
+#include "Utility.h"
 
-TaskAbstract::TaskAbstract(	const std::string& groupName,
-							const std::string& taskName,
-							float priority,
-							TaskState state):
-	groupName(groupName),
-	taskName(taskName),
-	priority(priority),
-	taskState(state) {}
-
-//Ž©•ª‚ðŽE‚·
-void TaskAbstract::KillMe()
+TaskAbstract::TaskAbstract(const std::string& task_name):
+    task_name_(task_name),
+    priority_(0.f),
+    task_state_(TaskState::Active)
 {
-	taskState = TaskState::Kill;
+    DOUT << "yCreate TaskzTask:" << task_name_ << std::endl;
 }
-//Ž©•ª‚ð’âŽ~ó‘Ô‚É‚·‚é
-void TaskAbstract::SleepMe()
+
+TaskAbstract::~TaskAbstract()
 {
-	if (taskState == TaskState::Active)
-	{
-		taskState = TaskState::Sleep;
-	}
-	else if (taskState == TaskState::Sleep)
-	{
-		taskState = TaskState::Active;
-	}
+    DOUT << "yDelete TaskzTask:" << task_name_ << std::endl;
 }
 
 //•`‰æ—Dæ“x‚ðÝ’è
-void TaskAbstract::SetPriority(float setPriority)
+void TaskAbstract::SetPriority(float set_priority)
 {
-	priority = setPriority;
+    priority_ = set_priority;
 }
 //ƒ^ƒXƒN‚Ìó‘Ô‚ðÝ’è
-void TaskAbstract::SetTaskState(TaskState setTaskState)
+void TaskAbstract::SetTaskState(TaskState set_task_state)
 {
-	taskState = setTaskState;
+    task_state_ = set_task_state;
 }
 
 
-//ƒ^ƒXƒN‚ÌƒOƒ‹[ƒv–¼‚ðŽæ“¾
-const std::string& TaskAbstract::GetGroupName()
-{
-	return groupName;
-}
 //ƒ^ƒXƒN–¼‚ðŽæ“¾
 const std::string& TaskAbstract::GetTaskName()
 {
-	return taskName;
+    return task_name_;
 }
 //•`‰æ—Dæ“x‚ðŽæ“¾
 const float& TaskAbstract::GetPriority()
 {
-	return priority;
+    return priority_;
 }
 //ƒ^ƒXƒN‚Ìó‘Ô‚ðŽæ“¾
 const TaskState& TaskAbstract::GetTaskState()
 {
-	return taskState;
+    return task_state_;
 }

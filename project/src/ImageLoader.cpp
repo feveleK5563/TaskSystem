@@ -3,153 +3,153 @@
 #include "Utility.h"
 
 AnimData::AnimData():
-	startSheet(0),
-	relativeSheet(0),
-	waitTime(0),
-	isLoop(false) {}
+    start_sheet(0),
+    relative_sheet(0),
+    wait_time(0),
+    is_loop(false) {}
 
-AnimData::AnimData(int startSheet, int relativeSheet, float waitTime, bool isLoop) :
-	startSheet(startSheet),
-	relativeSheet(relativeSheet),
-	waitTime(waitTime),
-	isLoop(isLoop) {}
+AnimData::AnimData(int start_sheet, int relative_sheet, float wait_time, bool is_loop) :
+    start_sheet(start_sheet),
+    relative_sheet(relative_sheet),
+    wait_time(wait_time),
+    is_loop(is_loop) {}
 
 //-----------------------------------------------------------------------------
 
 //デストラクタ
 ImageLoader::~ImageLoader()
 {
-	AllDeleteImageData();
+    AllDeleteImageData();
 }
 
 //画像読み込み
-bool ImageLoader::LoadOneImage(const std::string& imageName, const std::string& filePath)
+bool ImageLoader::LoadOneImage(const std::string& image_name, const std::string& file_path)
 {
-	if (imageData.find(imageName) != imageData.end())
-	{
-		//すでに読み込まれていたら何もしない
-		return false;
-	}
+    if (image_data.find(image_name) != image_data.end())
+    {
+        //すでに読み込まれていたら何もしない
+        return false;
+    }
 
-	//読み込んだ画像のデータを格納
-	imageData[imageName].handle = new int[1]{ LoadGraph(filePath.c_str()) };
-	imageData[imageName].sheetNum = 1;
-	int xSize, ySize;
-	GetGraphSize(*(imageData[imageName].handle), &xSize, &ySize);
-	imageData[imageName].rect = { 0, 0, xSize, ySize };
+    //読み込んだ画像のデータを格納
+    image_data[image_name].handle = new int[1]{ LoadGraph(file_path.c_str()) };
+    image_data[image_name].sheet_num = 1;
+    int xSize, ySize;
+    GetGraphSize(*(image_data[image_name].handle), &xSize, &ySize);
+    image_data[image_name].rect = Math::Box2D(0, 0, xSize, ySize);
 
-	return true;
+    return true;
 }
 
 //画像分割読み込み
-bool ImageLoader::LoadDivImage(const std::string& imageName, const std::string& filePath, int allNum, int xNum, int yNum, int xSize, int ySize)
+bool ImageLoader::LoadDivImage(const std::string& image_name, const std::string& file_path,
+                               int all_num, int x_num, int y_num, int x_size, int y_size)
 {
-	if (imageData.find(imageName) != imageData.end())
-	{
-		return false;
-	}
+    if (image_data.find(image_name) != image_data.end())
+    {
+        return false;
+    }
 
-	//読み込んだ画像のデータを格納
-	imageData[imageName].handle = new int[allNum] {};
-	if (LoadDivGraph(filePath.c_str(), allNum, xNum, yNum, xSize, ySize, imageData[imageName].handle) == -1)
-	{
-		return false;
-	}
-	imageData[imageName].sheetNum = allNum;
-	imageData[imageName].rect = { 0, 0, xSize, ySize };
+    //読み込んだ画像のデータを格納
+    image_data[image_name].handle = new int[all_num] {};
+    if (LoadDivGraph(file_path.c_str(), all_num, x_num, y_num, x_size, y_size, image_data[image_name].handle) == -1)
+    {
+        //読み込み失敗
+        assert(false && "image divload error!!!");
+    }
+    image_data[image_name].sheet_num = all_num;
+    image_data[image_name].rect = Math::Box2D(0, 0, x_size, y_size);
 
-	return true;
+    return true;
 }
 
 //分割読み込み済みのデータにアニメーションデータを追加
-void ImageLoader::AddAnimationData(const std::string& imageName, int startSheet, int endSheet, float waitTime, bool isLoop)
+void ImageLoader::AddAnimationData(const std::string& image_name, int start_sheet, int end_sheet,
+                                   float wait_time, bool is_loop)
 {
-	imageData[imageName].anim.emplace_back(
-		new AnimData(startSheet, endSheet - startSheet, max(waitTime, 1.f), isLoop)
-	);
+    image_data[image_name].anim.emplace_back(
+        new AnimData(start_sheet, end_sheet - start_sheet, max(wait_time, 1.f), is_loop)
+    );
 }
 
 //画像データの取得
-const ImageData& ImageLoader::GetImageData(const std::string& imageName)
+const ImageData& ImageLoader::GetImageData(const std::string& image_name)
 {
-	//アニメーション設定が行われていなかった場合は、便宜的にアニメーションを設定しておく
-	if (imageData[imageName].anim.empty())
-	{
-		AddAnimationData(imageName, 0, 0, 1, false);
-	}
+    //アニメーション設定が行われていなかった場合は、便宜的にアニメーションを設定しておく
+    if (image_data[image_name].anim.empty())
+    {
+        AddAnimationData(image_name, 0, 0, 1, false);
+    }
 
-	return imageData[imageName];
+    return image_data[image_name];
 }
 
 //画像データの解放
-bool ImageLoader::DeleteImageData(const std::string& imageName)
+bool ImageLoader::DeleteImageData(const std::string& image_name)
 {
-	if (!SafeImageDelete(imageName))
-		return false;
+    if (!SafeImageDelete(image_name)) { return false; }
 
-	imageData.erase(imageData.lower_bound(imageName));
-	return true;
+    image_data.erase(image_data.lower_bound(image_name));
+    return true;
 }
 
 //全ての画像データの解放
 bool ImageLoader::AllDeleteImageData()
 {
-	for (	auto it = imageData.begin();
-			it != imageData.end();)
-	{
-		SafeImageDelete(it->first);
-		it = imageData.erase(imageData.lower_bound(it->first));
-	}
-	imageData.clear();
-	return true;
+    for (auto it = image_data.begin();
+         it != image_data.end();)
+    {
+        SafeImageDelete(it->first);
+        it = image_data.erase(image_data.lower_bound(it->first));
+    }
+    image_data.clear();
+    return true;
 }
 
 ImageLoader* ImageLoader::loader = nullptr;
 //インスタンスを得る
 ImageLoader& ImageLoader::GetInstance()
 {
-	assert(loader != nullptr && "ImageLoader hasn't been created!");
-	return *loader;
+    assert(loader != nullptr && "ImageLoader hasn't been created!");
+    return *loader;
 }
 //インスタンスを生成する
 void ImageLoader::CreateInstance()
 {
-	if (loader == nullptr)
-	{
-		loader = new ImageLoader();
-	}
+    if (loader == nullptr)
+    {
+        loader = new ImageLoader();
+    }
 }
 //インスタンスを解放する
 void ImageLoader::DeleteInstance()
 {
-	Utility::SafeDelete(loader);
+    Util::SafeDelete(loader);
 }
 
-
 //安全に画像データを削除する
-bool ImageLoader::SafeImageDelete(const std::string& imageName)
+bool ImageLoader::SafeImageDelete(const std::string& image_name)
 {
-	if (!imageData.count(imageName))
-		return false;
+    if (!image_data.count(image_name)) { return false; }
 
-	for (int i = 0; i < imageData[imageName].sheetNum; ++i)
-	{
-		DeleteGraph(imageData[imageName].handle[i]);
-	}
+    for (int i = 0; i < image_data[image_name].sheet_num; ++i)
+    {
+        DeleteGraph(image_data[image_name].handle[i]);
+    }
 
-	if (imageData[imageName].sheetNum == 1)
-	{
-		Utility::SafeDelete(imageData[imageName].handle);
-	}
-	else
-	{
-		Utility::SafeDeleteArr(imageData[imageName].handle);
-	}
+    if (image_data[image_name].sheet_num == 1)
+    {
+        Util::SafeDelete(image_data[image_name].handle);
+    }
+    else
+    {
+        Util::SafeDeleteArr(image_data[image_name].handle);
+    }
 
-	for (auto animit : imageData[imageName].anim)
-	{
-		Utility::SafeDelete(animit);
-	}
+    for (auto animit : image_data[image_name].anim)
+    {
+        Util::SafeDelete(animit);
+    }
 
-	return true;
+    return true;
 }

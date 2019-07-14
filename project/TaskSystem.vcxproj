@@ -1,4 +1,4 @@
-<?xml version="1.0" encoding="utf-8"?>
+﻿<?xml version="1.0" encoding="utf-8"?>
 <Project DefaultTargets="Build" ToolsVersion="15.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
   <ItemGroup Label="ProjectConfigurations">
     <ProjectConfiguration Include="Debug|Win32">
@@ -19,34 +19,57 @@
     </ProjectConfiguration>
   </ItemGroup>
   <ItemGroup>
+    <ClCompile Include="src\Character.cpp" />
     <ClCompile Include="src\Easing.cpp" />
     <ClCompile Include="src\Fps.cpp" />
     <ClCompile Include="src\GameSystem.cpp" />
     <ClCompile Include="src\ImageDrawer.cpp" />
     <ClCompile Include="src\ImageLoader.cpp" />
-    <ClCompile Include="src\InputState.cpp" />
+    <ClCompile Include="src\InputDXL.cpp" />
+    <ClCompile Include="src\MLine.cpp" />
     <ClCompile Include="src\ShaderManager.cpp" />
+    <ClCompile Include="src\PadInputConfig.cpp" />
+    <ClCompile Include="src\Task_BackCircle.cpp" />
+    <ClCompile Include="src\Task_BackGround.cpp" />
+    <ClCompile Include="src\Task_Camera.cpp" />
+    <ClCompile Include="src\Task_EnemyKata.cpp" />
+    <ClCompile Include="src\Task_Player.cpp" />
+    <ClCompile Include="src\Task_Map.cpp" />
+    <ClCompile Include="src\Task_Jouetsu.cpp" />
+    <ClCompile Include="src\Task_TestEnemy.cpp" />
+    <ClCompile Include="src\Task_Mudra.cpp" />
     <ClCompile Include="src\Utility.cpp" />
     <ClCompile Include="src\WinMain.cpp" />
     <ClCompile Include="src\Math.cpp" />
     <ClCompile Include="src\TaskAbstract.cpp" />
     <ClCompile Include="src\TaskSystem.cpp" />
-    <ClCompile Include="src\Task_TestScene.cpp" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="src\Character.h" />
+    <ClInclude Include="src\MLine.h" />
+    <ClInclude Include="src\PadInputConfig.h" />
+    <ClInclude Include="src\TaskDefData.h" />
     <ClInclude Include="src\Easing.h" />
     <ClInclude Include="src\Fps.h" />
     <ClInclude Include="src\GameSystem.h" />
     <ClInclude Include="src\ImageDrawer.h" />
     <ClInclude Include="src\ImageLoader.h" />
-    <ClInclude Include="src\InputState.h" />
+    <ClInclude Include="src\InputDXL.h" />
     <ClInclude Include="src\Math.h" />
     <ClInclude Include="src\ShaderManager.h" />
     <ClInclude Include="src\TaskAbstract.h" />
     <ClInclude Include="src\SystemDefine.h" />
     <ClInclude Include="src\TaskSystem.h" />
-    <ClInclude Include="src\Task_TestScene.h" />
+    <ClInclude Include="src\Task_BackCircle.h" />
+    <ClInclude Include="src\Task_BackGround.h" />
+    <ClInclude Include="src\Task_Camera.h" />
+    <ClInclude Include="src\Task_EnemyKata.h" />
+    <ClInclude Include="src\Task_Player.h" />
     <ClInclude Include="src\Counter.hpp" />
+    <ClInclude Include="src\Task_Map.h" />
+    <ClInclude Include="src\Task_Jouetsu.h" />
+    <ClInclude Include="src\Task_TestEnemy.h" />
+    <ClInclude Include="src\Task_Mudra.h" />
     <ClInclude Include="src\Utility.h" />
   </ItemGroup>
   <ItemGroup>
@@ -56,32 +79,32 @@
     <VCProjectVersion>15.0</VCProjectVersion>
     <ProjectGuid>{CCB2D0CD-6F9C-4C47-A321-2CC2A30BBE63}</ProjectGuid>
     <RootNamespace>GameProgram</RootNamespace>
-    <WindowsTargetPlatformVersion>10.0.17763.0</WindowsTargetPlatformVersion>
+    <WindowsTargetPlatformVersion>10.0</WindowsTargetPlatformVersion>
   </PropertyGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.Default.props" />
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'" Label="Configuration">
     <ConfigurationType>Application</ConfigurationType>
     <UseDebugLibraries>true</UseDebugLibraries>
-    <PlatformToolset>v141</PlatformToolset>
+    <PlatformToolset>v142</PlatformToolset>
     <CharacterSet>MultiByte</CharacterSet>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'" Label="Configuration">
     <ConfigurationType>Application</ConfigurationType>
     <UseDebugLibraries>false</UseDebugLibraries>
-    <PlatformToolset>v141</PlatformToolset>
+    <PlatformToolset>v142</PlatformToolset>
     <WholeProgramOptimization>true</WholeProgramOptimization>
     <CharacterSet>MultiByte</CharacterSet>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'" Label="Configuration">
     <ConfigurationType>Application</ConfigurationType>
     <UseDebugLibraries>true</UseDebugLibraries>
-    <PlatformToolset>v141</PlatformToolset>
+    <PlatformToolset>v142</PlatformToolset>
     <CharacterSet>MultiByte</CharacterSet>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'" Label="Configuration">
     <ConfigurationType>Application</ConfigurationType>
     <UseDebugLibraries>false</UseDebugLibraries>
-    <PlatformToolset>v141</PlatformToolset>
+    <PlatformToolset>v142</PlatformToolset>
     <WholeProgramOptimization>true</WholeProgramOptimization>
     <CharacterSet>MultiByte</CharacterSet>
   </PropertyGroup>
@@ -110,11 +133,11 @@
       <Optimization>Disabled</Optimization>
       <SDLCheck>true</SDLCheck>
       <ConformanceMode>true</ConformanceMode>
-      <AdditionalIncludeDirectories>DxLib\DxLib_VC;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>DxLib_VC;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
       <RuntimeLibrary>MultiThreadedDebug</RuntimeLibrary>
     </ClCompile>
     <Link>
-      <AdditionalLibraryDirectories>DxLib\DxLib_VC;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
+      <AdditionalLibraryDirectories>DxLib_VC;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
     </Link>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
@@ -125,6 +148,8 @@
       <ConformanceMode>true</ConformanceMode>
       <AdditionalIncludeDirectories>DxLib_VC;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
       <RuntimeLibrary>MultiThreadedDebug</RuntimeLibrary>
+      <DisableSpecificWarnings>
+      </DisableSpecificWarnings>
     </ClCompile>
     <Link>
       <AdditionalLibraryDirectories>DxLib_VC;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
@@ -157,6 +182,7 @@
       <ConformanceMode>true</ConformanceMode>
       <AdditionalIncludeDirectories>DxLib_VC;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
       <RuntimeLibrary>MultiThreaded</RuntimeLibrary>
+      <LanguageStandard>stdcpplatest</LanguageStandard>
     </ClCompile>
     <Link>
       <EnableCOMDATFolding>true</EnableCOMDATFolding>
