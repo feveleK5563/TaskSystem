@@ -1,4 +1,5 @@
 #include "Math.h"
+#include <random>
 #include "DxLib.h"
 #include "Utility.h"
 
@@ -15,6 +16,17 @@ namespace Math
     {
         return 180.0f * rad / PI;
     }
+
+    std::random_device rd;
+    std::mt19937 mtrand(rd());
+
+    //範囲内でランダムな値を取得する(lowerLimit以上upperLimit以下)
+    int GetRand(int lower_limit, int upper_limit)
+    {
+        std::uniform_int_distribution<> randRange(lower_limit, upper_limit);
+        return randRange(mtrand);
+    }
+
 
     //--------------------------------------------------------
     //二次元ベクトルクラス

@@ -7,6 +7,7 @@
 #include "TaskSystem.h"
 #include "ImageLoader.h"
 #include "ShaderManager.h"
+#include "Utility.h"
 
 #include "Task_Map.h"
 #include "Task_BackGround.h"
@@ -80,6 +81,7 @@ void GameSystem::MainLoop()
         //タスクが存在しなかった場合終了する
         if (TaskSystem::GetAllTaskNum() == 0)
         {
+            DOUT << "[System End]" << std::endl;
             break;
         }
         TaskSystem::Update();

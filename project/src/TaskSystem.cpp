@@ -109,33 +109,22 @@ public:
     }
 
     // 指定したタスクの内、先頭のみを渡す
-    template<class T>
-    std::shared_ptr<T> GetTaskOne(const std::string& task_name)
+    std::shared_ptr<TaskAbstract> GetTaskAbstractOne(const std::string& task_name)
     {
         if (IsHaveTask(task_name))
         {
-            return std::static_pointer_cast<T>(task_data_[task_name].front());
+            return task_data_[task_name].front();
         }
-        return std::shared_ptr<T>();
+        return std::shared_ptr<TaskAbstract>();
     }
-    //指定したタスクをまとめて渡す
-    template<class T>
-    std::shared_ptr<std::vector<std::shared_ptr<T>>> GetTaskAll(const std::string& task_name)
+    // 指定したタスクをまとめて渡す
+    const std::vector<std::shared_ptr<TaskAbstract>>* GetTaskAbstractAll(const std::string& task_name)
     {
-        std::shared_ptr<std::vector<std::shared_ptr<T>>> gt;
-
         if (IsHaveTask(task_name))
         {
-            gt = std::make_shared<std::vector<std::shared_ptr<T>>>();
-
-            gt->reserve(task_data_[task_name].size());
-
-            for (auto it : task_data_[task_name])
-            {
-                gt->emplace_back(std::static_pointer_cast<T>(it));
-            }
+            return &task_data_[task_name];
         }
-        return gt;
+        return nullptr;
     }
 
 private:
@@ -229,19 +218,21 @@ private:
 //-----------------------------------------------------------------------------
 //-----------------------------------------------------------------------------
 
+TaskSystem::Impl* TaskSystem::impl_ = nullptr;
+
 // インスタンスを生成する
 void TaskSystem::Create()
 {
-    if (impl_)
+    if (!impl_)
     {
-        impl_ = std::make_unique<Impl>();
+        impl_ = new Impl();
     }
 }
 
 // インスタンスを解放する
 void TaskSystem::Delete()
 {
-    impl_.reset();
+    Util::SafeDelete(impl_);
 }
 
 void TaskSystem::Update()
@@ -316,4 +307,22 @@ int TaskSystem::GetAllTaskNum()
         return impl_->GetAllTaskNum();
     }
     return 0;
+}
+
+std::shared_ptr<TaskAbstract> TaskSystem::GetTaskAbstractOne(const std::string& task_name)
+{
+    if (impl_)
+    {
+        return impl_->GetTaskAbstractOne(task_name);
+    }
+    return std::shared_ptr<TaskAbstract>();
+}
+
+const std::vector<std::shared_ptr<TaskAbstract>>* TaskSystem::GetTaskAbstractAll(const std::string& task_name)
+{
+    if (impl_)
+    {
+        return impl_->GetTaskAbstractAll(task_name);
+    }
+    return nullptr;
 }

@@ -44,9 +44,6 @@ namespace Util
         }
     }
 
-    //範囲内でランダムな値を取得する
-    int GetRand(int lower_limit, int upper_limit);
-
     //コンソール画面を出し、cout,cinを許可する
     class Console final
     {

@@ -57,7 +57,7 @@ void MLine::CreateRandomLine(int line_num)
     ResetLine();
 
     //ƒ‰ƒ“ƒ_ƒ€‚Éü‚ğˆø‚­
-    int line = Util::GetRand(0, MAX_LINE_NUM_ - 1);
+    int line = Math::GetRand(0, MAX_LINE_NUM_ - 1);
     AddLine(line);
 
     //‘O‚Éˆø‚¢‚½ü‚©‚çÄ‚Ñü‚ğˆø‚­
@@ -65,7 +65,7 @@ void MLine::CreateRandomLine(int line_num)
     for (int i = 1; i < line_num; ++i)
     {
         //ƒ‰ƒ“ƒ_ƒ€‚Éü‚ğ•À‚×‚é
-        rrr[0] = Util::GetRand(0, MAX_LINE_NUM_ - 1);
+        rrr[0] = Math::GetRand(0, MAX_LINE_NUM_ - 1);
         for (int j = 1; j < MAX_LINE_NUM_; ++j)
         {
             rrr[j] = (rrr[j - 1] + 1) % MAX_LINE_NUM_;
@@ -168,7 +168,7 @@ void MLine::Draw(const Math::Vec2& pos, const Color& color)
     cb.g = color.Fg();
     cb.b = color.Fb();
     cb.a = color.Fa();
-    float tmp = float(Util::GetRand(5, 10)) * 0.1f * thick_;
+    float tmp = float(Math::GetRand(5, 10)) * 0.1f * thick_;
 
     for (int i = 0; i < MAX_LINE_NUM_; ++i)
     {

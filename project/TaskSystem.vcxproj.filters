@@ -106,9 +106,6 @@
     <ClCompile Include="src\ShaderManager.cpp">
       <Filter>システム\Utility\Shader</Filter>
     </ClCompile>
-    <ClCompile Include="src\Utility.cpp">
-      <Filter>システム\Utility\Etc</Filter>
-    </ClCompile>
     <ClCompile Include="src\Task_Player.cpp">
       <Filter>ソース ファイル\Task\Object\Player</Filter>
     </ClCompile>
@@ -151,6 +148,9 @@
     <ClCompile Include="src\Task_BackGround.cpp">
       <Filter>ソース ファイル\Task\Object\BackGround</Filter>
     </ClCompile>
+    <ClCompile Include="src\Utility.cpp">
+      <Filter>システム\Utility\Etc</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="src\SystemDefine.h">
@@ -182,9 +182,6 @@
     </ClInclude>
     <ClInclude Include="src\ShaderManager.h">
       <Filter>システム\Utility\Shader</Filter>
-    </ClInclude>
-    <ClInclude Include="src\Utility.h">
-      <Filter>システム\Utility\Etc</Filter>
     </ClInclude>
     <ClInclude Include="src\Task_Player.h">
       <Filter>ソース ファイル\Task\Object\Player</Filter>
@@ -230,6 +227,9 @@
     </ClInclude>
     <ClInclude Include="src\Task_BackGround.h">
       <Filter>ソース ファイル\Task\Object\BackGround</Filter>
+    </ClInclude>
+    <ClInclude Include="src\Utility.h">
+      <Filter>システム\Utility\Etc</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

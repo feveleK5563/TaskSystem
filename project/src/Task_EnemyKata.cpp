@@ -12,7 +12,7 @@ namespace EnemyKata
         mline_(dist, thick)
     {
         SetPriority(Priority::MLINE);
-        mline_.CreateRandomLine(Util::GetRand(max_line, min_line));
+        mline_.CreateRandomLine(Math::GetRand(max_line, min_line));
     }
     //----------------------------------------------
     //タスクのデストラクタ

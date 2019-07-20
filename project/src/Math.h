@@ -12,6 +12,9 @@ namespace Math
     //弧度法 → 度数法変換
     float ToDegree(float rad);
 
+    //範囲内でランダムな値を取得する
+    int GetRand(int lower_limit, int upper_limit);
+
     //二次元ベクトルクラス
     struct Vec2
     {

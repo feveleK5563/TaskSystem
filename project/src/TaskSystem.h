@@ -36,24 +36,44 @@ public:
     template<class T>
     static std::shared_ptr<T> GetTaskOne(const std::string& task_name)
     {
-        if (impl_)
+        if (IsHaveTask(task_name))
         {
-            return impl_->GetTaskOne(task_name);
+            std::shared_ptr<TaskAbstract> task_data = GetTaskAbstractOne(task_name);
+            return std::static_pointer_cast<T>(task_data);
         }
         return std::shared_ptr<T>();
     }
-    //指定したタスクをまとめて渡す
+    // 指定したタスクをまとめて渡す
     template<class T>
     static std::shared_ptr<std::vector<std::shared_ptr<T>>> GetTaskAll(const std::string& task_name)
     {
-        if (impl_)
+        if (IsHaveTask(task_name))
         {
-            impl_->GetTaskAll(task_name);
+            const std::vector<std::shared_ptr<TaskAbstract>>* task_data = GetTaskAbstractAll(task_name);
+            if (!task_data)
+            {
+                return std::shared_ptr<std::vector<std::shared_ptr<T>>>();
+            }
+
+            std::shared_ptr<std::vector<std::shared_ptr<T>>> gt =
+                    std::make_shared<std::vector<std::shared_ptr<T>>>();
+
+            gt->reserve(task_data->size());
+
+            for (auto it : *task_data)
+            {
+                gt->emplace_back(std::static_pointer_cast<T>(it));
+            }
+            return gt;
         }
         return std::shared_ptr<std::vector<std::shared_ptr<T>>>();
     }
 
 private:
+    static std::shared_ptr<TaskAbstract> GetTaskAbstractOne(const std::string& task_name);
+    static const std::vector<std::shared_ptr<TaskAbstract>>* GetTaskAbstractAll(const std::string& task_name);
+
+private:
     class Impl;
-    static std::unique_ptr<Impl> impl_;
+    static Impl* impl_;
 };
