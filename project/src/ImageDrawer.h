@@ -33,8 +33,8 @@ private:
     float       now_anim_image_;    //現在のアニメーション画像
     bool        is_anim_end_;       //アニメーション終了フラグ
 
-    float   scale_x_, scale_y_; //拡大率
-    bool    is_turn_;           //反転フラグ
+    float   scale_x_, scale_y_;     //拡大率
+    bool    is_turn_;               //反転フラグ
 
 public:
     //コンストラクタ

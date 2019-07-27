@@ -15,19 +15,18 @@ namespace Jouetsu
     {
         image_name_ = "Jouetsu";
 
-        auto& imgl = ImageLoader::GetInstance();
-        imgl.LoadDivImage(image_name_, "data/image/jouetsu.png", 12, 6, 2, 32, 32);
+        ImageLoader::LoadDivImage(image_name_, "data/image/jouetsu.png", 12, 6, 2, 32, 32);
 
-        imgl.AddAnimationData(image_name_, 0, 5, 8.f, true);        //通常時
-        imgl.AddAnimationData(image_name_, 6, 11, 2.5f, false);     //除霊モード遷移
-        imgl.AddAnimationData(image_name_, 11, 11, 8.f, true);      //除霊モード時
-        imgl.AddAnimationData(image_name_, 11, 6, 2.5f, false);     //通常遷移
+        ImageLoader::AddAnimationData(image_name_, 0, 5, 8.f, true);        //通常時
+        ImageLoader::AddAnimationData(image_name_, 6, 11, 2.5f, false);     //除霊モード遷移
+        ImageLoader::AddAnimationData(image_name_, 11, 11, 8.f, true);      //除霊モード時
+        ImageLoader::AddAnimationData(image_name_, 11, 6, 2.5f, false);     //通常遷移
     }
     //----------------------------------------------
     //リソースのデストラクタ
     Resource::~Resource()
     {
-        ImageLoader::GetInstance().DeleteImageData(image_name_);
+        ImageLoader::DeleteImageData(image_name_);
     }
     //----------------------------------------------
     //リソースの生成
@@ -140,7 +139,7 @@ namespace Jouetsu
     //----------------------------------------------
     void Task::InputToStateTransition()
     {
-        auto& input = PadInputConfig::GetInstance(0);
+        auto& input = PadInputConfig::Get(0);
         switch (state_)
         {
         case JState::Nomal: //通常モード
@@ -199,7 +198,7 @@ namespace Jouetsu
             velocity = (ppos - jouetsu_.GetPos()) / 3.f;
 
             //右スティックでの操作
-            auto& input = PadInputConfig::GetInstance(0);
+            auto& input = PadInputConfig::Get(0);
             Math::Vec2 rstick = input.GetVecStickR();
             if (rstick.GetDistance() > 0.f)
             {

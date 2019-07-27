@@ -1,5 +1,4 @@
 #include "TaskAbstract.h"
-#include "Utility.h"
 
 TaskAbstract::TaskAbstract(const std::string& task_name):
     task_name_(task_name),

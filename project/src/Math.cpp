@@ -222,8 +222,7 @@ namespace Math
     Vec2 Vec2::operator -() const
     {
         Vec2 tmp = *this;
-        tmp.x *= -1.f;
-        tmp.y *= -1.f;
+        tmp *= -1.f;
         return tmp;
     }
     bool Vec2::operator ==(const Vec2& vec) const
@@ -290,9 +289,9 @@ namespace Math
         return x < box.x && box.x + box.w < x + w &&
                y < box.y && box.y + box.h < y + h;
     }
-    void Box2D::DrawRect(bool isFill, int color) const
+    void Box2D::DrawRect(bool is_fill, int color) const
     {
-        DrawBoxAA(x, y, x + w, y + h, color, isFill);
+        DrawBoxAA(x, y, x + w, y + h, color, is_fill);
     }
 
     void Box2D::SetPos(const Vec2& pos, BoxCP cp_mode)

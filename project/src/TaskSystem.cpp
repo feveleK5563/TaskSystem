@@ -216,9 +216,13 @@ private:
 };
 
 //-----------------------------------------------------------------------------
-//-----------------------------------------------------------------------------
-
 TaskSystem::Impl* TaskSystem::impl_ = nullptr;
+TaskSystem::Impl* TaskSystem::GetImpl()
+{
+    assert(impl_ && "TaskSystem hasn't been created!!");
+    return impl_;
+}
+//-----------------------------------------------------------------------------
 
 // インスタンスを生成する
 void TaskSystem::Create()
@@ -237,92 +241,55 @@ void TaskSystem::Delete()
 
 void TaskSystem::Update()
 {
-    if (impl_)
-    {
-        impl_->Update();
-    }
+    GetImpl()->Update();
 }
 
 void TaskSystem::Draw()
 {
-    if (impl_)
-    {
-        impl_->Draw();
-    }
+    GetImpl()->Draw();
 }
 
 void TaskSystem::AddTask(std::shared_ptr<TaskAbstract> create_task)
 {
-    if (impl_)
-    {
-        impl_->AddTask(create_task);
-    }
+    GetImpl()->AddTask(create_task);
 }
 
 bool TaskSystem::IsHaveTask(const std::string& task_name)
 {
-    if (impl_)
-    {
-        return impl_->IsHaveTask(task_name);
-    }
-    return false;
+    return GetImpl()->IsHaveTask(task_name);
 }
 
 void TaskSystem::SetStateTask(const std::string& task_name, TaskState task_state)
 {
-    if (impl_)
-    {
-        impl_->SetStateTask(task_name, task_state);
-    }
+    GetImpl()->SetStateTask(task_name, task_state);
 }
 
 void TaskSystem::KillTask(const std::string& task_name)
 {
-    if (impl_)
-    {
-        impl_->KillTask(task_name);
-    }
+    GetImpl()->KillTask(task_name);
 }
 
 void TaskSystem::AllSetStateTask(TaskState task_state)
 {
-    if (impl_)
-    {
-        impl_->AllSetStateTask(task_state);
-    }
+    GetImpl()->AllSetStateTask(task_state);
 }
 
 void TaskSystem::AllDeleteTask()
 {
-    if (impl_)
-    {
-        impl_->AllDeleteTask();
-    }
+    GetImpl()->AllDeleteTask();
 }
 
 int TaskSystem::GetAllTaskNum()
 {
-    if (impl_)
-    {
-        return impl_->GetAllTaskNum();
-    }
-    return 0;
+    return GetImpl()->GetAllTaskNum();
 }
 
 std::shared_ptr<TaskAbstract> TaskSystem::GetTaskAbstractOne(const std::string& task_name)
 {
-    if (impl_)
-    {
-        return impl_->GetTaskAbstractOne(task_name);
-    }
-    return std::shared_ptr<TaskAbstract>();
+    return GetImpl()->GetTaskAbstractOne(task_name);
 }
 
 const std::vector<std::shared_ptr<TaskAbstract>>* TaskSystem::GetTaskAbstractAll(const std::string& task_name)
 {
-    if (impl_)
-    {
-        return impl_->GetTaskAbstractAll(task_name);
-    }
-    return nullptr;
+    return GetImpl()->GetTaskAbstractAll(task_name);
 }

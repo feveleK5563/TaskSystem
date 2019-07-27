@@ -10,15 +10,13 @@ namespace BackGround
     Resource::Resource()
     {
         back_image_ = "back";
-        auto& il = ImageLoader::GetInstance();
-        il.LoadOneImage(back_image_, "data/image/back.png");
+        ImageLoader::LoadOneImage(back_image_, "data/image/back.png");
     }
     //----------------------------------------------
     //リソースのデストラクタ
     Resource::~Resource()
     {
-        auto& il = ImageLoader::GetInstance();
-        il.DeleteImageData(back_image_);
+        ImageLoader::DeleteImageData(back_image_);
     }
     //----------------------------------------------
     //リソースの生成

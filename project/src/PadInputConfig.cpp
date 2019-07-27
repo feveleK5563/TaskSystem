@@ -181,15 +181,15 @@ Math::Vec2 PadInputConfig::PadConfig::GetVecStickR() const
 
 std::vector<PadInputConfig::PadConfig*> PadInputConfig::config;
 //ゲームパッドコンフィグマンのインスタンス取得
-PadInputConfig::PadConfig& PadInputConfig::GetInstance(unsigned int id)
+PadInputConfig::PadConfig& PadInputConfig::Get(unsigned int id)
 {
-    assert(IsCreatedInstance(id) && "PadInputConfig hasn't been created!");
+    assert(IsCreated(id) && "PadInputConfig hasn't been created!");
     return *config[id];
 }
 //ゲームパッドコンフィグマンのインスタンス生成
-void PadInputConfig::CreateInstance(unsigned int pad_num, bool use_pad, bool use_key)
+void PadInputConfig::Create(unsigned int pad_num, bool use_pad, bool use_key)
 {
-    DeleteInstance();
+    Delete();
     config.resize(pad_num);
     for (unsigned int i = 0; i < pad_num; ++i)
     {
@@ -197,7 +197,7 @@ void PadInputConfig::CreateInstance(unsigned int pad_num, bool use_pad, bool use
     }
 }
 //ゲームパッドコンフィグマンのインスタンス削除
-void PadInputConfig::DeleteInstance()
+void PadInputConfig::Delete()
 {
     if (config.size() <= 0) { return; }
 
@@ -209,7 +209,7 @@ void PadInputConfig::DeleteInstance()
     config.shrink_to_fit();
 }
 //指定番号のゲームパッドコンフィグマンが生成されているか否かを取得
-bool PadInputConfig::IsCreatedInstance(unsigned int id)
+bool PadInputConfig::IsCreated(unsigned int id)
 {
     if (id >= config.size()) { return false; }
     return true;

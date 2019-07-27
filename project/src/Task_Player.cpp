@@ -17,24 +17,23 @@ namespace Player
     {
         image_name_ = "sayori";
 
-        auto& imgl = ImageLoader::GetInstance();
-        imgl.LoadDivImage(image_name_, "data/image/sayori.png", 36, 6, 6, 32, 32);
+        ImageLoader::LoadDivImage(image_name_, "data/image/sayori.png", 36, 6, 6, 32, 32);
 
         //---アニメーション---
-        imgl.AddAnimationData(image_name_,  0,  5,  8.f, true);  //00-待機_接地(IDLE_GR)
-        imgl.AddAnimationData(image_name_,  6, 11, 10.f, true);  //01-待機_滞空(IDLE_FL)
+        ImageLoader::AddAnimationData(image_name_,  0,  5,  8.f, true);  //00-待機_接地(IDLE_GR)
+        ImageLoader::AddAnimationData(image_name_,  6, 11, 10.f, true);  //01-待機_滞空(IDLE_FL)
 
-        imgl.AddAnimationData(image_name_, 12, 16,  5.f, true);  //02-歩行_接地(WALK_GR)
-        imgl.AddAnimationData(image_name_, 18, 22,  8.f, true);  //03-移動_滞空(MOVE_FL)
+        ImageLoader::AddAnimationData(image_name_, 12, 16,  5.f, true);  //02-歩行_接地(WALK_GR)
+        ImageLoader::AddAnimationData(image_name_, 18, 22,  8.f, true);  //03-移動_滞空(MOVE_FL)
 
-        imgl.AddAnimationData(image_name_, 24, 29, 12.f, true);  //04-展開_接地(DEPLOY_GR)
-        imgl.AddAnimationData(image_name_, 30, 35, 15.f, true);  //05-展開_滞空(DEPLOY_FL)
+        ImageLoader::AddAnimationData(image_name_, 24, 29, 12.f, true);  //04-展開_接地(DEPLOY_GR)
+        ImageLoader::AddAnimationData(image_name_, 30, 35, 15.f, true);  //05-展開_滞空(DEPLOY_FL)
     }
     //----------------------------------------------
     //リソースのデストラクタ
     Resource::~Resource()
     {
-        ImageLoader::GetInstance().DeleteImageData(image_name_);
+        ImageLoader::DeleteImageData(image_name_);
     }
     //----------------------------------------------
     //リソースの生成
@@ -160,7 +159,7 @@ namespace Player
     Math::Vec2 Task::InputToGetMovingDirection()
     {
         Math::Vec2 velocity;
-        auto& input = PadInputConfig::GetInstance(0);
+        auto& input = PadInputConfig::Get(0);
 
         //入力情報を取得
         velocity = input.GetVecStickL();
@@ -205,7 +204,7 @@ namespace Player
     //状態遷移
     void Task::StateTransition(const Math::Vec2& velocity)
     {
-        auto& input = PadInputConfig::GetInstance(0);
+        auto& input = PadInputConfig::Get(0);
         switch (state_)
         {
         case PState::IDLE_GR:   //接地待機

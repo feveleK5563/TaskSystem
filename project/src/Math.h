@@ -85,9 +85,14 @@ namespace Math
     //当たり判定と描画機能つき矩形クラス
     struct Box2D
     {
+    private:
+        
+
+    public:
         float x, y; //座標
         float w, h; //矩形サイズ
 
+    public:
         Box2D();
         Box2D(const Box2D& box);
         Box2D(const Vec2& pos, const Vec2& rect);

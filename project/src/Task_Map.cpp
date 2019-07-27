@@ -15,15 +15,13 @@ namespace Map
     {
         map_chip_ = "mapChip";
 
-        auto& imgl = ImageLoader::GetInstance();
-        imgl.LoadDivImage(map_chip_, "data/image/mapChip.png", 1, 1, 1, block_size, block_size);
+        ImageLoader::LoadDivImage(map_chip_, "data/image/mapChip.png", 1, 1, 1, block_size, block_size);
     }
     //----------------------------------------------
     //リソースのデストラクタ
     Resource::~Resource()
     {
-        auto& imgl = ImageLoader::GetInstance();
-        imgl.DeleteImageData(map_chip_);
+        ImageLoader::DeleteImageData(map_chip_);
     }
     //----------------------------------------------
     //リソースの生成

@@ -41,7 +41,7 @@ ImageDrawer::ImageDrawer():
 //初期化(描画したい画像データを指定、第二引数trueで描画基準位置が中心)
 void ImageDrawer::Initialize(const std::string& image_name, Math::BoxCP cp)
 {
-    image_data_ = ImageLoader::GetInstance().GetImageData(image_name);
+    image_data_ = ImageLoader::GetImageData(image_name);
     switch (cp)
     {
     case Math::BoxCP::TOP_LEFT:
@@ -76,7 +76,7 @@ void ImageDrawer::Initialize(const std::string& image_name, Math::BoxCP cp)
 //初期化(描画したい画像データと描画基準位置を指定)
 void ImageDrawer::Initialize(const std::string& image_name, const Math::Vec2& criterion_pos)
 {
-    image_data_ = ImageLoader::GetInstance().GetImageData(image_name);
+    image_data_ = ImageLoader::GetImageData(image_name);
     c_pos_ = criterion_pos;
 }
 
@@ -330,6 +330,6 @@ void ImageDrawer::CheckHandleError(int image_sheet) const
 {
     if (image_sheet < 0 || image_data_.sheet_num <= image_sheet)
     {
-        assert(false && "There is no image assigned to that handle!");
+        assert(false && "No image assigned to that handle!");
     }
 }

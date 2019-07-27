@@ -15,14 +15,13 @@ namespace Mudra
     {
         image_name_ = "mudra";
 
-        auto& imgl = ImageLoader::GetInstance();
-        imgl.LoadOneImage(image_name_, "data/image/mudra.png");
+        ImageLoader::LoadOneImage(image_name_, "data/image/mudra.png");
     }
     //----------------------------------------------
     //リソースのデストラクタ
     Resource::~Resource()
     {
-        ImageLoader::GetInstance().DeleteImageData(image_name_);
+        ImageLoader::DeleteImageData(image_name_);
     }
     //----------------------------------------------
     //リソースの生成
@@ -132,7 +131,7 @@ namespace Mudra
             HitMudraPoint(jouetsu->GetRect());
 
             //Rボタンを離したら広がる
-            if (PadInputConfig::GetInstance(0).GetState(PAD_INPUT::R1) != ON)
+            if (PadInputConfig::Get(0).GetState(PAD_INPUT::R1) != ON)
             {
                 is_active_ = false;
                 release_ = true;

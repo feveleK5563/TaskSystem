@@ -44,11 +44,11 @@ private:
 
 public:
     //ゲームパッドコンフィグマンのインスタンス取得
-    static PadConfig& GetInstance(unsigned int id);
+    static PadConfig& Get(unsigned int id);
     //ゲームパッドコンフィグマンのインスタンス生成
-    static void CreateInstance(unsigned int pad_num, bool use_pad, bool use_key);
+    static void Create(unsigned int pad_num, bool use_pad, bool use_key);
     //ゲームパッドコンフィグマンのインスタンス削除
-    static void DeleteInstance();
+    static void Delete();
     //指定番号のゲームパッドコンフィグマンが生成されているか否かを取得
-    static bool IsCreatedInstance(unsigned int id);
+    static bool IsCreated(unsigned int id);
 };

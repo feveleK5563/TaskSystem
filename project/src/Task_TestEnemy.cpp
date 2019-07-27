@@ -13,14 +13,13 @@ namespace TestEnemy
     {
         image_name_ = "TestEnemy";
 
-        auto& imgl = ImageLoader::GetInstance();
-        imgl.LoadOneImage(image_name_, "data/image/testEnemy.png");
+        ImageLoader::LoadOneImage(image_name_, "data/image/testEnemy.png");
     }
     //----------------------------------------------
     //リソースのデストラクタ
     Resource::~Resource()
     {
-        ImageLoader::GetInstance().DeleteImageData(image_name_);
+        ImageLoader::DeleteImageData(image_name_);
     }
     //----------------------------------------------
     //リソースの生成

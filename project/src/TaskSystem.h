@@ -43,6 +43,7 @@ public:
         }
         return std::shared_ptr<T>();
     }
+
     // 指定したタスクをまとめて渡す
     template<class T>
     static std::shared_ptr<std::vector<std::shared_ptr<T>>> GetTaskAll(const std::string& task_name)
@@ -76,4 +77,5 @@ private:
 private:
     class Impl;
     static Impl* impl_;
+    static Impl* GetImpl();
 };

@@ -56,13 +56,13 @@ void GameSystem::Initialize()
         return;
     }
 
-    ImageLoader::CreateInstance();
+    ImageLoader::Create();
     ShaderManager::CreateInstance();
 
     InputDXL::CreateMouseInstance();    //マウスを生成
     InputDXL::CreateKeyInstance();      //キーボードを生成
     InputDXL::CreatePadInstance(SysDef::PadNum);                //ゲームパッドを指定個数生成
-    PadInputConfig::CreateInstance(SysDef::PadNum, true, true); //ゲームパッドのコンフィグを作成する
+    PadInputConfig::Create(SysDef::PadNum, true, true); //ゲームパッドのコンフィグを作成する
 
     FirstCreateTask();
 }
@@ -96,10 +96,10 @@ void GameSystem::MainLoop()
 void GameSystem::Finalize()
 {
     TaskSystem::Delete();
-    ImageLoader::DeleteInstance();
+    ImageLoader::Delete();
     ShaderManager::DeleteInstance();
     InputDXL::DeleteAllInstance();
-    PadInputConfig::DeleteInstance();
+    PadInputConfig::Delete();
     DxLib_End();
 }
 
