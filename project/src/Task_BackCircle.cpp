@@ -11,18 +11,16 @@ namespace BackCircle
     Resource::Resource()
     {
         shader_name = "circleShader";
-        auto& shader = ShaderManager::GetInstance();
-        shader.LoadShader(shader_name, "data/shader/circle.pso");
+        ShaderManager::LoadShader(shader_name, "data/shader/circle.pso");
         buffer_name = "circleBuffer";
-        shader.CreateConstantBuffer<CircleInfo>(buffer_name);
+        ShaderManager::CreateConstantBuffer<CircleInfo>(buffer_name);
     }
     //----------------------------------------------
     //リソースのデストラクタ
     Resource::~Resource()
     {
-        auto& shader = ShaderManager::GetInstance();
-        shader.DeleteShaderData(shader_name);
-        shader.DeleteConstantBuffer(buffer_name);
+        ShaderManager::DeleteShaderData(shader_name);
+        ShaderManager::DeleteConstantBuffer(buffer_name);
     }
     //----------------------------------------------
     //リソースの生成
@@ -107,8 +105,7 @@ namespace BackCircle
     void Task::Draw()
     {
         //ピクセルシェーダー用の定数バッファのアドレスを取得
-        auto& shaderManager = ShaderManager::GetInstance();
-        auto& cb = shaderManager.GetConstantBuffer<CircleInfo>(res_->buffer_name);
+        auto& cb = ShaderManager::GetConstantBuffer<CircleInfo>(res_->buffer_name);
 
         //各値を書き込み
         cb.window_size = info_.window_size;
@@ -120,7 +117,7 @@ namespace BackCircle
         cb.b = info_.b;
         cb.a = info_.a;
 
-        shaderManager.DrawShader(res_->shader_name, res_->buffer_name);
+        ShaderManager::DrawShader(res_->shader_name, res_->buffer_name);
     }
 
     //----------------------------------------------

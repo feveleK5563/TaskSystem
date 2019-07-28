@@ -57,7 +57,7 @@ void GameSystem::Initialize()
     }
 
     ImageLoader::Create();
-    ShaderManager::CreateInstance();
+    ShaderManager::Create();
 
     InputDXL::CreateMouseInstance();    //マウスを生成
     InputDXL::CreateKeyInstance();      //キーボードを生成
@@ -97,7 +97,7 @@ void GameSystem::Finalize()
 {
     TaskSystem::Delete();
     ImageLoader::Delete();
-    ShaderManager::DeleteInstance();
+    ShaderManager::Delete();
     InputDXL::DeleteAllInstance();
     PadInputConfig::Delete();
     DxLib_End();

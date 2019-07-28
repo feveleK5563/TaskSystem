@@ -9,18 +9,16 @@ std::weak_ptr<MResource> MResource::instance_;
 MResource::MResource()
 {
     shader_name = "lineShader";
-    auto& shader = ShaderManager::GetInstance();
-    shader.LoadShader(shader_name, "data/shader/mline.pso");
+    ShaderManager::LoadShader(shader_name, "data/shader/mline.pso");
     buffer_name = "lineBuffer";
-    shader.CreateConstantBuffer<MLineInfo>(buffer_name);
+    ShaderManager::CreateConstantBuffer<MLineInfo>(buffer_name);
 }
 //----------------------------------------------
 //リソースのデストラクタ
 MResource::~MResource()
 {
-    auto& shader = ShaderManager::GetInstance();
-    shader.DeleteShaderData(shader_name);
-    shader.DeleteConstantBuffer(buffer_name);
+    ShaderManager::DeleteShaderData(shader_name);
+    ShaderManager::DeleteConstantBuffer(buffer_name);
 }
 //----------------------------------------------
 //リソースの生成
@@ -160,8 +158,7 @@ MLine::MHit MLine::CheckHitLine(int line)
 //線を描画する
 void MLine::Draw(const Math::Vec2& pos, const Color& color)
 {
-    auto& shader = ShaderManager::GetInstance();
-    auto& cb = shader.GetConstantBuffer<MLineInfo>(mres_->buffer_name);
+    auto& cb = ShaderManager::GetConstantBuffer<MLineInfo>(mres_->buffer_name);
     cb.window_size.u = SysDef::SizeX;
     cb.window_size.v = SysDef::SizeY;
     cb.r = color.Fr();
@@ -188,6 +185,6 @@ void MLine::Draw(const Math::Vec2& pos, const Color& color)
         case 4: cb.start_pos.v += dist_; cb.end_pos.u -= dist_; break;	//1-3
         case 5: cb.start_pos.v += dist_; cb.end_pos.u += dist_; break;	//2-3
         }
-        shader.DrawShader(mres_->shader_name, mres_->buffer_name);
+        ShaderManager::DrawShader(mres_->shader_name, mres_->buffer_name);
     }
 }
