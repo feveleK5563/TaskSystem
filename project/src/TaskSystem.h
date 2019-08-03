@@ -8,9 +8,9 @@
 class TaskSystem
 {
 public:
-    //インスタンスを生成する
+    // インスタンスを生成する
     static void Create();
-    //インスタンスを解放する
+    // インスタンスを解放する
     static void Delete();
 
     static void Update();                                           // 更新

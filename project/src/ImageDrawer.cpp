@@ -28,7 +28,7 @@ float Color::Fa() const { return float(a) / 255.f; }
 int Color::GetColor() { return r * g * b; }
 
 //-----------------------------------------------------------------------------
-//コンストラクタ
+// コンストラクタ
 ImageDrawer::ImageDrawer():
     now_anim_pattern_(0),
     now_anim_image_(0),
@@ -38,7 +38,7 @@ ImageDrawer::ImageDrawer():
     is_turn_(false){}
 
 
-//初期化(描画したい画像データを指定、第二引数trueで描画基準位置が中心)
+// 初期化(描画したい画像データを指定、第二引数trueで描画基準位置が中心)
 void ImageDrawer::Initialize(const std::string& image_name, Math::BoxCP cp)
 {
     image_data_ = ImageLoader::GetImageData(image_name);
@@ -73,14 +73,14 @@ void ImageDrawer::Initialize(const std::string& image_name, Math::BoxCP cp)
         break;
     }
 }
-//初期化(描画したい画像データと描画基準位置を指定)
+// 初期化(描画したい画像データと描画基準位置を指定)
 void ImageDrawer::Initialize(const std::string& image_name, const Math::Vec2& criterion_pos)
 {
     image_data_ = ImageLoader::GetImageData(image_name);
     c_pos_ = criterion_pos;
 }
 
-//アニメーションさせる
+// アニメーションさせる
 void ImageDrawer::AnimUpdate()
 {
     now_anim_image_ += 1.0f / image_data_.anim[now_anim_pattern_]->wait_time;
@@ -101,13 +101,13 @@ void ImageDrawer::AnimUpdate()
     is_anim_end_ = false;
 }
 
-//アニメーションが終了したか否かを返す
+// アニメーションが終了したか否かを返す
 bool ImageDrawer::IsAnimEnd()
 {
     return is_anim_end_;
 }
 
-//アニメーションパターン番号の変更
+// アニメーションパターン番号の変更
 void ImageDrawer::ChangeAnimPattern(int pattern, bool reset_time)
 {
     now_anim_pattern_ = pattern;
@@ -119,32 +119,32 @@ void ImageDrawer::ChangeAnimPattern(int pattern, bool reset_time)
     }
 }
 
-//拡大率を設定
+// 拡大率を設定
 void ImageDrawer::SetScale(float scale)
 {
     scale_x_ = scale;
     scale_y_ = scale;
 }
-//拡大率を設定(縦横別)
+// 拡大率を設定(縦横別)
 void ImageDrawer::SetScale(float scale_x, float scale_y)
 {
     scale_x_ = scale_x;
     scale_y_ = scale_y;
 }
-//反転するか否かを設定
+// 反転するか否かを設定
 void ImageDrawer::SetTurnFlag(bool is_turn)
 {
     is_turn_ = is_turn;
     is_anim_end_ = false;
 }
-//反転フラグを反転
+// 反転フラグを反転
 void ImageDrawer::ChangeTurnFlag()
 {
     is_turn_ = !is_turn_;
     is_anim_end_ = false;
 }
 
-//簡易描画
+// 簡易描画
 void ImageDrawer::Draw(const Math::Vec2& pos) const
 {
     int handle = GetNowImageHandle();
@@ -160,7 +160,7 @@ void ImageDrawer::Draw(const Math::Vec2& pos) const
         false);
 }
 
-//描画する
+// 描画する
 void ImageDrawer::Draw(const Math::Vec2& pos, float angle, const Color& color) const
 {
     SetDrawBright(color.r, color.g, color.b);
@@ -182,7 +182,7 @@ void ImageDrawer::Draw(const Math::Vec2& pos, float angle, const Color& color) c
     SetDrawBlendMode(DX_BLENDMODE_NOBLEND, 0);
 }
 
-//描画範囲矩形を指定して描画する(描画の基準位置は無視する)
+// 描画範囲矩形を指定して描画する(描画の基準位置は無視する)
 void ImageDrawer::Draw(const Math::Vec2& pos, const Math::Box2D& rect, const Color& color) const
 {
     SetDrawBright(color.r, color.g, color.b);
@@ -205,8 +205,7 @@ void ImageDrawer::Draw(const Math::Vec2& pos, const Math::Box2D& rect, const Col
     SetDrawBlendMode(DX_BLENDMODE_NOBLEND, 0);
 }
 
-
-//指定番号の画像を簡易描画(アニメーションしない)
+// 指定番号の画像を簡易描画(アニメーションしない)
 void ImageDrawer::DrawOne(int image_sheet, const Math::Vec2& pos) const
 {
     CheckHandleError(image_sheet);
@@ -222,7 +221,7 @@ void ImageDrawer::DrawOne(int image_sheet, const Math::Vec2& pos) const
         false);
 }
 
-//指定番号の画像を描画する(アニメーションしない)
+// 指定番号の画像を描画する(アニメーションしない)
 void ImageDrawer::DrawOne(int image_sheet, const Math::Vec2& pos, float angle, const Color& color) const
 {
     CheckHandleError(image_sheet);
@@ -244,7 +243,7 @@ void ImageDrawer::DrawOne(int image_sheet, const Math::Vec2& pos, float angle, c
     SetDrawBlendMode(DX_BLENDMODE_NOBLEND, 0);
 }
 
-//指定番号の画像を描画範囲矩形を指定して描画する
+// 指定番号の画像を描画範囲矩形を指定して描画する
 void ImageDrawer::DrawOne(int image_sheet, const Math::Vec2& pos, const Math::Box2D& rect, const Color& color) const
 {
     CheckHandleError(image_sheet);
@@ -265,7 +264,7 @@ void ImageDrawer::DrawOne(int image_sheet, const Math::Vec2& pos, const Math::Bo
     SetDrawBlendMode(DX_BLENDMODE_NOBLEND, 0);
 }
 
-//シルエットを描画させる
+// シルエットを描画させる
 void ImageDrawer::DrawSilhouette(const Math::Vec2& pos, const Color& color) const
 {
     SetDrawBright(color.r, color.g, color.b);
@@ -279,7 +278,7 @@ void ImageDrawer::DrawSilhouette(const Math::Vec2& pos, const Color& color) cons
     SetDrawBlendMode(DX_BLENDMODE_NOBLEND, 0);
 }
 
-//シルエットを描画させる
+// シルエットを描画させる
 void ImageDrawer::DrawSilhouetteOne(int image_sheet, const Math::Vec2& pos, const Color& color) const
 {
     SetDrawBright(color.r, color.g, color.b);
@@ -293,7 +292,7 @@ void ImageDrawer::DrawSilhouetteOne(int image_sheet, const Math::Vec2& pos, cons
     SetDrawBlendMode(DX_BLENDMODE_NOBLEND, 0);
 }
 
-//現在の画像ハンドルを取得
+// 現在の画像ハンドルを取得
 const int ImageDrawer::GetNowImageHandle() const
 {
     int nai = (int)now_anim_image_;
@@ -308,13 +307,13 @@ const int ImageDrawer::GetNowImageHandle() const
     return image_data_.handle[imageSheet];
 }
 
-//画像が反転されているか否かを取得(反転されていたらtrue)
+// 画像が反転されているか否かを取得(反転されていたらtrue)
 const bool& ImageDrawer::GetIsTurn() const
 {
     return is_turn_;
 }
 
-//描画予定の画像矩形を取得
+// 描画予定の画像矩形を取得
 const Math::Box2D ImageDrawer::GetDrawImageRect() const
 {
     Math::Box2D rect(image_data_.rect);
@@ -325,7 +324,7 @@ const Math::Box2D ImageDrawer::GetDrawImageRect() const
     return rect;
 }
 
-//そんなハンドルの画像は無い！
+// そんなハンドルの画像は無い！
 void ImageDrawer::CheckHandleError(int image_sheet) const
 {
     if (image_sheet < 0 || image_data_.sheet_num <= image_sheet)

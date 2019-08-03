@@ -1,240 +1,144 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
   <ItemGroup>
-    <Filter Include="ソース ファイル">
+    <Filter Include="Task">
       <UniqueIdentifier>{4FC737F1-C7A5-4376-A066-2A32D752A2FF}</UniqueIdentifier>
       <Extensions>cpp;c;cc;cxx;def;odl;idl;hpj;bat;asm;asmx</Extensions>
     </Filter>
-    <Filter Include="システム">
+    <Filter Include="System">
       <UniqueIdentifier>{b62d9bf3-85bb-40d7-8d9e-a50722211543}</UniqueIdentifier>
     </Filter>
-    <Filter Include="システム\System">
+    <Filter Include="System\System">
       <UniqueIdentifier>{8bbf3bd2-baa7-4ca3-a91b-8ad0c2e46790}</UniqueIdentifier>
     </Filter>
-    <Filter Include="システム\Utility">
-      <UniqueIdentifier>{1b1dd403-1bbf-41cb-aa54-5db5c0f85585}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="システム\Utility\Image">
-      <UniqueIdentifier>{6efafe19-41e4-4454-b93c-354154564618}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="システム\Utility\Input">
-      <UniqueIdentifier>{64d89c6f-b34c-41c4-8172-dc83545166c7}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="システム\System\TaskSystem">
+    <Filter Include="System\System\TaskSystem">
       <UniqueIdentifier>{269b6ff9-6fd9-4bf1-8afd-77d94eaeac39}</UniqueIdentifier>
     </Filter>
-    <Filter Include="システム\Utility\Math">
+    <Filter Include="System\Utility">
+      <UniqueIdentifier>{1b1dd403-1bbf-41cb-aa54-5db5c0f85585}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="System\Utility\Image">
+      <UniqueIdentifier>{6efafe19-41e4-4454-b93c-354154564618}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="System\Utility\Input">
+      <UniqueIdentifier>{64d89c6f-b34c-41c4-8172-dc83545166c7}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="System\Utility\Math">
       <UniqueIdentifier>{6e8c700e-9550-4c86-878c-795b1cb2dd3a}</UniqueIdentifier>
     </Filter>
-    <Filter Include="システム\Utility\Easing">
+    <Filter Include="System\Utility\Easing">
       <UniqueIdentifier>{f55b1e2c-1184-45d6-a40a-e501e52d2921}</UniqueIdentifier>
     </Filter>
-    <Filter Include="システム\Utility\Counter">
+    <Filter Include="System\Utility\Counter">
       <UniqueIdentifier>{415a0a59-ec35-4c8f-b4bd-59fb566646c5}</UniqueIdentifier>
     </Filter>
-    <Filter Include="システム\Utility\Shader">
+    <Filter Include="System\Utility\Shader">
       <UniqueIdentifier>{6b6bb59c-7666-4806-a556-f1e63f42dec1}</UniqueIdentifier>
     </Filter>
-    <Filter Include="システム\Utility\Etc">
+    <Filter Include="System\Utility\Etc">
       <UniqueIdentifier>{89f5544e-2450-4396-826c-ad849729a55c}</UniqueIdentifier>
     </Filter>
-    <Filter Include="ソース ファイル\Task">
-      <UniqueIdentifier>{1644d8d5-b98e-4e7a-be91-545459ba8508}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="ソース ファイル\Task\Object">
-      <UniqueIdentifier>{7929ba7a-ce28-402e-9e22-6e38fb12e684}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="ソース ファイル\Class">
-      <UniqueIdentifier>{741239fc-9fdf-4eb7-b869-855844d545bd}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="ソース ファイル\Task\Object\Player">
-      <UniqueIdentifier>{a5b32f0e-d2d9-4b31-98a8-04c2444f438c}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="ソース ファイル\Task\Object\Map">
-      <UniqueIdentifier>{ea6236b8-559f-4781-980f-525e8fc5f6f0}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="ソース ファイル\Class\Character">
-      <UniqueIdentifier>{7344a5f7-befa-4c8b-a3bb-bb803d16194f}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="リソース ファイル">
-      <UniqueIdentifier>{b06ba40b-9643-418a-8eea-03cd1f428db5}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="システム\Utility\Fps">
+    <Filter Include="System\Utility\Fps">
       <UniqueIdentifier>{7a4fd94a-aca8-407e-b64d-4af595d7085c}</UniqueIdentifier>
     </Filter>
-    <Filter Include="ソース ファイル\Task\Object\Enemy">
-      <UniqueIdentifier>{42c53e0a-0e54-4ef6-a681-6f3588a9a47b}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="ソース ファイル\Task\Camera">
-      <UniqueIdentifier>{a8d2c04a-02c2-4ea7-ab5d-74a0a0aaccc1}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="ソース ファイル\Class\Shader">
-      <UniqueIdentifier>{2438ba5b-27ff-4db8-aca5-2ade422b560d}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="ソース ファイル\Class\Shader\MLine">
-      <UniqueIdentifier>{cc271761-4807-4cc8-be4f-24be4c7bd82a}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="ソース ファイル\Task\Object\BackGround">
-      <UniqueIdentifier>{f9a6e087-b1e5-4b09-ac20-91da3ad33ee8}</UniqueIdentifier>
+    <Filter Include="Resource">
+      <UniqueIdentifier>{b06ba40b-9643-418a-8eea-03cd1f428db5}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="src\GameSystem.cpp">
-      <Filter>システム\System</Filter>
+      <Filter>System\System</Filter>
     </ClCompile>
     <ClCompile Include="src\TaskAbstract.cpp">
-      <Filter>システム\System\TaskSystem</Filter>
+      <Filter>System\System\TaskSystem</Filter>
     </ClCompile>
     <ClCompile Include="src\TaskSystem.cpp">
-      <Filter>システム\System\TaskSystem</Filter>
+      <Filter>System\System\TaskSystem</Filter>
     </ClCompile>
     <ClCompile Include="src\ImageLoader.cpp">
-      <Filter>システム\Utility\Image</Filter>
+      <Filter>System\Utility\Image</Filter>
     </ClCompile>
     <ClCompile Include="src\ImageDrawer.cpp">
-      <Filter>システム\Utility\Image</Filter>
+      <Filter>System\Utility\Image</Filter>
     </ClCompile>
     <ClCompile Include="src\WinMain.cpp">
-      <Filter>システム</Filter>
+      <Filter>System</Filter>
     </ClCompile>
     <ClCompile Include="src\Math.cpp">
-      <Filter>システム\Utility\Math</Filter>
+      <Filter>System\Utility\Math</Filter>
     </ClCompile>
     <ClCompile Include="src\Easing.cpp">
-      <Filter>システム\Utility\Easing</Filter>
+      <Filter>System\Utility\Easing</Filter>
     </ClCompile>
     <ClCompile Include="src\ShaderManager.cpp">
-      <Filter>システム\Utility\Shader</Filter>
-    </ClCompile>
-    <ClCompile Include="src\Task_Player.cpp">
-      <Filter>ソース ファイル\Task\Object\Player</Filter>
-    </ClCompile>
-    <ClCompile Include="src\Task_Map.cpp">
-      <Filter>ソース ファイル\Task\Object\Map</Filter>
-    </ClCompile>
-    <ClCompile Include="src\Character.cpp">
-      <Filter>ソース ファイル\Class\Character</Filter>
+      <Filter>System\Utility\Shader</Filter>
     </ClCompile>
     <ClCompile Include="src\PadInputConfig.cpp">
-      <Filter>システム\Utility\Input</Filter>
+      <Filter>System\Utility\Input</Filter>
     </ClCompile>
     <ClCompile Include="src\InputDXL.cpp">
-      <Filter>システム\Utility\Input</Filter>
+      <Filter>System\Utility\Input</Filter>
     </ClCompile>
     <ClCompile Include="src\Fps.cpp">
-      <Filter>システム\Utility\Fps</Filter>
-    </ClCompile>
-    <ClCompile Include="src\Task_TestEnemy.cpp">
-      <Filter>ソース ファイル\Task\Object\Enemy</Filter>
-    </ClCompile>
-    <ClCompile Include="src\Task_Jouetsu.cpp">
-      <Filter>ソース ファイル\Task\Object\Player</Filter>
-    </ClCompile>
-    <ClCompile Include="src\Task_Mudra.cpp">
-      <Filter>ソース ファイル\Task\Object\Player</Filter>
-    </ClCompile>
-    <ClCompile Include="src\MLine.cpp">
-      <Filter>ソース ファイル\Class\Shader\MLine</Filter>
-    </ClCompile>
-    <ClCompile Include="src\Task_Camera.cpp">
-      <Filter>ソース ファイル\Task\Camera</Filter>
-    </ClCompile>
-    <ClCompile Include="src\Task_EnemyKata.cpp">
-      <Filter>ソース ファイル\Task\Object\Enemy</Filter>
-    </ClCompile>
-    <ClCompile Include="src\Task_BackCircle.cpp">
-      <Filter>ソース ファイル\Task\Object\BackGround</Filter>
-    </ClCompile>
-    <ClCompile Include="src\Task_BackGround.cpp">
-      <Filter>ソース ファイル\Task\Object\BackGround</Filter>
+      <Filter>System\Utility\Fps</Filter>
     </ClCompile>
     <ClCompile Include="src\Utility.cpp">
-      <Filter>システム\Utility\Etc</Filter>
+      <Filter>System\Utility\Etc</Filter>
+    </ClCompile>
+    <ClCompile Include="src\Task_Test.cpp">
+      <Filter>Task</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="src\SystemDefine.h">
-      <Filter>システム\System</Filter>
+      <Filter>System\System</Filter>
     </ClInclude>
     <ClInclude Include="src\GameSystem.h">
-      <Filter>システム\System</Filter>
+      <Filter>System\System</Filter>
     </ClInclude>
     <ClInclude Include="src\TaskAbstract.h">
-      <Filter>システム\System\TaskSystem</Filter>
+      <Filter>System\System\TaskSystem</Filter>
     </ClInclude>
     <ClInclude Include="src\TaskSystem.h">
-      <Filter>システム\System\TaskSystem</Filter>
+      <Filter>System\System\TaskSystem</Filter>
     </ClInclude>
     <ClInclude Include="src\ImageLoader.h">
-      <Filter>システム\Utility\Image</Filter>
+      <Filter>System\Utility\Image</Filter>
     </ClInclude>
     <ClInclude Include="src\ImageDrawer.h">
-      <Filter>システム\Utility\Image</Filter>
+      <Filter>System\Utility\Image</Filter>
     </ClInclude>
     <ClInclude Include="src\Math.h">
-      <Filter>システム\Utility\Math</Filter>
+      <Filter>System\Utility\Math</Filter>
     </ClInclude>
     <ClInclude Include="src\Counter.hpp">
-      <Filter>システム\Utility\Counter</Filter>
+      <Filter>System\Utility\Counter</Filter>
     </ClInclude>
     <ClInclude Include="src\Easing.h">
-      <Filter>システム\Utility\Easing</Filter>
+      <Filter>System\Utility\Easing</Filter>
     </ClInclude>
     <ClInclude Include="src\ShaderManager.h">
-      <Filter>システム\Utility\Shader</Filter>
-    </ClInclude>
-    <ClInclude Include="src\Task_Player.h">
-      <Filter>ソース ファイル\Task\Object\Player</Filter>
-    </ClInclude>
-    <ClInclude Include="src\Task_Map.h">
-      <Filter>ソース ファイル\Task\Object\Map</Filter>
-    </ClInclude>
-    <ClInclude Include="src\Character.h">
-      <Filter>ソース ファイル\Class\Character</Filter>
-    </ClInclude>
-    <ClInclude Include="src\TaskDefData.h">
-      <Filter>ソース ファイル\Task</Filter>
+      <Filter>System\Utility\Shader</Filter>
     </ClInclude>
     <ClInclude Include="src\PadInputConfig.h">
-      <Filter>システム\Utility\Input</Filter>
+      <Filter>System\Utility\Input</Filter>
     </ClInclude>
     <ClInclude Include="src\InputDXL.h">
-      <Filter>システム\Utility\Input</Filter>
+      <Filter>System\Utility\Input</Filter>
     </ClInclude>
     <ClInclude Include="src\Fps.h">
-      <Filter>システム\Utility\Fps</Filter>
-    </ClInclude>
-    <ClInclude Include="src\Task_TestEnemy.h">
-      <Filter>ソース ファイル\Task\Object\Enemy</Filter>
-    </ClInclude>
-    <ClInclude Include="src\Task_Jouetsu.h">
-      <Filter>ソース ファイル\Task\Object\Player</Filter>
-    </ClInclude>
-    <ClInclude Include="src\Task_Mudra.h">
-      <Filter>ソース ファイル\Task\Object\Player</Filter>
-    </ClInclude>
-    <ClInclude Include="src\MLine.h">
-      <Filter>ソース ファイル\Class\Shader\MLine</Filter>
-    </ClInclude>
-    <ClInclude Include="src\Task_Camera.h">
-      <Filter>ソース ファイル\Task\Camera</Filter>
-    </ClInclude>
-    <ClInclude Include="src\Task_EnemyKata.h">
-      <Filter>ソース ファイル\Task\Object\Enemy</Filter>
-    </ClInclude>
-    <ClInclude Include="src\Task_BackCircle.h">
-      <Filter>ソース ファイル\Task\Object\BackGround</Filter>
-    </ClInclude>
-    <ClInclude Include="src\Task_BackGround.h">
-      <Filter>ソース ファイル\Task\Object\BackGround</Filter>
+      <Filter>System\Utility\Fps</Filter>
     </ClInclude>
     <ClInclude Include="src\Utility.h">
-      <Filter>システム\Utility\Etc</Filter>
+      <Filter>System\Utility\Etc</Filter>
+    </ClInclude>
+    <ClInclude Include="src\Task_Test.h">
+      <Filter>Task</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ResourceCompile Include="data\icon\icon.rc">
-      <Filter>リソース ファイル</Filter>
+      <Filter>Resource</Filter>
     </ResourceCompile>
   </ItemGroup>
 </Project>

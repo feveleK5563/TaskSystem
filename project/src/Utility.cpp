@@ -6,8 +6,8 @@ namespace Util
     Console::Console()
     {
         AllocConsole();
-        freopen_s(&in_, "CONIN$", "r", stdin);      //標準入力をコンソールにする
-        freopen_s(&out_, "CONOUT$", "w", stdout);   //標準出力をコンソールにする
+        freopen_s(&in_, "CONIN$", "r", stdin);      // 標準入力をコンソールにする
+        freopen_s(&out_, "CONOUT$", "w", stdout);   // 標準出力をコンソールにする
     }
     Console::~Console()
     {

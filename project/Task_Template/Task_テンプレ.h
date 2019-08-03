@@ -4,8 +4,7 @@
 
 namespace タスク名
 {
-    const std::string   def_group (グループ名); //グループ名
-    const std::string   def_task  (タスク名);   //タスク名
+    const std::string   task_name(タスク名);   // タスク名
     
     //----------------------------------------------
     class Resource
@@ -15,16 +14,16 @@ namespace タスク名
     
     public:
     
-        Resource();     //コンストラクタ
-        ~Resource();    //デストラクタ
-        static std::shared_ptr<Resource> Create();  //リソースの生成
+        Resource();     // コンストラクタ
+        ~Resource();    // デストラクタ
+        static std::shared_ptr<Resource> Create();  // リソースの生成
     };
     
     //----------------------------------------------
     class Task : public TaskAbstract
     {
     private:
-        std::shared_ptr<Resource> res_;  //確保したリソース
+        std::shared_ptr<Resource> res_;  // 確保したリソース
 
     public:
         //コンストラクタ
@@ -36,9 +35,9 @@ namespace タスク名
         //タスクの生成
         static std::shared_ptr<Task> Create();
 
-        void Initialize() override; //初期化処理
-        void Finalize() override;   //終了処理
-        void Update() override;     //更新
-        void Draw() override;       //描画
+        void Initialize() override; // 初期化処理
+        void Finalize() override;   // 終了処理
+        void Update();              // 更新
+        void Draw();                // 描画
     };
 }

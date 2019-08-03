@@ -1,25 +1,23 @@
-#include "Task_BackGround.h"
+#include "Task_Test.h"
 #include "ImageLoader.h"
-#include "TaskDefData.h"
 
-namespace BackGround
+namespace Test
 {
     std::weak_ptr<Resource> Resource::instance_;
     //----------------------------------------------
-    //リソースのコンストラクタ
+    // リソースのコンストラクタ
     Resource::Resource()
     {
-        back_image_ = "back";
-        ImageLoader::LoadOneImage(back_image_, "data/image/back.png");
+        ImageLoader::LoadOneImage("test", "data/image/test.png");
     }
     //----------------------------------------------
-    //リソースのデストラクタ
+    // リソースのデストラクタ
     Resource::~Resource()
     {
-        ImageLoader::DeleteImageData(back_image_);
+        ImageLoader::DeleteImageData("test");
     }
     //----------------------------------------------
-    //リソースの生成
+    // リソースの生成
     std::shared_ptr<Resource> Resource::Create()
     {
         auto sp = instance_.lock();
@@ -35,20 +33,19 @@ namespace BackGround
     //★☆★☆★☆★☆★☆★☆★☆★☆★☆★☆★☆★☆★☆★☆★☆★☆★☆★☆★☆★☆★☆★☆★☆
 
     //----------------------------------------------
-    //タスクのコンストラクタ
+    // タスクのコンストラクタ
     Task::Task():
-        TaskAbstract(def_task),
+        TaskAbstract(task_name, 0.f),
         res_(Resource::Create())
     {
-        SetPriority(Priority::BACK);
     }
     //----------------------------------------------
-    //タスクのデストラクタ
+    // タスクのデストラクタ
     Task::~Task()
     {
     }
     //----------------------------------------------
-    //タスクの生成
+    // タスクの生成
     std::shared_ptr<Task> Task::Create()
     {
         std::shared_ptr<Task> task =
@@ -63,26 +60,32 @@ namespace BackGround
     //◆◇◆◇◆◇◆◇◆◇◆◇◆◇◆◇◆◇◆◇◆◇◆◇◆◇◆◇◆◇◆◇◆◇◆◇◆◇◆◇◆◇◆◇◆◇
 
     //----------------------------------------------
-    //初期化処理
+    // 初期化処理
     //----------------------------------------------
     void Task::Initialize()
     {
-        back_.Initialize(res_->back_image_, Math::BoxCP::TOP_LEFT);
-        back_.SetScale(Ratio::layer_main);
+        drawer.Initialize("test", Math::BoxCP::CENTER);
     }
 
     //----------------------------------------------
-    //終了処理
+    // 終了処理
     //----------------------------------------------
     void Task::Finalize()
     {
     }
 
     //----------------------------------------------
-    //描画
+    // 更新
+    //----------------------------------------------
+    void Task::Update()
+    {
+    }
+
+    //----------------------------------------------
+    // 描画
     //----------------------------------------------
     void Task::Draw()
     {
-        back_.Draw(Math::Vec2(0, 0));
+        drawer.Draw(Math::Vec2(100, 100));
     }
 }

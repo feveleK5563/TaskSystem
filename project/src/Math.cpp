@@ -5,13 +5,13 @@
 
 namespace Math
 {
-    //弧度法変換
+    // 弧度法変換
     float ToRadian(float deg)
     {
         return deg * PI / 180.0f;
     }
 
-    //度数法変換
+    // 度数法変換
     float ToDegree(float rad)
     {
         return 180.0f * rad / PI;
@@ -20,7 +20,7 @@ namespace Math
     std::random_device rd;
     std::mt19937 mtrand(rd());
 
-    //範囲内でランダムな値を取得する(lowerLimit以上upperLimit以下)
+    // 範囲内でランダムな値を取得する(lowerLimit以上upperLimit以下)
     int GetRand(int lower_limit, int upper_limit)
     {
         std::uniform_int_distribution<> randRange(lower_limit, upper_limit);
@@ -29,7 +29,7 @@ namespace Math
 
 
     //--------------------------------------------------------
-    //二次元ベクトルクラス
+    // 二次元ベクトルクラス
     Vec2::Vec2():
         x(0.f), y(0.f) {}
 
@@ -246,7 +246,7 @@ namespace Math
 
 
     //--------------------------------------------------------
-    //当たり判定と描画機能つき矩形クラス
+    // 当たり判定と描画機能つき矩形クラス
     Box2D::Box2D():
         x(0.f), y(0.f), w(0.f), h(0.f){}
 

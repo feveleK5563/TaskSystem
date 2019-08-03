@@ -3,11 +3,11 @@
 #include <math.h>
 #include "Math.h"
 
-//コンストラクタ
+// コンストラクタ
 Easing::Easing() : time_(0.f, 1.f), volume_(0.f) {}
 
-//イージングの実行
-//引数：イージング動作の関数ポインタ(Ease_…), 継続時間(float)
+// イージングの実行
+// 引数：イージング動作の関数ポインタ(Ease_…), 継続時間(float)
 void Easing::Run(Ease em, float duration_time)
 {
     time_.SetCounter(0.f, 1.f, duration_time, 0.f);
@@ -15,20 +15,20 @@ void Easing::Run(Ease em, float duration_time)
     volume_ = em(time_.GetNow(), duration_time);
 }
 
-//値を取得
-//引数：始点(float), 終点(float)
+// 値を取得
+// 引数：始点(float), 終点(float)
 float Easing::GetVolume(float start_point, float end_point)
 {
     return start_point + (volume_ * (start_point - end_point));
 }
 
-//イージングが終了したらtrueが返る
+// イージングが終了したらtrueが返る
 bool Easing::IsEaseEnd()
 {
     return time_.IsMax();
 }
 
-//イージングをリセットする
+// イージングをリセットする
 void Easing::Reset()
 {
     time_.Reset();

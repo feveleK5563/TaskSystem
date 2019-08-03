@@ -9,21 +9,21 @@ private:
     float           volume_;
 
 public:
-    //コンストラクタ
+    // コンストラクタ
     Easing();
 
-    //イージングの実行
-    //引数：イージング動作の関数ポインタ(Ease_…), 継続時間(float)
+    // イージングの実行
+    // 引数：イージング動作の関数ポインタ(Ease_…), 継続時間(float)
     void Run(Ease em, float duration_time);
 
-    //値を取得
-    //引数：始点(float), 終点(float)
+    // 値を取得
+    // 引数：始点(float), 終点(float)
     float GetVolume(float start_point, float end_point);
 
-    //イージングが終了したらtrueが返る
+    // イージングが終了したらtrueが返る
     bool IsEaseEnd();
 
-    //イージングをリセットする
+    // イージングをリセットする
     void Reset();
 };
 

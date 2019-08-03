@@ -1,22 +1,22 @@
 #include "PadInputConfig.h"
 #include "Utility.h"
 
-//コンストラクタ
+// コンストラクタ
 PadInputConfig::PadConfig::PadConfig(unsigned int id, bool use_pad, bool use_key):
     input_id_(id),
     use_pad_(use_pad),
     use_key_(use_key)
 {
     pad_set_.resize(ButtonNum::pad);
-    key_set_.resize(ButtonNum::pad + 8); //+8はスティックの分
+    key_set_.resize(ButtonNum::pad + 8); // +8はスティックの分
     Initialize();
 }
 
 //-----------------------------------------------------------------------------
-//パッド配置を初期化
+// パッド配置を初期化
 void PadInputConfig::PadConfig::Initialize()
 {
-    //パッドのボタン割り当てを設定
+    // パッドのボタン割り当てを設定
     SetPadConfig(PAD_INPUT::LEFT, PAD_INPUT::LEFT);
     SetPadConfig(PAD_INPUT::RIGHT, PAD_INPUT::RIGHT);
     SetPadConfig(PAD_INPUT::UP, PAD_INPUT::UP);
@@ -32,7 +32,7 @@ void PadInputConfig::PadConfig::Initialize()
     SetPadConfig(PAD_INPUT::L3, PAD_INPUT::L3);
     SetPadConfig(PAD_INPUT::R3, PAD_INPUT::R3);
 
-    //キー割り当てを設定
+    // キー割り当てを設定
     SetPadConfig(PAD_INPUT::LEFT, KEY_INPUT::LEFT);
     SetPadConfig(PAD_INPUT::RIGHT, KEY_INPUT::RIGHT);
     SetPadConfig(PAD_INPUT::UP, KEY_INPUT::UP);
@@ -47,22 +47,24 @@ void PadInputConfig::PadConfig::Initialize()
     SetPadConfig(PAD_INPUT::START, KEY_INPUT::SPACE);
     SetPadConfig(PAD_INPUT::L3, KEY_INPUT::T);
     SetPadConfig(PAD_INPUT::R3, KEY_INPUT::K);
-    SetLStickConfig(KEY_INPUT::A, KEY_INPUT::D, KEY_INPUT::W, KEY_INPUT::S);
-    SetRStickConfig(KEY_INPUT::NUMPAD4, KEY_INPUT::NUMPAD6, KEY_INPUT::NUMPAD8, KEY_INPUT::NUMPAD2);
+    SetLStickConfig(KEY_INPUT::A, KEY_INPUT::D,
+                    KEY_INPUT::W, KEY_INPUT::S);
+    SetRStickConfig(KEY_INPUT::NUMPAD4, KEY_INPUT::NUMPAD6,
+                    KEY_INPUT::NUMPAD8, KEY_INPUT::NUMPAD2);
 }
 
 //-----------------------------------------------------------------------------
-//パッド配置を変更
+// パッド配置を変更
 void PadInputConfig::PadConfig::SetPadConfig(PAD_INPUT target, PAD_INPUT set)
 {
     pad_set_[(int)target] = set;
 }
-//パッドのキー割り当てを変更
+// パッドのキー割り当てを変更
 void PadInputConfig::PadConfig::SetPadConfig(PAD_INPUT target, KEY_INPUT set)
 {
     key_set_[(int)target] = set;
 }
-//左スティックのキー割り当てを変更
+// 左スティックのキー割り当てを変更
 void PadInputConfig::PadConfig::SetLStickConfig(KEY_INPUT l, KEY_INPUT r, KEY_INPUT u, KEY_INPUT d)
 {
     for (int i = ButtonNum::pad; i < ButtonNum::pad + 4; ++i)
@@ -76,7 +78,7 @@ void PadInputConfig::PadConfig::SetLStickConfig(KEY_INPUT l, KEY_INPUT r, KEY_IN
         }
     }
 }
-//右スティックのキー割り当てを変更
+// 右スティックのキー割り当てを変更
 void PadInputConfig::PadConfig::SetRStickConfig(KEY_INPUT l, KEY_INPUT r, KEY_INPUT u, KEY_INPUT d)
 {
     for (int i = ButtonNum::pad + 4; i < ButtonNum::pad + 8; ++i)
@@ -92,7 +94,7 @@ void PadInputConfig::PadConfig::SetRStickConfig(KEY_INPUT l, KEY_INPUT r, KEY_IN
 }
 
 //-----------------------------------------------------------------------------
-//キー、パッド、両者から得られる入力状態を統合して返す
+// キー、パッド、両者から得られる入力状態を統合して返す
 InputState PadInputConfig::PadConfig::GetState(PAD_INPUT target) const
 {
     InputState ps = OFF, ks = OFF;
@@ -105,16 +107,16 @@ InputState PadInputConfig::PadConfig::GetState(PAD_INPUT target) const
         ks = InputDXL::GetKey()[key_set_[(int)target]].GetInputState();
     }
 
-    //両者が同じ判定ならそのまま返す
+    // 両者が同じ判定ならそのまま返す
     if (ps == ks) { return ps; }
 
-    //両者の判定が異なる場合、優先度順に ON, DOWN, UP, OFF を判定する
-    if (ps == ON || ks == ON)       { return ON; }
+    // 両者の判定が異なる場合、優先度順に ON, DOWN, UP, OFF を判定する
+    if (ps == ON   || ks == ON)     { return ON; }
     if (ps == DOWN || ks == DOWN)   { return DOWN; }
 
     return UP;
 }
-//左スティックのベクトルを取得する
+// 左スティックのベクトルを取得する
 Math::Vec2 PadInputConfig::PadConfig::GetVecStickL() const
 {
     Math::Vec2 vp, vk;
@@ -145,7 +147,7 @@ Math::Vec2 PadInputConfig::PadConfig::GetVecStickL() const
         return vk;
     }
 }
-//右スティックのベクトルを取得する
+// 右スティックのベクトルを取得する
 Math::Vec2 PadInputConfig::PadConfig::GetVecStickR() const
 {
     Math::Vec2 vp, vk;
@@ -180,13 +182,13 @@ Math::Vec2 PadInputConfig::PadConfig::GetVecStickR() const
 //-----------------------------------------------------------------------------
 
 std::vector<PadInputConfig::PadConfig*> PadInputConfig::config;
-//ゲームパッドコンフィグマンのインスタンス取得
+// ゲームパッドコンフィグマンのインスタンス取得
 PadInputConfig::PadConfig& PadInputConfig::Get(unsigned int id)
 {
     assert(IsCreated(id) && "PadInputConfig hasn't been created!");
     return *config[id];
 }
-//ゲームパッドコンフィグマンのインスタンス生成
+// ゲームパッドコンフィグマンのインスタンス生成
 void PadInputConfig::Create(unsigned int pad_num, bool use_pad, bool use_key)
 {
     Delete();
@@ -196,7 +198,7 @@ void PadInputConfig::Create(unsigned int pad_num, bool use_pad, bool use_key)
         config[i] = new PadConfig(i, use_pad, use_key);
     }
 }
-//ゲームパッドコンフィグマンのインスタンス削除
+// ゲームパッドコンフィグマンのインスタンス削除
 void PadInputConfig::Delete()
 {
     if (config.size() <= 0) { return; }
@@ -208,7 +210,7 @@ void PadInputConfig::Delete()
     config.clear();
     config.shrink_to_fit();
 }
-//指定番号のゲームパッドコンフィグマンが生成されているか否かを取得
+// 指定番号のゲームパッドコンフィグマンが生成されているか否かを取得
 bool PadInputConfig::IsCreated(unsigned int id)
 {
     if (id >= config.size()) { return false; }

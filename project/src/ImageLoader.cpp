@@ -20,7 +20,7 @@ AnimData::AnimData(int start_sheet, int relative_sheet, float wait_time, bool is
 class ImageLoader::Impl
 {
 private:
-    std::unordered_map<std::string, ImageData> image_data;  //画像データ
+    std::unordered_map<std::string, ImageData> image_data;  // 画像データ
 
 public:
     Impl() = default;
@@ -29,16 +29,16 @@ public:
         AllDeleteImageData();
     };
 
-    //画像読み込み
+    // 画像読み込み
     bool LoadOneImage(const std::string& image_name, const std::string& file_path)
     {
         if (image_data.find(image_name) != image_data.end())
         {
-            //すでに読み込まれていたら何もしない
+            // すでに読み込まれていたら何もしない
             return false;
         }
 
-        //読み込んだ画像のデータを格納
+        // 読み込んだ画像のデータを格納
         image_data[image_name].handle = new int[1]{ LoadGraph(file_path.c_str()) };
         image_data[image_name].sheet_num = 1;
         int xSize, ySize;
@@ -47,7 +47,7 @@ public:
         return true;
     }
 
-    //画像分割読み込み
+    // 画像分割読み込み
     bool LoadDivImage(const std::string& image_name, const std::string& file_path,
                       int all_num, int x_num, int y_num, int x_size, int y_size)
     {
@@ -56,11 +56,11 @@ public:
             return false;
         }
 
-        //読み込んだ画像のデータを格納
+        // 読み込んだ画像のデータを格納
         image_data[image_name].handle = new int[all_num] {};
         if (LoadDivGraph(file_path.c_str(), all_num, x_num, y_num, x_size, y_size, image_data[image_name].handle) == -1)
         {
-            //読み込み失敗
+            // 読み込み失敗
             assert(false && "image divload error!!!");
         }
         image_data[image_name].sheet_num = all_num;
@@ -68,7 +68,7 @@ public:
         return true;
     }
 
-    //分割読み込み済みのデータにアニメーションデータを追加
+    // 分割読み込み済みのデータにアニメーションデータを追加
     void AddAnimationData(const std::string& image_name, int start_sheet, int end_sheet,
                           float wait_time, bool is_loop)
     {
@@ -77,10 +77,10 @@ public:
         );
     }
 
-    //画像データの取得
+    // 画像データの取得
     const ImageData& GetImageData(const std::string& image_name)
     {
-        //アニメーション設定が行われていなかった場合は、便宜的にアニメーションを設定しておく
+        // アニメーション設定が行われていなかった場合は、便宜的にアニメーションを設定しておく
         if (image_data[image_name].anim.empty())
         {
             AddAnimationData(image_name, 0, 0, 1, false);
@@ -88,7 +88,7 @@ public:
         return image_data[image_name];
     }
 
-    //画像データの解放
+    // 画像データの解放
     bool DeleteImageData(const std::string& image_name)
     {
         if (!SafeImageDelete(image_name)) { return false; }
@@ -97,7 +97,7 @@ public:
         return true;
     }
 
-    //全ての画像データの解放
+    // 全ての画像データの解放
     bool AllDeleteImageData()
     {
         for (auto it = image_data.begin();
@@ -110,7 +110,7 @@ public:
         return true;
     }
 
-    //安全に画像データを削除する
+    // 安全に画像データを削除する
     bool SafeImageDelete(const std::string& image_name)
     {
         if (!image_data.count(image_name)) { return false; }

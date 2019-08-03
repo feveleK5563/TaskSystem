@@ -9,48 +9,43 @@
 #include "ShaderManager.h"
 #include "Utility.h"
 
-#include "Task_Map.h"
-#include "Task_BackGround.h"
-#include "Task_Camera.h"
-#include "Task_Player.h"
-#include "Task_Jouetsu.h"
-#include "Task_TestEnemy.h"
+#include "Task_Test.h"
 
 GameSystem::GameSystem(){}
 
 //-----------------------------------------------------------------------------
-//初期化処理
+// 初期化処理
 void GameSystem::Initialize()
 {
-    SetAlwaysRunFlag(TRUE); //ウィンドウがノンアクティブでも実行する
-    SetOutApplicationLogValidFlag(FALSE); //Log.txtを作らない
+    SetAlwaysRunFlag(TRUE); // ウィンドウがノンアクティブでも実行する
+    SetOutApplicationLogValidFlag(FALSE); // Log.txtを作らない
 
     if (IsFullScreenMode())
     {
-        //フルスクリーンモード
+        // フルスクリーンモード
         ChangeWindowMode(FALSE);
-        //フルスクリーン時に縦横比を維持する
+        // フルスクリーン時に縦横比を維持する
         SetFullScreenResolutionMode(DX_FSRESOLUTIONMODE_DESKTOP);
     }
     else
     {
-        //ウィンドウモード
+        // ウィンドウモード
         ChangeWindowMode(TRUE);
-        //ウインドウのサイズを手動で変更できず、且つウインドウのサイズに合わせて拡大もしないようにする
+        // ウインドウのサイズを手動で変更できず、且つウインドウのサイズに合わせて拡大もしないようにする
         SetWindowSizeChangeEnableFlag(FALSE, FALSE);
-        //ウィンドウサイズ(解像度以下に設定)
+        // ウィンドウサイズ(解像度以下に設定)
         SetWindowSize(SysDef::SizeX, SysDef::SizeY);
     }
 
-    //画面解像度とカラービット数
+    // 画面解像度とカラービット数
     SetGraphMode(SysDef::SizeX, SysDef::SizeY, 32);
-    //ウィンドウタイトルを付ける
+    // ウィンドウタイトルを付ける
     SetWindowText("DXlib");
 
-    //背景色設定
+    // 背景色設定
     SetBackgroundColor(0, 0, 0);
 
-    //初期化と裏画面化
+    // 初期化と裏画面化
     if (DxLib_Init() == -1 || SetDrawScreen(DX_SCREEN_BACK) != 0)
     {
         return;
@@ -59,16 +54,16 @@ void GameSystem::Initialize()
     ImageLoader::Create();
     ShaderManager::Create();
 
-    InputDXL::CreateMouseInstance();    //マウスを生成
-    InputDXL::CreateKeyInstance();      //キーボードを生成
-    InputDXL::CreatePadInstance(SysDef::PadNum);                //ゲームパッドを指定個数生成
-    PadInputConfig::Create(SysDef::PadNum, true, true); //ゲームパッドのコンフィグを作成する
+    InputDXL::CreateMouseInstance();    // マウスを生成
+    InputDXL::CreateKeyInstance();      // キーボードを生成
+    InputDXL::CreatePadInstance(SysDef::PadNum);        // ゲームパッドを指定個数生成
+    PadInputConfig::Create(SysDef::PadNum, true, true); // ゲームパッドのコンフィグを作成する
 
     FirstCreateTask();
 }
 
 //-----------------------------------------------------------------------------
-//メインループ
+// メインループ
 void GameSystem::MainLoop()
 {
     Fps fps;
@@ -78,7 +73,7 @@ void GameSystem::MainLoop()
         fps.Wait();
         fps.Update();
 
-        //タスクが存在しなかった場合終了する
+        // タスクが存在しなかった場合終了する
         if (TaskSystem::GetAllTaskNum() == 0)
         {
             DOUT << "[System End]" << std::endl;
@@ -92,7 +87,7 @@ void GameSystem::MainLoop()
 }
 
 //-----------------------------------------------------------------------------
-//終了処理
+// 終了処理
 void GameSystem::Finalize()
 {
     TaskSystem::Delete();
@@ -104,7 +99,7 @@ void GameSystem::Finalize()
 }
 
 //-----------------------------------------------------------------------------
-//フルスクリーンモードにするか否かをメッセージボックスで問う
+// フルスクリーンモードにするか否かをメッセージボックスで問う
 bool GameSystem::IsFullScreenMode()
 {
     int flag;
@@ -119,29 +114,24 @@ bool GameSystem::IsFullScreenMode()
 }
 
 //-----------------------------------------------------------------------------
-//ループを回す際の判定処理
+// ループを回す際の判定処理
 bool GameSystem::Run()
 {
-    return  ScreenFlip() == 0                               //裏画面を表画面に反映
-        &&  ProcessMessage() == 0                           //メッセージ処理
-        &&  ClearDrawScreen() == 0                          //画面をクリア
-        &&  InputDXL::GetAllInputState()                    //入力情報を取得
-        &&  InputDXL::GetKey()[KEY_INPUT::ESCAPE] == OFF;   //ESCが押されていない
+    return  ScreenFlip() == 0                               // 裏画面を表画面に反映
+        &&  ProcessMessage() == 0                           // メッセージ処理
+        &&  ClearDrawScreen() == 0                          // 画面をクリア
+        &&  InputDXL::GetAllInputState()                    // 入力情報を取得
+        &&  InputDXL::GetKey()[KEY_INPUT::ESCAPE] == OFF;   // ESCが押されていない
 }
 
 //-----------------------------------------------------------------------------
-//最初に作成するタスク
+// 最初に作成するタスク
 void GameSystem::FirstCreateTask()
 {
-    //タスクシステムを生成
+    // タスクシステムを生成
     TaskSystem::Create();
 
     //☆★☆★☆★☆★☆★☆★☆★☆★☆★☆★☆★☆★☆★☆★☆★
-    //ゲーム開始時に作成するタスクを以下に記述
-    (void)Map::Task::Create();
-    (void)BackGround::Task::Create();
-    (void)Camera::Task::Create();
-    (void)Player::Task::Create();
-    (void)Jouetsu::Task::Create();
-    (void)TestEnemy::Task::Create(Math::Vec2(1200, 200));
+    // ゲーム開始時に作成するタスクを以下に記述 ※警告でるから(void)付けてね
+    (void)Test::Task::Create();
 }

@@ -19,25 +19,15 @@
     </ProjectConfiguration>
   </ItemGroup>
   <ItemGroup>
-    <ClCompile Include="src\Character.cpp" />
     <ClCompile Include="src\Easing.cpp" />
     <ClCompile Include="src\Fps.cpp" />
     <ClCompile Include="src\GameSystem.cpp" />
     <ClCompile Include="src\ImageDrawer.cpp" />
     <ClCompile Include="src\ImageLoader.cpp" />
     <ClCompile Include="src\InputDXL.cpp" />
-    <ClCompile Include="src\MLine.cpp" />
     <ClCompile Include="src\ShaderManager.cpp" />
     <ClCompile Include="src\PadInputConfig.cpp" />
-    <ClCompile Include="src\Task_BackCircle.cpp" />
-    <ClCompile Include="src\Task_BackGround.cpp" />
-    <ClCompile Include="src\Task_Camera.cpp" />
-    <ClCompile Include="src\Task_EnemyKata.cpp" />
-    <ClCompile Include="src\Task_Player.cpp" />
-    <ClCompile Include="src\Task_Map.cpp" />
-    <ClCompile Include="src\Task_Jouetsu.cpp" />
-    <ClCompile Include="src\Task_TestEnemy.cpp" />
-    <ClCompile Include="src\Task_Mudra.cpp" />
+    <ClCompile Include="src\Task_Test.cpp" />
     <ClCompile Include="src\Utility.cpp" />
     <ClCompile Include="src\WinMain.cpp" />
     <ClCompile Include="src\Math.cpp" />
@@ -45,10 +35,7 @@
     <ClCompile Include="src\TaskSystem.cpp" />
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="src\Character.h" />
-    <ClInclude Include="src\MLine.h" />
     <ClInclude Include="src\PadInputConfig.h" />
-    <ClInclude Include="src\TaskDefData.h" />
     <ClInclude Include="src\Easing.h" />
     <ClInclude Include="src\Fps.h" />
     <ClInclude Include="src\GameSystem.h" />
@@ -60,16 +47,8 @@
     <ClInclude Include="src\TaskAbstract.h" />
     <ClInclude Include="src\SystemDefine.h" />
     <ClInclude Include="src\TaskSystem.h" />
-    <ClInclude Include="src\Task_BackCircle.h" />
-    <ClInclude Include="src\Task_BackGround.h" />
-    <ClInclude Include="src\Task_Camera.h" />
-    <ClInclude Include="src\Task_EnemyKata.h" />
-    <ClInclude Include="src\Task_Player.h" />
     <ClInclude Include="src\Counter.hpp" />
-    <ClInclude Include="src\Task_Map.h" />
-    <ClInclude Include="src\Task_Jouetsu.h" />
-    <ClInclude Include="src\Task_TestEnemy.h" />
-    <ClInclude Include="src\Task_Mudra.h" />
+    <ClInclude Include="src\Task_Test.h" />
     <ClInclude Include="src\Utility.h" />
   </ItemGroup>
   <ItemGroup>
