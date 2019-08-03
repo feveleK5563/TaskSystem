@@ -44,6 +44,12 @@
     <Filter Include="Resource">
       <UniqueIdentifier>{b06ba40b-9643-418a-8eea-03cd1f428db5}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Task\Physics">
+      <UniqueIdentifier>{62ff45a5-1a02-4204-8d6c-8b9efa8c303c}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Task\Test">
+      <UniqueIdentifier>{7b1bd802-e577-4573-acfb-839a2e271612}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="src\GameSystem.cpp">
@@ -86,7 +92,10 @@
       <Filter>System\Utility\Etc</Filter>
     </ClCompile>
     <ClCompile Include="src\Task_Test.cpp">
-      <Filter>Task</Filter>
+      <Filter>Task\Test</Filter>
+    </ClCompile>
+    <ClCompile Include="src\Task_Physics.cpp">
+      <Filter>Task\Physics</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -133,7 +142,10 @@
       <Filter>System\Utility\Etc</Filter>
     </ClInclude>
     <ClInclude Include="src\Task_Test.h">
-      <Filter>Task</Filter>
+      <Filter>Task\Test</Filter>
+    </ClInclude>
+    <ClInclude Include="src\Task_Physics.h">
+      <Filter>Task\Physics</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

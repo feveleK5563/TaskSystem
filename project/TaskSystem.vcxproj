@@ -27,6 +27,7 @@
     <ClCompile Include="src\InputDXL.cpp" />
     <ClCompile Include="src\ShaderManager.cpp" />
     <ClCompile Include="src\PadInputConfig.cpp" />
+    <ClCompile Include="src\Task_Physics.cpp" />
     <ClCompile Include="src\Task_Test.cpp" />
     <ClCompile Include="src\Utility.cpp" />
     <ClCompile Include="src\WinMain.cpp" />
@@ -48,6 +49,7 @@
     <ClInclude Include="src\SystemDefine.h" />
     <ClInclude Include="src\TaskSystem.h" />
     <ClInclude Include="src\Counter.hpp" />
+    <ClInclude Include="src\Task_Physics.h" />
     <ClInclude Include="src\Task_Test.h" />
     <ClInclude Include="src\Utility.h" />
   </ItemGroup>

@@ -31,9 +31,9 @@ namespace タスク名
 
     //----------------------------------------------
     // タスクのコンストラクタ
-    Task::Task():
-        TaskAbstract(task_name, 0.f),
-        res_(Resource::Create())
+    Task::Task()
+        : TaskAbstract(task_name, 0.f)
+        , res_(Resource::Create())
     {
     }
     //----------------------------------------------

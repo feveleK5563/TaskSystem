@@ -37,7 +37,8 @@ namespace タスク名
 
         void Initialize() override; // 初期化処理
         void Finalize() override;   // 終了処理
-        void Update();              // 更新
-        void Draw();                // 描画
+        void Update() override;     // 更新
+        void Draw() override;       // 描画
     };
+    using TaskPtr = std::shared_ptr<Task>;
 }

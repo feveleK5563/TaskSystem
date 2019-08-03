@@ -26,6 +26,12 @@ void TaskAbstract::SetTaskState(TaskState set_task_state)
     task_state_ = set_task_state;
 }
 
+// íœ
+void TaskAbstract::Kill()
+{
+    task_state_ = TaskState::Kill;
+}
+
 // ƒ^ƒXƒN–¼‚ğæ“¾
 const std::string& TaskAbstract::GetTaskName()
 {

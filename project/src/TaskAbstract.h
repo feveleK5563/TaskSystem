@@ -33,8 +33,9 @@ public:
     virtual void Update() {};       // 更新
     virtual void Draw() {};         // 描画
 
-    void SetPriority(float set_priority);        // 描画優先度を設定
-    void SetTaskState(TaskState set_task_state); // タスクの状態を設定
+    void SetPriority(float set_priority);         // 描画優先度を設定
+    void SetTaskState(TaskState set_task_state);  // タスクの状態を設定
+    void Kill();                                  // 削除
 
     const std::string&  GetTaskName();  // タスク名を取得
     const float&        GetPriority();  // 描画優先度を取得

@@ -2,6 +2,7 @@
 #include "DxLib.h"
 #include "TaskSystem.h"
 #include "ImageDrawer.h"
+#include "Task_Physics.h"
 
 namespace Test
 {
@@ -26,6 +27,7 @@ namespace Test
     private:
         std::shared_ptr<Resource> res_;  // 確保したリソース
         ImageDrawer drawer;
+        Physics::TaskPtr physics;
 
     public:
         //コンストラクタ
@@ -39,7 +41,8 @@ namespace Test
 
         void Initialize() override; // 初期化処理
         void Finalize() override;   // 終了処理
-        void Update();              // 更新
-        void Draw();                // 描画
+        void Update() override;     // 更新
+        void Draw() override;       // 描画
     };
+    using TaskPtr = std::shared_ptr<Task>;
 }

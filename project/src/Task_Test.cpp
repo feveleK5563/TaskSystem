@@ -1,5 +1,6 @@
 #include "Task_Test.h"
 #include "ImageLoader.h"
+#include "InputDXL.h"
 
 namespace Test
 {
@@ -34,9 +35,9 @@ namespace Test
 
     //----------------------------------------------
     // タスクのコンストラクタ
-    Task::Task():
-        TaskAbstract(task_name, 0.f),
-        res_(Resource::Create())
+    Task::Task()
+        : TaskAbstract(task_name, 0.f)
+        , res_(Resource::Create())
     {
     }
     //----------------------------------------------
@@ -64,7 +65,12 @@ namespace Test
     //----------------------------------------------
     void Task::Initialize()
     {
-        drawer.Initialize("test", Math::BoxCP::CENTER);
+        physics = Physics::Task::Create();
+        physics->SetPos(Math::Vec2(640, 360));
+        physics->SetVel(Math::Vec2(0, -10));
+        physics->SetAcc(Math::Vec2(0.f, 0.25f));
+
+        drawer.Initialize("test", Math::BoxCP::TOP_LEFT);
     }
 
     //----------------------------------------------
@@ -72,6 +78,7 @@ namespace Test
     //----------------------------------------------
     void Task::Finalize()
     {
+        physics->Kill();
     }
 
     //----------------------------------------------
@@ -79,6 +86,11 @@ namespace Test
     //----------------------------------------------
     void Task::Update()
     {
+        auto input = InputDXL::GetKey();
+        if (input[KEY_INPUT::SPACE] == DOWN)
+        {
+            physics->SetVel(Math::Vec2(0, -10));
+        }
     }
 
     //----------------------------------------------
@@ -86,6 +98,6 @@ namespace Test
     //----------------------------------------------
     void Task::Draw()
     {
-        drawer.Draw(Math::Vec2(100, 100));
+        drawer.Draw(physics->GetPos());
     }
 }
