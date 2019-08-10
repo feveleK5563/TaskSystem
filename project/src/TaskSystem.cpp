@@ -6,6 +6,8 @@
 class TaskSystem::Impl
 {
 private:
+    static const int TASK_BUFFER_SIZE = 1024;
+
     std::vector<std::shared_ptr<TaskAbstract>> task_;
     std::vector<std::shared_ptr<TaskAbstract>> add_task_;
     std::unordered_map<std::string,
@@ -14,7 +16,11 @@ private:
     bool sort_flag_;
 
 public:
-    Impl() : sort_flag_(false) {}
+    Impl() : sort_flag_(false)
+    {
+        task_.reserve(TASK_BUFFER_SIZE);
+        add_task_.reserve(TASK_BUFFER_SIZE);
+    }
 
     ~Impl()
     {

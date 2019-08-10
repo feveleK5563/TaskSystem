@@ -23,8 +23,6 @@ namespace Physics
         std::shared_ptr<Task> task =
             std::make_shared<Task>();
         TaskSystem::AddTask(task);
-
-        task->Initialize();
         return task;
     }
 
